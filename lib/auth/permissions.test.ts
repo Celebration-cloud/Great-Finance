@@ -1,8 +1,9 @@
-import { describe, expect, it } from "vitest";
-import { can, canReviewOwnRequest } from "./permissions";
+import assert from "node:assert/strict";
+import { describe, it } from "node:test";
+import { can, canReviewOwnRequest } from "./permissions.ts";
 
 describe("role policy", () => {
-  it("keeps customer access scoped", () => { expect(can("CUSTOMER", "payment:create")).toBe(true); expect(can("CUSTOMER", "ledger:read")).toBe(false); });
-  it("grants super admins all declared powers", () => expect(can("SUPER_ADMIN", "admin:manage")).toBe(true));
-  it("enforces maker-checker separation", () => { expect(canReviewOwnRequest("user-1", "user-1")).toBe(false); expect(canReviewOwnRequest("user-1", "user-2")).toBe(true); });
+  it("keeps customer access scoped", () => { assert.equal(can("CUSTOMER", "payment:create"), true); assert.equal(can("CUSTOMER", "ledger:read"), false); });
+  it("grants super admins all declared powers", () => assert.equal(can("SUPER_ADMIN", "admin:manage"), true));
+  it("enforces maker-checker separation", () => { assert.equal(canReviewOwnRequest("user-1", "user-1"), false); assert.equal(canReviewOwnRequest("user-1", "user-2"), true); });
 });

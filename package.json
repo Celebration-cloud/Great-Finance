@@ -9,8 +9,8 @@
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "node --test features/ledger/domain.test.ts features/payments/paystack.test.ts lib/auth/permissions.test.ts",
+    "test:watch": "node --test --watch features/ledger/domain.test.ts features/payments/paystack.test.ts lib/auth/permissions.test.ts",
     "db:generate": "prisma generate",
     "db:validate": "prisma validate",
     "db:migrate": "prisma migrate dev",
@@ -40,14 +40,12 @@
     "@types/pg": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "@vitest/coverage-v8": "latest",
     "eslint": "^9.39.0",
     "eslint-config-next": "16.3.6",
     "postcss": "latest",
     "prisma": "7.10.0",
     "tailwindcss": "4.3.3",
-    "typescript": "latest",
-    "vitest": "latest"
+    "typescript": "latest"
   },
   "overrides": {
     "deepmerge-ts": "8.0.2",

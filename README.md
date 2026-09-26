@@ -1,6 +1,6 @@
 # Great Finance
 
-Great Finance is migrating from a browser-trusted Vite prototype to a server-controlled financial platform. The active application is Next.js App Router; the previous implementation remains in `src/` as migration reference and is excluded from the production build.
+Great Finance is a server-controlled financial platform built entirely with the Next.js App Router.
 
 ## Production architecture
 
@@ -25,11 +25,11 @@ The combined four-page architecture model is available at `output/pdf/great-fina
 
 The application deliberately fails closed when credentials are missing. `/setup` reports which integrations are connected without exposing their values.
 
-## Legacy route compatibility
+## Product surface
 
 The original customer, vendor and administrator route surface has been carried into the App Router. Marketing copy, plan data, registration fields, dashboard labels, referral tools, coupon acquisition, purchase history, KYC inputs and administrative queues are represented by reusable Next.js components.
 
-Unsafe prototype behavior was intentionally not preserved: Firebase collection-wide subscriptions, plaintext passwords and bank account storage, fabricated dashboard rows, administrator impersonation, client-exposed FX credentials and manual wallet-address confirmation are replaced by scoped server queries, honest empty states or verified provider workflows. KYC file selection is visible, but submission remains fail-closed until secure object storage is configured.
+Unsafe prototype behavior was intentionally not preserved: collection-wide browser subscriptions, plaintext passwords and bank account storage, fabricated dashboard rows, administrator impersonation, client-exposed FX credentials and manual wallet-address confirmation are replaced by scoped server queries, honest empty states or verified provider workflows. KYC file selection is visible, but submission remains fail-closed until secure object storage is configured.
 
 ## Verification
 
