@@ -1,0 +1,28 @@
+.howToInvest{
+    color: black;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.howToInvest section{
+    align-self: center;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 400px;
+    border-radius: 10px;
+    padding: 20px;
+    background: #F1F0F0;
+}
+.guide{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+.guide span{
+    font-size: xx-large;
+    color: #9F9F9F;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}

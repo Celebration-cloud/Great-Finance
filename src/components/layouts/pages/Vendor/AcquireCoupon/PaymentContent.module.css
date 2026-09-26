@@ -1,0 +1,42 @@
+.payment_content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}
+.details {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+.amount {
+  font-weight: bolder;
+}
+.address {
+  width: 381px;
+  height: 32.86px;
+  top: 51.55px;
+  gap: 0px;
+  padding: 10px 0px 0px 10px 0px;
+  border: 0.44px 0px 0px 0px;
+  opacity: 0px;
+  background: #ffffff;
+  border: 0.44px solid #42414199;
+  text-align: left;
+}
+.address span {
+  color: #537fee;
+}
+.pay {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.direct {
+  color: #328332;
+}
+.payBtn button{
+  background: #004584;
+}

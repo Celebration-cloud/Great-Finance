@@ -1,0 +1,291 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum OrganizationType {
+  CUSTOMER
+  VENDOR
+  INTERNAL
+}
+
+enum MembershipRole {
+  CUSTOMER
+  VENDOR
+  REVIEWER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum MembershipStatus {
+  INVITED
+  ACTIVE
+  SUSPENDED
+}
+
+enum LedgerAccountType {
+  ASSET
+  LIABILITY
+  EQUITY
+  REVENUE
+  EXPENSE
+}
+
+enum EntryDirection {
+  DEBIT
+  CREDIT
+}
+
+enum TransactionStatus {
+  POSTED
+  REVERSED
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  SUCCEEDED
+  FAILED
+  CANCELLED
+}
+
+enum WebhookStatus {
+  RECEIVED
+  PROCESSING
+  PROCESSED
+  FAILED
+  IGNORED
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+enum OutboxStatus {
+  PENDING
+  PROCESSING
+  PUBLISHED
+  FAILED
+}
+
+model Organization {
+  id          String            @id @default(cuid())
+  name        String
+  slug        String            @unique
+  type        OrganizationType
+  createdAt   DateTime          @default(now()) @map("created_at")
+  updatedAt   DateTime          @updatedAt @map("updated_at")
+  memberships Membership[]
+  accounts    LedgerAccount[]
+  payments    PaymentIntent[]
+  approvals   ApprovalRequest[]
+  profile     Profile?
+
+  @@map("organizations")
+}
+
+model Profile {
+  id                 String       @id @default(cuid())
+  organizationId     String       @unique @map("organization_id")
+  authUserId         String       @unique @map("auth_user_id")
+  displayName        String       @map("display_name")
+  phone              String?
+  whatsapp           String?
+  bankName           String?      @map("bank_name")
+  accountNumberLast4 String?      @map("account_number_last4") @db.Char(4)
+  referralCode       String       @unique @map("referral_code")
+  referredByCode     String?      @map("referred_by_code")
+  createdAt          DateTime     @default(now()) @map("created_at")
+  updatedAt          DateTime     @updatedAt @map("updated_at")
+  organization       Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+
+  @@index([referredByCode])
+  @@map("profiles")
+}
+
+model Membership {
+  id             String           @id @default(cuid())
+  organizationId String           @map("organization_id")
+  authUserId     String           @map("auth_user_id")
+  role           MembershipRole
+  status         MembershipStatus @default(ACTIVE)
+  createdAt      DateTime         @default(now()) @map("created_at")
+  updatedAt      DateTime         @updatedAt @map("updated_at")
+  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+
+  @@unique([organizationId, authUserId])
+  @@index([authUserId, status])
+  @@map("memberships")
+}
+
+model LedgerAccount {
+  id             String            @id @default(cuid())
+  organizationId String?           @map("organization_id")
+  code           String
+  name           String
+  type           LedgerAccountType
+  currency       String            @db.Char(3)
+  active         Boolean           @default(true)
+  createdAt      DateTime          @default(now()) @map("created_at")
+  organization   Organization?     @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  entries        LedgerEntry[]
+
+  @@unique([organizationId, code, currency])
+  @@index([currency, type])
+  @@map("ledger_accounts")
+}
+
+model LedgerTransaction {
+  id               String             @id @default(cuid())
+  reference        String             @unique
+  idempotencyKey   String             @unique @map("idempotency_key")
+  description      String
+  status           TransactionStatus  @default(POSTED)
+  occurredAt       DateTime           @map("occurred_at")
+  createdAt        DateTime           @default(now()) @map("created_at")
+  createdBy        String             @map("created_by")
+  reversalOfId     String?            @unique @map("reversal_of_id")
+  metadata         Json?
+  entries          LedgerEntry[]
+  reversalOf       LedgerTransaction? @relation("TransactionReversal", fields: [reversalOfId], references: [id], onDelete: Restrict)
+  reversedBy       LedgerTransaction? @relation("TransactionReversal")
+
+  @@index([occurredAt])
+  @@map("ledger_transactions")
+}
+
+model LedgerEntry {
+  id            String            @id @default(cuid())
+  transactionId String            @map("transaction_id")
+  accountId     String            @map("account_id")
+  direction     EntryDirection
+  amountMinor   BigInt            @map("amount_minor")
+  currency      String            @db.Char(3)
+  createdAt     DateTime          @default(now()) @map("created_at")
+  transaction   LedgerTransaction @relation(fields: [transactionId], references: [id], onDelete: Restrict)
+  account       LedgerAccount     @relation(fields: [accountId], references: [id], onDelete: Restrict)
+
+  @@index([transactionId])
+  @@index([accountId, createdAt])
+  @@map("ledger_entries")
+}
+
+model PaymentIntent {
+  id                    String        @id @default(cuid())
+  organizationId        String        @map("organization_id")
+  reference             String        @unique
+  idempotencyKey        String        @unique @map("idempotency_key")
+  provider              String        @default("paystack")
+  providerReference     String?       @unique @map("provider_reference")
+  customerEmail         String        @map("customer_email")
+  amountMinor           BigInt        @map("amount_minor")
+  currency              String        @db.Char(3)
+  status                PaymentStatus @default(PENDING)
+  authorizationUrl      String?       @map("authorization_url")
+  accessCode            String?       @map("access_code")
+  metadata              Json?
+  failureReason         String?       @map("failure_reason")
+  createdAt             DateTime      @default(now()) @map("created_at")
+  updatedAt             DateTime      @updatedAt @map("updated_at")
+  verifiedAt            DateTime?     @map("verified_at")
+  organization          Organization  @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+
+  @@index([organizationId, createdAt])
+  @@index([status, updatedAt])
+  @@map("payment_intents")
+}
+
+model WebhookEvent {
+  id          String        @id @default(cuid())
+  provider    String
+  eventHash   String        @unique @map("event_hash")
+  eventType   String        @map("event_type")
+  reference   String?
+  signature   String
+  status      WebhookStatus @default(RECEIVED)
+  payload     Json
+  error       String?
+  receivedAt  DateTime      @default(now()) @map("received_at")
+  processedAt DateTime?     @map("processed_at")
+
+  @@index([provider, reference])
+  @@index([status, receivedAt])
+  @@map("webhook_events")
+}
+
+model FxRate {
+  id        String   @id @default(cuid())
+  base      String   @db.Char(3)
+  quote     String   @db.Char(3)
+  rate      Decimal  @db.Decimal(30, 12)
+  source    String
+  fetchedAt DateTime @default(now()) @map("fetched_at")
+  expiresAt DateTime @map("expires_at")
+
+  @@unique([base, quote, source])
+  @@index([expiresAt])
+  @@map("fx_rates")
+}
+
+model ApprovalRequest {
+  id             String         @id @default(cuid())
+  organizationId String?        @map("organization_id")
+  resourceType   String         @map("resource_type")
+  resourceId     String         @map("resource_id")
+  action         String
+  payload        Json
+  status         ApprovalStatus @default(PENDING)
+  requestedBy    String         @map("requested_by")
+  reviewedBy     String?        @map("reviewed_by")
+  reviewNote     String?        @map("review_note")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  reviewedAt     DateTime?      @map("reviewed_at")
+  organization   Organization?  @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+
+  @@index([status, createdAt])
+  @@index([resourceType, resourceId])
+  @@map("approval_requests")
+}
+
+model AuditLog {
+  id           String   @id @default(cuid())
+  actorId      String?  @map("actor_id")
+  actorRole    String?  @map("actor_role")
+  action       String
+  entityType   String   @map("entity_type")
+  entityId     String   @map("entity_id")
+  ipAddress    String?  @map("ip_address")
+  userAgent    String?  @map("user_agent")
+  metadata     Json?
+  previousHash String?  @map("previous_hash")
+  hash         String   @unique
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@index([entityType, entityId, createdAt])
+  @@index([actorId, createdAt])
+  @@map("audit_logs")
+}
+
+model OutboxEvent {
+  id            String       @id @default(cuid())
+  aggregateType String       @map("aggregate_type")
+  aggregateId   String       @map("aggregate_id")
+  eventType     String       @map("event_type")
+  payload       Json
+  status        OutboxStatus @default(PENDING)
+  attempts      Int          @default(0)
+  availableAt   DateTime     @default(now()) @map("available_at")
+  createdAt     DateTime     @default(now()) @map("created_at")
+  publishedAt   DateTime?    @map("published_at")
+  lastError     String?      @map("last_error")
+
+  @@index([status, availableAt])
+  @@map("outbox_events")
+}

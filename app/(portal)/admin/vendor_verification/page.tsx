@@ -1,0 +1,6 @@
+import { DataTable, EmptyState, PageHeader } from "@/components/portal/page-header";
+import { requireRole } from "@/lib/auth/access";
+import { getPrisma } from "@/lib/db";
+
+export const dynamic = "force-dynamic";
+export default async function VendorVerificationPage() { await requireRole(["REVIEWER", "ADMIN", "SUPER_ADMIN"]); const requests = await getPrisma().approvalRequest.findMany({ where: { resourceType: "vendor-kyc", status: "PENDING" }, orderBy: { createdAt: "asc" }, take: 100 }); return <section><PageHeader eyebrow="Identity queue" title="Vendor Verification"/><DataTable columns={["Request", "Vendor resource", "Submitted", "Status"]}>{requests.map((request) => <tr key={request.id}><td className="px-5 py-4 font-mono text-xs">{request.id}</td><td className="px-5 py-4">{request.resourceId}</td><td className="px-5 py-4">{request.createdAt.toLocaleDateString("en-NG")}</td><td className="px-5 py-4">Review vendor details</td></tr>)}</DataTable>{!requests.length && <div className="rounded-b-[1.25rem] border-x border-b border-[var(--line)] bg-white"><EmptyState title="No vendor verifications" description="Submitted KYC approvals will appear here after secure upload storage is connected."/></div>}</section>; }

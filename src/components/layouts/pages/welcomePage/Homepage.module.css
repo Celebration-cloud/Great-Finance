@@ -1,0 +1,13 @@
+.homePage{
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.welcomeBlack{
+    background-color: #181818;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}

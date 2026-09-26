@@ -1,0 +1,36 @@
+.records{
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+}
+.records div{
+    display: flex;
+height: 60px;
+padding: 20px 60px 20px 60px;
+align-items: center;
+justify-content: center;
+border-radius: 4.196px;
+background: #7618C0;
+width: 100%;
+gap: 10px;
+color: white;
+}
+.records div:nth-child(1){
+    background-color: black;
+}
+.records div:nth-child(2){
+    background: #7618C0;
+}
+.records div:nth-child(3){
+ border-radius: 4.196px;
+background: #188E1D;
+}
+.records div:nth-child(4){
+    border-radius: 4.196px;
+background: #BD362E;
+}
+.records div:nth-child(5){
+    border-radius: 4.196px;
+background: #E19E39;
+}

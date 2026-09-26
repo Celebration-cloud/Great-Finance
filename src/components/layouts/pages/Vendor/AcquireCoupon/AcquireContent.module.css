@@ -1,0 +1,10 @@
+.coupon-table{
+    display: flex;
+    flex-direction: column;
+    gap: 10px !important;
+}
+.plans{
+    display: inline-flex;
+    flex-direction: column;
+    gap: 30px !important;
+}

@@ -1,0 +1,7 @@
+import { MessageCircle } from "lucide-react";
+import { EmptyState, PageHeader } from "@/components/portal/page-header";
+import { requireRole } from "@/lib/auth/access";
+import { getPrisma } from "@/lib/db";
+
+export const dynamic = "force-dynamic";
+export default async function PurchaseCouponPage() { await requireRole(["CUSTOMER"]); const vendors = await getPrisma().membership.findMany({ where: { role: "VENDOR", status: "ACTIVE", organization: { profile: { is: { whatsapp: { not: null } } } } }, include: { organization: { include: { profile: true } } }, take: 50 }); return <section><PageHeader eyebrow="Vendor directory" title="Purchase Coupon" description="Contact any verified vendor on our list to purchase."/>{vendors.length ? <div className="mt-8 grid gap-3">{vendors.map(({ organization }) => <article className="flex flex-wrap items-center gap-4 rounded-2xl bg-white p-5" key={organization.id}><div><p className="font-bold">{organization.profile?.displayName}</p><p className="text-sm text-[var(--muted)]">Registered vendor</p></div><a className="ml-auto inline-flex items-center gap-2 rounded-xl bg-[var(--brand)] px-4 py-2.5 font-bold text-white" href={`https://wa.me/${organization.profile?.whatsapp}`}><MessageCircle size={18}/> Chat on whatsapp</a></article>)}</div> : <div className="card mt-8"><EmptyState title="No verified vendors available" description="The directory will populate from active vendor memberships after onboarding and review."/></div>}</section>; }

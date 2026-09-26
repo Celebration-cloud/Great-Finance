@@ -1,0 +1,39 @@
+.nav{
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.menuName{
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+.menu{
+    height: 35px;
+}
+.menuName span img{
+    height: 40px;
+}
+.purchase{color: #000;
+font-size: 15px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+    border-radius: 20px;
+background: #70B7F8;
+}
+@media (max-width: 678px) {
+    .purchase{
+        font-size: 12px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+    border-radius: 20px;
+background: #70B7F8;
+    }
+    .menuName .menu{
+        height: 20px;
+    }
+}
