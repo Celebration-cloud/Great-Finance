@@ -1,16 +1,15 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createAuthClient } from "@neondatabase/auth/next";
 import { ArrowRight, LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
+import { getNeonClient } from "@/lib/neon/client";
 
 const schema = z.object({ email: z.string().email("Enter a valid email."), password: z.string().min(8, "Use at least 8 characters.") });
 type Values = z.infer<typeof schema>;
-const auth = createAuthClient();
 
 export function SignInForm({ configured, redirectTo = "/dashboard", label = "Sign in securely" }: { configured: boolean; redirectTo?: string; label?: string }) {
   const router = useRouter();
@@ -18,7 +17,7 @@ export function SignInForm({ configured, redirectTo = "/dashboard", label = "Sig
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<Values>({ resolver: zodResolver(schema) });
   const submit = handleSubmit(async (values) => {
     setServerError(undefined);
-    const result = await auth.signIn.email({ ...values, callbackURL: redirectTo });
+    const result = await getNeonClient().auth.signIn.email({ ...values, callbackURL: redirectTo });
     if (result.error) return setServerError(result.error.message ?? "Sign in failed.");
     router.push(redirectTo);
     router.refresh();

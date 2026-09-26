@@ -1,14 +1,12 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createAuthClient } from "@neondatabase/auth/next";
 import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { registrationSchema, type RegistrationValues } from "@/features/onboarding/schemas";
-
-const auth = createAuthClient();
+import { getNeonClient } from "@/lib/neon/client";
 
 export function RegistrationForm({ accountType, configured }: { accountType: "CUSTOMER" | "VENDOR"; configured: boolean }) {
   const router = useRouter();
@@ -16,7 +14,7 @@ export function RegistrationForm({ accountType, configured }: { accountType: "CU
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<RegistrationValues>({ resolver: zodResolver(registrationSchema), defaultValues: { accountType } });
   const submit = handleSubmit(async (values) => {
     setServerError(undefined);
-    const signup = await auth.signUp.email({ email: values.email, password: values.password, name: values.fullName, callbackURL: accountType === "VENDOR" ? "/vendor/dashboard" : "/dashboard" });
+    const signup = await getNeonClient().auth.signUp.email({ email: values.email, password: values.password, name: values.fullName, callbackURL: accountType === "VENDOR" ? "/vendor/dashboard" : "/dashboard" });
     if (signup.error) return setServerError(signup.error.message ?? "Registration failed.");
     const response = await fetch("/api/onboarding", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(values) });
     const result = await response.json() as { message?: string };

@@ -28,3 +28,11 @@ export function hasDatabaseConfig() {
 export function hasAuthConfig() {
   return Boolean(process.env.NEON_AUTH_BASE_URL && process.env.NEON_AUTH_COOKIE_SECRET?.length && process.env.NEON_AUTH_COOKIE_SECRET.length >= 32);
 }
+
+export function hasDataApiConfig() {
+  return Boolean(process.env.NEXT_PUBLIC_NEON_DATABASE_URL && process.env.NEON_DATA_API_URL);
+}
+
+export function hasStorageConfig() {
+  return Boolean(process.env.NEON_STORAGE_BUCKET && process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY && process.env.AWS_ENDPOINT_URL_S3 && process.env.AWS_REGION);
+}

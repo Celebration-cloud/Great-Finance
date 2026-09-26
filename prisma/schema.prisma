@@ -76,19 +76,41 @@ enum OutboxStatus {
 }
 
 model Organization {
-  id          String            @id @default(cuid())
-  name        String
-  slug        String            @unique
-  type        OrganizationType
-  createdAt   DateTime          @default(now()) @map("created_at")
-  updatedAt   DateTime          @updatedAt @map("updated_at")
-  memberships Membership[]
-  accounts    LedgerAccount[]
-  payments    PaymentIntent[]
-  approvals   ApprovalRequest[]
-  profile     Profile?
+  id             String                @id @default(cuid())
+  name           String
+  slug           String                @unique
+  type           OrganizationType
+  createdAt      DateTime              @default(now()) @map("created_at")
+  updatedAt      DateTime              @updatedAt @map("updated_at")
+  memberships    Membership[]
+  accounts       LedgerAccount[]
+  payments       PaymentIntent[]
+  approvals      ApprovalRequest[]
+  profile        Profile?
+  kycSubmissions VendorKycSubmission[]
 
   @@map("organizations")
+}
+
+model VendorKycSubmission {
+  id                  String       @id @default(cuid())
+  organizationId      String       @map("organization_id")
+  authUserId          String       @map("auth_user_id")
+  fullName            String       @map("full_name")
+  stateOfOrigin       String       @map("state_of_origin")
+  localGovernment     String       @map("local_government")
+  identityObjectKey   String       @unique @map("identity_object_key")
+  identityContentType String       @map("identity_content_type")
+  identitySizeBytes   Int          @map("identity_size_bytes")
+  selfieObjectKey     String       @unique @map("selfie_object_key")
+  selfieContentType   String       @map("selfie_content_type")
+  selfieSizeBytes     Int          @map("selfie_size_bytes")
+  submittedAt         DateTime     @default(now()) @map("submitted_at")
+  organization        Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+
+  @@index([organizationId, submittedAt])
+  @@index([authUserId, submittedAt])
+  @@map("vendor_kyc_submissions")
 }
 
 model Profile {
@@ -143,19 +165,19 @@ model LedgerAccount {
 }
 
 model LedgerTransaction {
-  id               String             @id @default(cuid())
-  reference        String             @unique
-  idempotencyKey   String             @unique @map("idempotency_key")
-  description      String
-  status           TransactionStatus  @default(POSTED)
-  occurredAt       DateTime           @map("occurred_at")
-  createdAt        DateTime           @default(now()) @map("created_at")
-  createdBy        String             @map("created_by")
-  reversalOfId     String?            @unique @map("reversal_of_id")
-  metadata         Json?
-  entries          LedgerEntry[]
-  reversalOf       LedgerTransaction? @relation("TransactionReversal", fields: [reversalOfId], references: [id], onDelete: Restrict)
-  reversedBy       LedgerTransaction? @relation("TransactionReversal")
+  id             String             @id @default(cuid())
+  reference      String             @unique
+  idempotencyKey String             @unique @map("idempotency_key")
+  description    String
+  status         TransactionStatus  @default(POSTED)
+  occurredAt     DateTime           @map("occurred_at")
+  createdAt      DateTime           @default(now()) @map("created_at")
+  createdBy      String             @map("created_by")
+  reversalOfId   String?            @unique @map("reversal_of_id")
+  metadata       Json?
+  entries        LedgerEntry[]
+  reversalOf     LedgerTransaction? @relation("TransactionReversal", fields: [reversalOfId], references: [id], onDelete: Restrict)
+  reversedBy     LedgerTransaction? @relation("TransactionReversal")
 
   @@index([occurredAt])
   @@map("ledger_transactions")
@@ -178,24 +200,24 @@ model LedgerEntry {
 }
 
 model PaymentIntent {
-  id                    String        @id @default(cuid())
-  organizationId        String        @map("organization_id")
-  reference             String        @unique
-  idempotencyKey        String        @unique @map("idempotency_key")
-  provider              String        @default("paystack")
-  providerReference     String?       @unique @map("provider_reference")
-  customerEmail         String        @map("customer_email")
-  amountMinor           BigInt        @map("amount_minor")
-  currency              String        @db.Char(3)
-  status                PaymentStatus @default(PENDING)
-  authorizationUrl      String?       @map("authorization_url")
-  accessCode            String?       @map("access_code")
-  metadata              Json?
-  failureReason         String?       @map("failure_reason")
-  createdAt             DateTime      @default(now()) @map("created_at")
-  updatedAt             DateTime      @updatedAt @map("updated_at")
-  verifiedAt            DateTime?     @map("verified_at")
-  organization          Organization  @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  id                String        @id @default(cuid())
+  organizationId    String        @map("organization_id")
+  reference         String        @unique
+  idempotencyKey    String        @unique @map("idempotency_key")
+  provider          String        @default("paystack")
+  providerReference String?       @unique @map("provider_reference")
+  customerEmail     String        @map("customer_email")
+  amountMinor       BigInt        @map("amount_minor")
+  currency          String        @db.Char(3)
+  status            PaymentStatus @default(PENDING)
+  authorizationUrl  String?       @map("authorization_url")
+  accessCode        String?       @map("access_code")
+  metadata          Json?
+  failureReason     String?       @map("failure_reason")
+  createdAt         DateTime      @default(now()) @map("created_at")
+  updatedAt         DateTime      @updatedAt @map("updated_at")
+  verifiedAt        DateTime?     @map("verified_at")
+  organization      Organization  @relation(fields: [organizationId], references: [id], onDelete: Restrict)
 
   @@index([organizationId, createdAt])
   @@index([status, updatedAt])
