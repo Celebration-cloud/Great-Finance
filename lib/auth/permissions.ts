@@ -10,9 +10,9 @@ export type Permission = (typeof PERMISSIONS)[number];
 
 const grants: Record<Role, ReadonlySet<Permission>> = {
   CUSTOMER: new Set(["payment:create", "payment:read", "investment:create", "investment:read", "coupon:read"]),
-  VENDOR: new Set(["payment:read", "vendor:read", "approval:request", "coupon:create", "coupon:read"]),
+  VENDOR: new Set(["payment:create", "payment:read", "vendor:read", "approval:request", "coupon:create", "coupon:read"]),
   REVIEWER: new Set(["payment:read", "vendor:read", "approval:review", "ledger:read", "investment:read", "coupon:read"]),
-  ADMIN: new Set(["payment:read", "vendor:read", "approval:request", "approval:review", "ledger:read", "ledger:post", "investment:read", "coupon:read"]),
+  ADMIN: new Set(["payment:create", "payment:read", "vendor:read", "approval:request", "approval:review", "ledger:read", "ledger:post", "investment:read", "coupon:read"]),
   SUPER_ADMIN: new Set(PERMISSIONS),
 };
 
