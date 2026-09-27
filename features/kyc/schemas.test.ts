@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { MAX_KYC_FILE_BYTES, kycUploadRequestSchema } from "./schemas.ts";
+import { MAX_KYC_FILE_BYTES, isKycImageContentType, kycUploadRequestSchema } from "./schemas.ts";
 
 describe("KYC upload validation", () => {
   it("accepts supported identity documents within the size limit", () => {
@@ -13,5 +13,10 @@ describe("KYC upload validation", () => {
 
   it("rejects files larger than 40 MB", () => {
     assert.equal(kycUploadRequestSchema.safeParse({ kind: "identity", fileName: "large.pdf", contentType: "application/pdf", size: MAX_KYC_FILE_BYTES + 1 }).success, false);
+  });
+
+  it("routes image types to private image storage and leaves PDFs as documents", () => {
+    assert.equal(isKycImageContentType("image/jpeg"), true);
+    assert.equal(isKycImageContentType("application/pdf"), false);
   });
 });

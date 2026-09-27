@@ -1,10 +1,11 @@
 import { Prisma } from "@/generated/prisma/client";
 import { NextResponse } from "next/server";
 import { appendAuditLog } from "@/features/audit/service";
-import { kycSubmissionSchema } from "@/features/kyc/schemas";
+import { isKycImageContentType, kycSubmissionSchema } from "@/features/kyc/schemas";
 import { getPrincipal } from "@/lib/auth/principal";
 import { getPrisma } from "@/lib/db";
 import { inspectStoredObject } from "@/lib/storage/neon";
+import { inspectPrivateBlob } from "@/lib/storage/vercel-blob";
 
 export async function POST(request: Request) {
   const principal = await getPrincipal();
@@ -19,10 +20,18 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, message: "Invalid storage object ownership." }, { status: 403 });
   }
 
-  let identity: Awaited<ReturnType<typeof inspectStoredObject>>;
-  let selfie: Awaited<ReturnType<typeof inspectStoredObject>>;
+  const identityProvider = isKycImageContentType(parsed.data.identity.contentType) ? "vercel-blob" : "neon-storage";
+  if (parsed.data.identity.provider !== identityProvider || parsed.data.selfie.provider !== "vercel-blob") {
+    return NextResponse.json({ success: false, message: "Invalid storage provider." }, { status: 400 });
+  }
+
+  let identity: { contentType?: string; size?: number };
+  let selfie: { contentType?: string; size?: number };
   try {
-    [identity, selfie] = await Promise.all([inspectStoredObject(parsed.data.identity.key), inspectStoredObject(parsed.data.selfie.key)]);
+    [identity, selfie] = await Promise.all([
+      identityProvider === "vercel-blob" ? inspectPrivateBlob(parsed.data.identity.key) : inspectStoredObject(parsed.data.identity.key),
+      inspectPrivateBlob(parsed.data.selfie.key),
+    ]);
   } catch (error) {
     console.error("vendor-kyc.storage-verification.failed", error);
     return NextResponse.json({ success: false, message: "Uploaded files could not be verified." }, { status: 409 });

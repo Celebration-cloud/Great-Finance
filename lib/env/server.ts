@@ -36,3 +36,7 @@ export function hasDataApiConfig() {
 export function hasStorageConfig() {
   return Boolean(process.env.NEON_STORAGE_BUCKET && process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY && process.env.AWS_ENDPOINT_URL_S3 && process.env.AWS_REGION);
 }
+
+export function hasBlobStorageConfig() {
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+}

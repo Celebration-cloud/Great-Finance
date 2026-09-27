@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { NextResponse } from "next/server";
-import { kycUploadRequestSchema } from "@/features/kyc/schemas";
+import { isKycImageContentType, kycUploadRequestSchema } from "@/features/kyc/schemas";
 import { getPrincipal } from "@/lib/auth/principal";
 import { createUploadUrl } from "@/lib/storage/neon";
 
@@ -17,8 +17,15 @@ export async function POST(request: Request) {
   try {
     const extension = extensions[parsed.data.contentType];
     const key = `vendor-kyc/${principal.organizationId}/${principal.userId}/${randomUUID()}-${parsed.data.kind}.${extension}`;
+    if (isKycImageContentType(parsed.data.contentType)) {
+      return NextResponse.json({
+        success: true,
+        data: { key, provider: "vercel-blob" },
+        message: "Private Blob upload prepared.",
+      });
+    }
     const uploadUrl = await createUploadUrl(key, parsed.data.contentType);
-    return NextResponse.json({ success: true, data: { key, uploadUrl }, message: "Secure upload URL created." });
+    return NextResponse.json({ success: true, data: { key, provider: "neon-storage", uploadUrl }, message: "Secure upload URL created." });
   } catch (error) {
     console.error("vendor-kyc.upload-url.failed", error);
     return NextResponse.json({ success: false, message: "Secure storage is temporarily unavailable." }, { status: 503 });

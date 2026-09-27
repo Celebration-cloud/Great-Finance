@@ -16,6 +16,8 @@ generated
 *.local
 /env/
 .env
+playwright-report/
+test-results/
 !.env.example
 
 # Editor directories and files

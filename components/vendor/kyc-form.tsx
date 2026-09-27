@@ -2,9 +2,11 @@
 
 import { LoaderCircle, ShieldCheck } from "lucide-react";
 import { useState } from "react";
+import { upload } from "@vercel/blob/client";
 
 type UploadKind = "identity" | "selfie";
-type UploadedObject = { key: string; contentType: string; size: number };
+type StorageProvider = "neon-storage" | "vercel-blob";
+type UploadedObject = { key: string; provider: StorageProvider; contentType: string; size: number };
 
 async function uploadFile(kind: UploadKind, file: File): Promise<UploadedObject> {
   const response = await fetch("/api/storage/kyc/upload-url", {
@@ -12,12 +14,23 @@ async function uploadFile(kind: UploadKind, file: File): Promise<UploadedObject>
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ kind, fileName: file.name, contentType: file.type, size: file.size }),
   });
-  const result = await response.json() as { data?: { key: string; uploadUrl: string }; message?: string };
+  const result = await response.json() as { data?: { key: string; provider: StorageProvider; uploadUrl?: string }; message?: string };
   if (!response.ok || !result.data) throw new Error(result.message ?? "Could not prepare the secure upload.");
 
-  const upload = await fetch(result.data.uploadUrl, { method: "PUT", headers: { "Content-Type": file.type }, body: file });
-  if (!upload.ok) throw new Error(`The ${kind === "identity" ? "identity document" : "photo"} upload failed.`);
-  return { key: result.data.key, contentType: file.type, size: file.size };
+  if (result.data.provider === "vercel-blob") {
+    await upload(result.data.key, file, {
+      access: "private",
+      handleUploadUrl: "/api/storage/kyc/blob-upload",
+      contentType: file.type,
+      clientPayload: JSON.stringify({ kind, contentType: file.type, size: file.size }),
+      multipart: file.size > 5 * 1024 * 1024,
+    });
+  } else {
+    if (!result.data.uploadUrl) throw new Error("The secure document upload URL is missing.");
+    const uploaded = await fetch(result.data.uploadUrl, { method: "PUT", headers: { "Content-Type": file.type }, body: file });
+    if (!uploaded.ok) throw new Error(`The ${kind === "identity" ? "identity document" : "photo"} upload failed.`);
+  }
+  return { key: result.data.key, provider: result.data.provider, contentType: file.type, size: file.size };
 }
 
 export function KycForm() {
@@ -61,7 +74,7 @@ export function KycForm() {
 
   const fieldClass = "rounded-xl border border-[var(--line)] bg-white px-4 py-3";
   return <form className="mt-8 grid gap-5 rounded-[1.35rem] bg-white p-6" onSubmit={submit}>
-    <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-950"><ShieldCheck className="mt-0.5 shrink-0" size={20}/><p>Documents are stored in a private, branch-matched Neon bucket. Review links expire after five minutes, and every reviewer access is written to the audit log.</p></div>
+    <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-950"><ShieldCheck className="mt-0.5 shrink-0" size={20}/><p>Images are stored in private Vercel Blob storage and PDF documents remain in the private, branch-matched Neon bucket. Every reviewer access is authenticated and written to the audit log.</p></div>
     <label className="grid gap-2 text-sm font-bold">1. Full name as it appears on your ID<input className={fieldClass} name="fullName" autoComplete="name" required/></label>
     <label className="grid gap-2 text-sm font-bold">2. State of origin<input className={fieldClass} name="stateOfOrigin" required/></label>
     <label className="grid gap-2 text-sm font-bold">3. Local government of origin<input className={fieldClass} name="localGovernment" required/></label>
