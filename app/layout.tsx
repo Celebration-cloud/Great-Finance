@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Landmark } from "lucide-react";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: { default: "Great Finance", template: "%s · Great Finance" },
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           </div>
         </header>
         <div id="main-content">{children}</div>
+        <Analytics />
       </body>
     </html>
   );
