@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { getNeonClient } from "@/lib/neon/client";
+import { getAuthErrorMessage } from "@/lib/auth/client-errors";
 
 const schema = z.object({ email: z.string().email("Enter a valid email."), password: z.string().min(8, "Use at least 8 characters.") });
 type Values = z.infer<typeof schema>;
@@ -22,10 +23,14 @@ export function SignInForm({ configured, redirectTo = "/dashboard", label = "Sig
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<Values>({ resolver: zodResolver(schema) });
   const submit = handleSubmit(async (values) => {
     setServerError(undefined);
-    const result = await getNeonClient().auth.signIn.email({ ...values, callbackURL: redirectTo });
-    if (result.error) return setServerError(result.error.message ?? "Sign in failed.");
-    router.push(redirectTo);
-    router.refresh();
+    try {
+      const result = await getNeonClient().auth.signIn.email({ ...values, callbackURL: redirectTo });
+      if (result.error) return setServerError(getAuthErrorMessage(result.error.message, "sign-in"));
+      router.push(redirectTo);
+      router.refresh();
+    } catch (error) {
+      setServerError(getAuthErrorMessage(error, "sign-in"));
+    }
   });
 
   return <form className="mt-8 space-y-5" method="post" onSubmit={submit} noValidate>

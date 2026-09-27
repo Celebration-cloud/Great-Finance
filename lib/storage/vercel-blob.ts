@@ -2,6 +2,7 @@ import "server-only";
 
 import { get, head } from "@vercel/blob";
 import { z } from "zod";
+import { errors } from "@/lib/errors/app-error";
 
 const blobEnvSchema = z.object({
   BLOB_READ_WRITE_TOKEN: z.string().min(1),
@@ -9,7 +10,7 @@ const blobEnvSchema = z.object({
 
 function getBlobToken() {
   const parsed = blobEnvSchema.safeParse(process.env);
-  if (!parsed.success) throw new Error("Vercel Blob configuration is incomplete: BLOB_READ_WRITE_TOKEN");
+  if (!parsed.success) throw errors.configuration("Private image storage is not configured.", parsed.error);
   return parsed.data.BLOB_READ_WRITE_TOKEN;
 }
 

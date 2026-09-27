@@ -1,21 +1,25 @@
 "use client";
 
 import { LoaderCircle, ShieldCheck } from "lucide-react";
-import { useState } from "react";
+import { useRef } from "react";
 import { upload } from "@vercel/blob/client";
+import { useRouter } from "next/navigation";
+import { apiFetch } from "@/lib/http/api-fetch";
+import { useApiMutation } from "@/hooks/use-api-mutation";
 
 type UploadKind = "identity" | "selfie";
 type StorageProvider = "neon-storage" | "vercel-blob";
 type UploadedObject = { key: string; provider: StorageProvider; contentType: string; size: number };
 
 async function uploadFile(kind: UploadKind, file: File): Promise<UploadedObject> {
-  const response = await fetch("/api/storage/kyc/upload-url", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ kind, fileName: file.name, contentType: file.type, size: file.size }),
-  });
-  const result = await response.json() as { data?: { key: string; provider: StorageProvider; uploadUrl?: string }; message?: string };
-  if (!response.ok || !result.data) throw new Error(result.message ?? "Could not prepare the secure upload.");
+  const result = await apiFetch<{ key: string; provider: StorageProvider; uploadUrl?: string }>(
+    "/api/storage/kyc/upload-url",
+    {
+      method: "POST",
+      body: JSON.stringify({ kind, fileName: file.name, contentType: file.type, size: file.size }),
+    },
+  );
+  if (!result.ok) throw new Error(result.error.message);
 
   if (result.data.provider === "vercel-blob") {
     await upload(result.data.key, file, {
@@ -30,57 +34,96 @@ async function uploadFile(kind: UploadKind, file: File): Promise<UploadedObject>
     const uploaded = await fetch(result.data.uploadUrl, { method: "PUT", headers: { "Content-Type": file.type }, body: file });
     if (!uploaded.ok) throw new Error(`The ${kind === "identity" ? "identity document" : "photo"} upload failed.`);
   }
+
   return { key: result.data.key, provider: result.data.provider, contentType: file.type, size: file.size };
 }
 
+type KycSubmitBody = {
+  fullName: string;
+  stateOfOrigin: string;
+  localGovernment: string;
+  identity: UploadedObject;
+  selfie: UploadedObject;
+};
+
 export function KycForm() {
-  const [state, setState] = useState<"idle" | "uploading" | "submitted" | "error">("idle");
-  const [message, setMessage] = useState<string>();
+  const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const { mutate, isLoading, isSuccess, isError, error } = useApiMutation<unknown, KycSubmitBody>(
+    "/api/storage/kyc/submit",
+    { successMessage: "KYC verification submitted securely." },
+  );
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formElement = event.currentTarget;
-    setState("uploading");
-    setMessage(undefined);
+    const form = new FormData(formElement);
 
+    const identityFile = form.get("identityFile");
+    const selfieFile = form.get("selfieFile");
+    if (!(identityFile instanceof File) || !(selfieFile instanceof File) || !identityFile.size || !selfieFile.size) {
+      return;
+    }
+
+    let identity: UploadedObject;
+    let selfie: UploadedObject;
     try {
-      const form = new FormData(formElement);
-      const identityFile = form.get("identityFile");
-      const selfieFile = form.get("selfieFile");
-      if (!(identityFile instanceof File) || !(selfieFile instanceof File) || !identityFile.size || !selfieFile.size) throw new Error("Choose both required files.");
+      [identity, selfie] = await Promise.all([uploadFile("identity", identityFile), uploadFile("selfie", selfieFile)]);
+    } catch (uploadError) {
+      // Upload errors (presign fetch or PUT) are surfaced as thrown Errors — toast manually.
+      const { toast } = await import("@/lib/toast");
+      toast.error(uploadError instanceof Error ? uploadError.message : "File upload failed.");
+      return;
+    }
 
-      const [identity, selfie] = await Promise.all([uploadFile("identity", identityFile), uploadFile("selfie", selfieFile)]);
-      const response = await fetch("/api/storage/kyc/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName: form.get("fullName"),
-          stateOfOrigin: form.get("stateOfOrigin"),
-          localGovernment: form.get("localGovernment"),
-          identity,
-          selfie,
-        }),
-      });
-      const result = await response.json() as { message?: string };
-      if (!response.ok) throw new Error(result.message ?? "KYC submission failed.");
+    const result = await mutate({
+      fullName: String(form.get("fullName")),
+      stateOfOrigin: String(form.get("stateOfOrigin")),
+      localGovernment: String(form.get("localGovernment")),
+      identity,
+      selfie,
+    });
+
+    if (result.ok) {
       formElement.reset();
-      setState("submitted");
-      setMessage(result.message ?? "KYC verification submitted securely.");
-    } catch (error) {
-      setState("error");
-      setMessage(error instanceof Error ? error.message : "KYC submission failed.");
+      router.refresh();
     }
   }
 
   const fieldClass = "rounded-xl border border-[var(--line)] bg-white px-4 py-3";
-  return <form className="mt-8 grid gap-5 rounded-[1.35rem] bg-white p-6" onSubmit={submit}>
-    <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-950"><ShieldCheck className="mt-0.5 shrink-0" size={20}/><p>Images are stored in private Vercel Blob storage and PDF documents remain in the private, branch-matched Neon bucket. Every reviewer access is authenticated and written to the audit log.</p></div>
-    <label className="grid gap-2 text-sm font-bold">1. Full name as it appears on your ID<input className={fieldClass} name="fullName" autoComplete="name" required/></label>
-    <label className="grid gap-2 text-sm font-bold">2. State of origin<input className={fieldClass} name="stateOfOrigin" required/></label>
-    <label className="grid gap-2 text-sm font-bold">3. Local government of origin<input className={fieldClass} name="localGovernment" required/></label>
-    <label className="grid gap-2 text-sm font-bold">4. Means of identification <span className="font-normal text-[var(--muted)]">NIN, driver’s licence, passport; image or PDF, up to 40 MB</span><input className="rounded-xl border border-dashed border-[var(--line)] p-5" name="identityFile" type="file" accept="image/jpeg,image/png,image/webp,application/pdf" required/></label>
-    <label className="grid gap-2 text-sm font-bold">5. Recent photo <span className="font-normal text-[var(--muted)]">JPEG, up to 40 MB</span><input className="rounded-xl border border-dashed border-[var(--line)] p-5" name="selfieFile" type="file" accept="image/jpeg" required/></label>
-    <button disabled={state === "uploading" || state === "submitted"} className="flex items-center justify-center gap-2 rounded-xl bg-[var(--brand)] px-5 py-3 font-bold text-white disabled:opacity-60">{state === "uploading" && <LoaderCircle className="animate-spin" size={18}/>} {state === "uploading" ? "Encrypting and uploading…" : state === "submitted" ? "Verification submitted" : "Complete KYC Verification"}</button>
-    {message && <p role={state === "error" ? "alert" : "status"} className={`rounded-xl p-3 text-sm ${state === "error" ? "bg-red-50 text-red-800" : "bg-emerald-50 text-emerald-900"}`}>{message}</p>}
-  </form>;
+  return (
+    <form ref={formRef} className="mt-8 grid gap-5 rounded-[1.35rem] bg-white p-6" onSubmit={submit}>
+      <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-950">
+        <ShieldCheck className="mt-0.5 shrink-0" size={20} />
+        <p>Identity documents and photos are stored securely in encrypted storage. Only image formats (JPEG, PNG, WebP) are supported. Every reviewer access is authenticated and written to the audit log.</p>
+      </div>
+      <label className="grid gap-2 text-sm font-bold">1. Full name as it appears on your ID<input className={fieldClass} name="fullName" autoComplete="name" required /></label>
+      <label className="grid gap-2 text-sm font-bold">2. State of origin<input className={fieldClass} name="stateOfOrigin" required /></label>
+      <label className="grid gap-2 text-sm font-bold">3. Local government of origin<input className={fieldClass} name="localGovernment" required /></label>
+      <label className="grid gap-2 text-sm font-bold">
+        4. Means of identification (Image only){" "}
+        <span className="font-normal text-[var(--muted)]">NIN slip/card, driver's license, voter's card, or passport photo (JPEG, PNG, WebP up to 40 MB)</span>
+        <input className="rounded-xl border border-dashed border-[var(--line)] p-5" name="identityFile" type="file" accept="image/jpeg,image/png,image/webp" required />
+      </label>
+      <label className="grid gap-2 text-sm font-bold">
+        5. Recent selfie photo{" "}
+        <span className="font-normal text-[var(--muted)]">Clear facial photo (JPEG, PNG, WebP up to 40 MB)</span>
+        <input className="rounded-xl border border-dashed border-[var(--line)] p-5" name="selfieFile" type="file" accept="image/jpeg,image/png,image/webp" required />
+      </label>
+
+      <button
+        disabled={isLoading || isSuccess}
+        className="flex items-center justify-center gap-2 rounded-xl bg-[var(--brand)] px-5 py-3 font-bold text-white disabled:opacity-60"
+      >
+        {isLoading && <LoaderCircle className="animate-spin" size={18} />}
+        {isLoading ? "Encrypting and uploading…" : isSuccess ? "Verification submitted" : "Complete KYC Verification"}
+      </button>
+      {isError && (
+        <p role="alert" className="rounded-xl p-3 text-sm bg-red-50 text-red-800">
+          {error?.message ?? "KYC submission failed."}
+        </p>
+      )}
+    </form>
+  );
 }

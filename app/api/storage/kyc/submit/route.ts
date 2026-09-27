@@ -1,28 +1,28 @@
 import { Prisma } from "@/generated/prisma/client";
-import { NextResponse } from "next/server";
 import { appendAuditLog } from "@/features/audit/service";
 import { isKycImageContentType, kycSubmissionSchema } from "@/features/kyc/schemas";
-import { getPrincipal } from "@/lib/auth/principal";
+import { requireApiPrincipal, requireApiRole } from "@/lib/auth/api";
 import { getPrisma } from "@/lib/db";
+import { AppError, errors } from "@/lib/errors/app-error";
+import { apiSuccess, readJson, withApiHandler } from "@/lib/http/api-response";
 import { inspectStoredObject } from "@/lib/storage/neon";
 import { inspectPrivateBlob } from "@/lib/storage/vercel-blob";
 
 export async function POST(request: Request) {
-  const principal = await getPrincipal();
-  if (!principal) return NextResponse.json({ success: false, message: "Authentication required." }, { status: 401 });
-  if (principal.role !== "VENDOR") return NextResponse.json({ success: false, message: "Vendor access required." }, { status: 403 });
-
-  const parsed = kycSubmissionSchema.safeParse(await request.json());
-  if (!parsed.success) return NextResponse.json({ success: false, message: "Invalid KYC submission.", errors: parsed.error.flatten().fieldErrors }, { status: 400 });
+  return withApiHandler(request, "vendor-kyc.submit", async (context) => {
+  const principal = await requireApiPrincipal();
+  requireApiRole(principal, ["VENDOR"], "Vendor access required.");
+  const parsed = kycSubmissionSchema.safeParse(await readJson(request));
+  if (!parsed.success) throw errors.validation("Invalid KYC submission.", parsed.error.flatten().fieldErrors);
 
   const expectedPrefix = `vendor-kyc/${principal.organizationId}/${principal.userId}/`;
   if (!parsed.data.identity.key.startsWith(expectedPrefix) || !parsed.data.selfie.key.startsWith(expectedPrefix) || !parsed.data.identity.key.includes("-identity.") || !parsed.data.selfie.key.includes("-selfie.") || parsed.data.identity.key === parsed.data.selfie.key) {
-    return NextResponse.json({ success: false, message: "Invalid storage object ownership." }, { status: 403 });
+    throw errors.forbidden("Invalid storage object ownership.");
   }
 
   const identityProvider = isKycImageContentType(parsed.data.identity.contentType) ? "vercel-blob" : "neon-storage";
   if (parsed.data.identity.provider !== identityProvider || parsed.data.selfie.provider !== "vercel-blob") {
-    return NextResponse.json({ success: false, message: "Invalid storage provider." }, { status: 400 });
+    throw errors.validation("Invalid storage provider.");
   }
 
   let identity: { contentType?: string; size?: number };
@@ -33,17 +33,16 @@ export async function POST(request: Request) {
       inspectPrivateBlob(parsed.data.selfie.key),
     ]);
   } catch (error) {
-    console.error("vendor-kyc.storage-verification.failed", error);
-    return NextResponse.json({ success: false, message: "Uploaded files could not be verified." }, { status: 409 });
+    if (error instanceof AppError) throw error;
+    throw errors.storageUnavailable("Uploaded files could not be verified. Please retry shortly.", error);
   }
   if (identity.contentType !== parsed.data.identity.contentType || identity.size !== parsed.data.identity.size || selfie.contentType !== parsed.data.selfie.contentType || selfie.size !== parsed.data.selfie.size) {
-    return NextResponse.json({ success: false, message: "Uploaded file metadata could not be verified." }, { status: 409 });
+    throw errors.conflict("Uploaded file metadata could not be verified.");
   }
 
   const existing = await getPrisma().approvalRequest.findFirst({ where: { resourceType: "vendor-kyc", requestedBy: principal.userId, status: "PENDING" }, select: { id: true } });
-  if (existing) return NextResponse.json({ success: false, message: "A KYC verification is already pending." }, { status: 409 });
+  if (existing) throw errors.conflict("A KYC verification is already pending.");
 
-  try {
     const result = await getPrisma().$transaction(async (tx) => {
       const submission = await tx.vendorKycSubmission.create({ data: {
         organizationId: principal.organizationId,
@@ -70,9 +69,6 @@ export async function POST(request: Request) {
       return { submissionId: submission.id, approvalId: approval.id };
     });
 
-    return NextResponse.json({ success: true, data: result, message: "KYC verification submitted securely." }, { status: 201 });
-  } catch (error) {
-    console.error("vendor-kyc.submission.failed", error);
-    return NextResponse.json({ success: false, message: "Unable to record the KYC submission." }, { status: 500 });
-  }
+    return apiSuccess(context, result, "KYC verification submitted securely.", 201);
+  });
 }

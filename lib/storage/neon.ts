@@ -3,6 +3,7 @@ import "server-only";
 import { GetObjectCommand, HeadObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { z } from "zod";
+import { errors } from "@/lib/errors/app-error";
 
 const storageEnvSchema = z.object({
   NEON_STORAGE_BUCKET: z.string().min(1),
@@ -16,10 +17,9 @@ let storageClient: S3Client | undefined;
 
 function getStorageConfig() {
   const parsed = storageEnvSchema.safeParse(process.env);
-  if (!parsed.success) throw new Error(`Neon Storage configuration is incomplete: ${parsed.error.issues.map((issue) => issue.path.join(".")).join(", ")}`);
+  if (!parsed.success) throw errors.configuration("Private document storage is not configured.", parsed.error);
   return parsed.data;
 }
-
 function getStorageClient() {
   if (storageClient) return storageClient;
   const env = getStorageConfig();
@@ -46,7 +46,7 @@ export async function inspectStoredObject(key: string) {
   return { contentType: result.ContentType, size: result.ContentLength };
 }
 
-export async function createDownloadUrl(key: string) {
+export async function createDownloadUrl(key: string, disposition: "inline" | "attachment" = "inline") {
   const { NEON_STORAGE_BUCKET: bucket } = getStorageConfig();
-  return getSignedUrl(getStorageClient(), new GetObjectCommand({ Bucket: bucket, Key: key, ResponseContentDisposition: "attachment" }), { expiresIn: 300 });
+  return getSignedUrl(getStorageClient(), new GetObjectCommand({ Bucket: bucket, Key: key, ResponseContentDisposition: disposition }), { expiresIn: 300 });
 }

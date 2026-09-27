@@ -7,6 +7,13 @@ export const FX_PROVIDER_ATTRIBUTION = {
   usage: "indicative-only",
 } as const;
 
+export const MAX_STALE_FX_AGE_MS = 48 * 60 * 60_000;
+
+export function canUseStaleFxRate(fetchedAt: Date, now = new Date()) {
+  const age = now.getTime() - fetchedAt.getTime();
+  return age >= 0 && age <= MAX_STALE_FX_AGE_MS;
+}
+
 const openExchangeRateResponseSchema = z.object({
   result: z.literal("success"),
   base_code: z.string().length(3),

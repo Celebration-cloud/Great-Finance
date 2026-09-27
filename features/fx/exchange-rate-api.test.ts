@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { parseOpenExchangeRateResponse } from "./exchange-rate-api.ts";
+import { canUseStaleFxRate, parseOpenExchangeRateResponse } from "./exchange-rate-api.ts";
 
 describe("ExchangeRate-API open response", () => {
   it("returns the requested rate and provider refresh time", () => {
@@ -31,5 +31,11 @@ describe("ExchangeRate-API open response", () => {
       time_next_update_unix: 1_900_000_000,
       rates: { GHS: 0.0098 },
     }, "NGN", "USD"), /FX_RATE_UNAVAILABLE/);
+  });
+
+  it("limits degraded-mode rates to the 48-hour staleness budget", () => {
+    const now = new Date("2026-09-27T12:00:00Z");
+    assert.equal(canUseStaleFxRate(new Date("2026-09-25T12:00:00Z"), now), true);
+    assert.equal(canUseStaleFxRate(new Date("2026-09-25T11:59:59Z"), now), false);
   });
 });

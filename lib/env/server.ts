@@ -1,5 +1,6 @@
 import "server-only";
 import { z } from "zod";
+import { errors } from "@/lib/errors/app-error";
 
 const serverEnvSchema = z.object({
   DATABASE_URL: z.string().url(),
@@ -16,7 +17,7 @@ export function getServerEnv(): ServerEnv {
   const parsed = serverEnvSchema.safeParse(process.env);
   if (!parsed.success) {
     const fields = parsed.error.issues.map((issue) => issue.path.join(".")).join(", ");
-    throw new Error(`Server configuration is incomplete: ${fields}`);
+    throw errors.configuration("Server configuration is incomplete.", new Error(`Missing or invalid fields: ${fields}`));
   }
   return parsed.data;
 }

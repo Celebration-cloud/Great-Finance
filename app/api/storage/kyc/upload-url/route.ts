@@ -1,33 +1,29 @@
 import { randomUUID } from "node:crypto";
-import { NextResponse } from "next/server";
 import { isKycImageContentType, kycUploadRequestSchema } from "@/features/kyc/schemas";
-import { getPrincipal } from "@/lib/auth/principal";
+import { requireApiPrincipal, requireApiRole } from "@/lib/auth/api";
+import { AppError, errors } from "@/lib/errors/app-error";
+import { apiSuccess, readJson, withApiHandler } from "@/lib/http/api-response";
 import { createUploadUrl } from "@/lib/storage/neon";
 
 const extensions: Record<string, string> = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "application/pdf": "pdf" };
 
 export async function POST(request: Request) {
-  const principal = await getPrincipal();
-  if (!principal) return NextResponse.json({ success: false, message: "Authentication required." }, { status: 401 });
-  if (principal.role !== "VENDOR") return NextResponse.json({ success: false, message: "Vendor access required." }, { status: 403 });
-
-  const parsed = kycUploadRequestSchema.safeParse(await request.json());
-  if (!parsed.success) return NextResponse.json({ success: false, message: "Invalid KYC file.", errors: parsed.error.flatten().fieldErrors }, { status: 400 });
-
-  try {
+  return withApiHandler(request, "vendor-kyc.upload.prepare", async (context) => {
+    const principal = await requireApiPrincipal();
+    requireApiRole(principal, ["VENDOR"], "Vendor access required.");
+    const parsed = kycUploadRequestSchema.safeParse(await readJson(request));
+    if (!parsed.success) throw errors.validation("Invalid KYC file.", parsed.error.flatten().fieldErrors);
     const extension = extensions[parsed.data.contentType];
     const key = `vendor-kyc/${principal.organizationId}/${principal.userId}/${randomUUID()}-${parsed.data.kind}.${extension}`;
     if (isKycImageContentType(parsed.data.contentType)) {
-      return NextResponse.json({
-        success: true,
-        data: { key, provider: "vercel-blob" },
-        message: "Private Blob upload prepared.",
-      });
+      return apiSuccess(context, { key, provider: "vercel-blob" }, "Private Blob upload prepared.");
     }
-    const uploadUrl = await createUploadUrl(key, parsed.data.contentType);
-    return NextResponse.json({ success: true, data: { key, provider: "neon-storage", uploadUrl }, message: "Secure upload URL created." });
-  } catch (error) {
-    console.error("vendor-kyc.upload-url.failed", error);
-    return NextResponse.json({ success: false, message: "Secure storage is temporarily unavailable." }, { status: 503 });
-  }
+    try {
+      const uploadUrl = await createUploadUrl(key, parsed.data.contentType);
+      return apiSuccess(context, { key, provider: "neon-storage", uploadUrl }, "Secure upload URL created.");
+    } catch (cause) {
+      if (cause instanceof AppError) throw cause;
+      throw errors.storageUnavailable("Secure storage is temporarily unavailable.", cause);
+    }
+  });
 }

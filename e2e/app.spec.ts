@@ -74,5 +74,11 @@ test("anonymous users cannot obtain a KYC storage upload URL", async ({ request 
   });
 
   expect(response.status()).toBe(401);
-  await expect(response.json()).resolves.toMatchObject({ success: false });
+  const requestId = response.headers()["x-request-id"];
+  expect(requestId).toBeTruthy();
+  await expect(response.json()).resolves.toMatchObject({
+    success: false,
+    error: { code: "AUTHENTICATION_REQUIRED", requestId, retryable: false },
+    requestId,
+  });
 });

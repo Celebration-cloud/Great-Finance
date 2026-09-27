@@ -1,23 +1,39 @@
-import { NextResponse } from "next/server";
 import { initializePaymentSchema } from "@/features/payments/schemas";
 import { initializePayment } from "@/features/payments/service";
-import { assertPermission } from "@/lib/auth/permissions";
-import { getPrincipal } from "@/lib/auth/principal";
+import { requireApiPermission, requireApiPrincipal } from "@/lib/auth/api";
 import { getServerEnv } from "@/lib/env/server";
+import { errors } from "@/lib/errors/app-error";
+import { apiSuccess, readJson, withApiHandler } from "@/lib/http/api-response";
 
 export async function POST(request: Request) {
-  try {
-    const principal = await getPrincipal();
-    if (!principal) return NextResponse.json({ success: false, message: "Authentication required." }, { status: 401 });
-    assertPermission(principal.role, "payment:create");
-    const body = initializePaymentSchema.safeParse(await request.json());
-    if (!body.success) return NextResponse.json({ success: false, message: "Invalid payment request.", errors: body.error.flatten().fieldErrors }, { status: 400 });
+  return withApiHandler(request, "payment.initialize", async (context) => {
+    const principal = await requireApiPrincipal();
+    requireApiPermission(principal, "payment:create");
+    const body = initializePaymentSchema.safeParse(await readJson(request));
+    if (!body.success) throw errors.validation("Invalid payment request.", body.error.flatten().fieldErrors);
+    if (principal.role === "VENDOR") {
+      const db = (await import("@/lib/db")).getPrisma();
+      const approvedKyc = await db.approvalRequest.findFirst({
+        where: { resourceType: "vendor-kyc", requestedBy: principal.userId, status: "APPROVED" },
+      });
+      if (!approvedKyc) {
+        throw errors.forbidden("Tier-1 KYC verification must be approved before acquiring wholesale coupon packages.");
+      }
+    }
+
     const env = getServerEnv();
-    const payment = await initializePayment({ organizationId: principal.organizationId, actorId: principal.userId, email: principal.email, ...body.data }, { secret: env.PAYSTACK_SECRET_KEY, appUrl: env.APP_URL });
-    return NextResponse.json({ success: true, data: { reference: payment.reference, authorizationUrl: payment.authorizationUrl }, message: "Payment initialized." }, { status: 201 });
-  } catch (error) {
-    const forbidden = error instanceof Error && error.message === "FORBIDDEN";
-    console.error("payment.initialize.failed", error);
-    return NextResponse.json({ success: false, message: forbidden ? "You do not have permission to create a payment." : "Unable to initialize payment." }, { status: forbidden ? 403 : 500 });
-  }
+    const payment = await initializePayment(
+      {
+        organizationId: principal.organizationId,
+        actorId: principal.userId,
+        email: principal.email,
+        amountMinor: body.data.amountMinor,
+        currency: body.data.currency,
+        idempotencyKey: body.data.idempotencyKey,
+        planItems: body.data.planItems,
+      },
+      { secret: env.PAYSTACK_SECRET_KEY, appUrl: env.APP_URL }
+    );
+    return apiSuccess(context, { reference: payment.reference, authorizationUrl: payment.authorizationUrl }, "Payment initialized.", 201);
+  });
 }

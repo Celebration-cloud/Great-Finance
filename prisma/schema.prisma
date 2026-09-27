@@ -68,6 +68,20 @@ enum ApprovalStatus {
   CANCELLED
 }
 
+enum CouponStatus {
+  ACTIVE
+  REDEEMED
+  EXPIRED
+  VOIDED
+}
+
+enum InvestmentStatus {
+  ACTIVE
+  MATURED
+  SETTLED
+  CANCELLED
+}
+
 enum OutboxStatus {
   PENDING
   PROCESSING
@@ -310,4 +324,50 @@ model OutboxEvent {
 
   @@index([status, availableAt])
   @@map("outbox_events")
+}
+
+// ─── Coupon System ────────────────────────────────────────────────────────────
+
+model Coupon {
+  id           String       @id @default(cuid())
+  code         String       @unique
+  planName     String       @map("plan_name")
+  planAmount   Int          @map("plan_amount")   // e.g. 2000 (NGN)
+  returnAmount Int          @map("return_amount") // e.g. 3000
+  durationDays Int          @map("duration_days") // e.g. 7
+  vendorOrgId  String       @map("vendor_org_id")
+  purchaseRef  String       @map("purchase_ref")  // PaymentIntent.reference
+  status       CouponStatus @default(ACTIVE)
+  redeemedBy   String?      @map("redeemed_by")   // auth_user_id of customer
+  redeemedAt   DateTime?    @map("redeemed_at")
+  expiresAt    DateTime?    @map("expires_at")
+  issuedAt     DateTime     @default(now()) @map("issued_at")
+  investment   Investment?
+
+  @@index([vendorOrgId, status, issuedAt])
+  @@index([code])
+  @@index([redeemedBy])
+  @@map("coupons")
+}
+
+model Investment {
+  id           String           @id @default(cuid())
+  couponId     String           @unique @map("coupon_id")
+  customerId   String           @map("customer_id")  // auth_user_id
+  orgId        String           @map("org_id")        // customer org
+  planName     String           @map("plan_name")
+  planAmount   Int              @map("plan_amount")
+  returnAmount Int              @map("return_amount")
+  durationDays Int              @map("duration_days")
+  matureAt     DateTime         @map("mature_at")
+  status       InvestmentStatus @default(ACTIVE)
+  settledAt    DateTime?        @map("settled_at")
+  createdAt    DateTime         @default(now()) @map("created_at")
+  updatedAt    DateTime         @updatedAt @map("updated_at")
+  coupon       Coupon           @relation(fields: [couponId], references: [id], onDelete: Restrict)
+
+  @@index([customerId, status, matureAt])
+  @@index([orgId, createdAt])
+  @@index([status, matureAt])
+  @@map("investments")
 }

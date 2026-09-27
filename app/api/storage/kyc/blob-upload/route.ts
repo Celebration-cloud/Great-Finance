@@ -1,8 +1,9 @@
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
-import { NextResponse } from "next/server";
 import { z } from "zod";
 import { KYC_IMAGE_CONTENT_TYPES, MAX_KYC_FILE_BYTES, kycUploadRequestSchema } from "@/features/kyc/schemas";
-import { getPrincipal } from "@/lib/auth/principal";
+import { requireApiPrincipal, requireApiRole } from "@/lib/auth/api";
+import { AppError, errors } from "@/lib/errors/app-error";
+import { apiProtocolJson, readJson, withApiHandler } from "@/lib/http/api-response";
 
 const clientPayloadSchema = z.object({
   kind: z.enum(["identity", "selfie"]),
@@ -11,26 +12,22 @@ const clientPayloadSchema = z.object({
 });
 
 export async function POST(request: Request) {
-  let body: HandleUploadBody;
-  try {
-    body = await request.json() as HandleUploadBody;
-  } catch {
-    return NextResponse.json({ success: false, message: "Invalid upload request." }, { status: 400 });
-  }
-
-  try {
-    const response = await handleUpload({
+  return withApiHandler(request, "vendor-kyc.blob-upload", async (context) => {
+    const body = await readJson(request) as HandleUploadBody;
+    try {
+      const response = await handleUpload({
       request,
       body,
       onBeforeGenerateToken: async (pathname, clientPayload) => {
-        const principal = await getPrincipal();
-        if (!principal) throw new Error("Authentication required.");
-        if (principal.role !== "VENDOR") throw new Error("Vendor access required.");
+        const principal = await requireApiPrincipal();
+        requireApiRole(principal, ["VENDOR"], "Vendor access required.");
 
-        const parsedPayload = clientPayloadSchema.safeParse(clientPayload ? JSON.parse(clientPayload) : null);
-        if (!parsedPayload.success) throw new Error("Invalid upload metadata.");
+        let payload: unknown;
+        try { payload = clientPayload ? JSON.parse(clientPayload) : null; } catch { throw errors.validation("Invalid upload metadata."); }
+        const parsedPayload = clientPayloadSchema.safeParse(payload);
+        if (!parsedPayload.success) throw errors.validation("Invalid upload metadata.", parsedPayload.error.flatten().fieldErrors);
         const expectedPrefix = `vendor-kyc/${principal.organizationId}/${principal.userId}/`;
-        if (!pathname.startsWith(expectedPrefix) || !pathname.includes(`-${parsedPayload.data.kind}.`)) throw new Error("Invalid storage object ownership.");
+        if (!pathname.startsWith(expectedPrefix) || !pathname.includes(`-${parsedPayload.data.kind}.`)) throw errors.forbidden("Invalid storage object ownership.");
 
         const validatedFile = kycUploadRequestSchema.safeParse({
           kind: parsedPayload.data.kind,
@@ -38,7 +35,7 @@ export async function POST(request: Request) {
           contentType: parsedPayload.data.contentType,
           size: parsedPayload.data.size,
         });
-        if (!validatedFile.success || !validatedFile.data.contentType.startsWith("image/")) throw new Error("Invalid KYC image.");
+        if (!validatedFile.success || !validatedFile.data.contentType.startsWith("image/")) throw errors.validation("Invalid KYC image.");
 
         return {
           allowedContentTypes: [validatedFile.data.contentType],
@@ -49,14 +46,11 @@ export async function POST(request: Request) {
           tokenPayload: JSON.stringify({ userId: principal.userId, pathname }),
         };
       },
-    });
-    return NextResponse.json(response);
-  } catch (error) {
-    console.error("vendor-kyc.blob-upload.failed", error);
-    const reason = error instanceof Error ? error.message : "";
-    if (reason === "Authentication required.") return NextResponse.json({ success: false, message: reason }, { status: 401 });
-    if (reason === "Vendor access required." || reason === "Invalid storage object ownership.") return NextResponse.json({ success: false, message: reason }, { status: 403 });
-    if (reason === "Invalid upload metadata." || reason === "Invalid KYC image.") return NextResponse.json({ success: false, message: reason }, { status: 400 });
-    return NextResponse.json({ success: false, message: "Private image upload is unavailable." }, { status: 503 });
-  }
+      });
+      return apiProtocolJson(context, response);
+    } catch (cause) {
+      if (cause instanceof AppError) throw cause;
+      throw errors.storageUnavailable("Private image upload is unavailable.", cause);
+    }
+  });
 }
