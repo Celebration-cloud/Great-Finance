@@ -1,23 +1,15 @@
 import {
   CheckCircle2,
   Database,
-  FileCheck2,
-  KeyRound,
-  Layers,
-  Lock,
   Radio,
   Server,
-  Shield,
-  ShieldAlert,
   ShieldCheck,
-  Sliders,
   Workflow,
 } from "lucide-react";
 import { MetricGrid, PageHeader } from "@/components/portal/page-header";
 import { SettingsSecurityCard } from "@/components/portal/settings-security-card";
 import { requireRole } from "@/lib/auth/access";
 import { getPrisma } from "@/lib/db";
-import { formatMinorUnits } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -46,11 +38,6 @@ export default async function AdminSettingsPage() {
   const isLedgerBalanced = totalDebits === totalCredits;
 
   const hasPaystackConfig = Boolean(process.env.PAYSTACK_SECRET_KEY);
-  const hasNeonDbConfig = Boolean(process.env.DATABASE_URL);
-  const hasStorageConfig = Boolean(
-    process.env.NEON_STORAGE_ENDPOINT && process.env.NEON_STORAGE_ACCESS_KEY
-  );
-
   return (
     <section className="space-y-8">
       <PageHeader

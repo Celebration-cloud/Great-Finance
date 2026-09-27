@@ -4,12 +4,8 @@ import { useState } from "react";
 import {
   Check,
   Copy,
-  ExternalLink,
-  Filter,
   Search,
-  Share2,
   Ticket,
-  TicketCheck,
 } from "lucide-react";
 import { toast } from "@/lib/toast";
 
@@ -149,8 +145,6 @@ export function CouponInventoryTable({ coupons }: Props) {
             <tbody className="divide-y divide-[var(--line)]">
               {filtered.map((coupon) => {
                 const isCopied = copiedCode === coupon.code;
-                const isRedeemed = coupon.status === "REDEEMED";
-
                 return (
                   <tr key={coupon.id} className="hover:bg-[var(--surface-muted)]/40 transition">
                     <td className="px-5 py-3.5">

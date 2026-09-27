@@ -1,16 +1,14 @@
 import Link from "next/link";
 import {
+  ArrowRight,
   BadgeAlert,
   BadgeCheck,
   CheckCircle2,
   Clock,
   Plus,
-  Receipt,
-  ShieldAlert,
   ShieldCheck,
-  Store,
-  Ticket,
-  TicketCheck,
+  TrendingUp,
+  Zap,
 } from "lucide-react";
 import { DataTable, EmptyState, MetricGrid, PageHeader } from "@/components/portal/page-header";
 import { Pagination } from "@/components/portal/pagination";
@@ -18,6 +16,7 @@ import { CouponInventoryTable, type SerializedCoupon } from "@/components/vendor
 import { requireRole } from "@/lib/auth/access";
 import { getPrisma } from "@/lib/db";
 import { formatMinorUnits } from "@/lib/utils";
+import { parseVendorTier, VENDOR_TIERS } from "@/lib/vendor/tiers";
 
 export const dynamic = "force-dynamic";
 
@@ -107,6 +106,9 @@ export default async function VendorDashboardPage({ searchParams }: Props) {
     issuedAt: c.issuedAt.toISOString(),
   }));
 
+  const activeTier = parseVendorTier(profile?.vendorTier);
+  const tierDef = VENDOR_TIERS[activeTier] ?? VENDOR_TIERS.TIER_1_STARTER;
+
   return (
     <section className="space-y-8">
       <PageHeader
@@ -177,6 +179,62 @@ export default async function VendorDashboardPage({ searchParams }: Props) {
           </div>
         </div>
       )}
+
+      {/* Active Vendor Partner Tier Card */}
+      <div className="rounded-2xl bg-gradient-to-br from-[var(--surface)] via-[var(--surface-muted)]/40 to-[var(--brand)]/5 p-6 shadow-sm space-y-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
+            <span className="grid size-12 place-items-center rounded-2xl bg-[var(--brand)] text-white shadow-md shadow-[var(--brand)]/20">
+              <Zap size={22} />
+            </span>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="rounded-full bg-[var(--brand)]/15 px-2.5 py-0.5 text-[0.65rem] font-bold text-[var(--brand)] uppercase tracking-wider">
+                  Partner Level
+                </span>
+                <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-[0.65rem] font-bold text-emerald-800">
+                  {tierDef.marginLabel}
+                </span>
+              </div>
+              <h2 className="mt-1 text-xl font-extrabold text-[var(--ink)]">{tierDef.name}</h2>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Link
+              href="/vendor/acquire"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[var(--brand)] px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-[var(--brand-dark)] transition"
+            >
+              <span>Acquire at {tierDef.marginPercent}% Off</span>
+              <ArrowRight size={13} />
+            </Link>
+          </div>
+        </div>
+
+        {/* Tier Perks Checklist */}
+        <div className="border-t border-[var(--line)] pt-3">
+          <p className="text-[0.68rem] font-bold uppercase tracking-wider text-[var(--muted)] mb-2">Active Partner Advantages & SLAs</p>
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+            {tierDef.features.map((feature, idx) => (
+              <div key={idx} className="flex items-center gap-2 rounded-xl bg-white border border-[var(--line)] px-3 py-2 text-xs text-[var(--ink)] shadow-2xs">
+                <CheckCircle2 size={14} className="text-emerald-600 shrink-0" />
+                <span className="font-semibold truncate">{feature}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Volume & Qualification Indicator */}
+        <div className="flex flex-col gap-1 rounded-xl bg-[var(--surface)] p-3 sm:flex-row sm:items-center sm:justify-between text-xs">
+          <div className="flex items-center gap-2 text-[var(--muted)]">
+            <TrendingUp size={14} className="text-[var(--brand)]" />
+            <span>Target Volume Range: <strong className="text-[var(--ink)]">{tierDef.volume}</strong></span>
+          </div>
+          <span className="text-[0.7rem] text-[var(--muted)]">
+            Auto-advancement enabled based on rolling 30-day coupon settlement volume.
+          </span>
+        </div>
+      </div>
 
       {/* Metrics Grid */}
       <MetricGrid

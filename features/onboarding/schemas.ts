@@ -7,6 +7,7 @@ export const onboardingSchema = z.object({
   bankName: z.string().trim().max(80).optional(),
   accountNumber: z.string().regex(/^\d{10}$/).optional(),
   referralCode: z.string().trim().max(40).optional(),
+  vendorTier: z.enum(["TIER_1_STARTER", "TIER_2_SILVER", "TIER_3_GOLD", "TIER_4_MASTER"]).optional(),
 }).superRefine((value, context) => {
   if (value.accountType === "CUSTOMER" && (!value.bankName || !value.accountNumber)) {
     context.addIssue({ code: "custom", path: ["bankName"], message: "Bank and account number are required." });

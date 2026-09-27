@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, Clock, HelpCircle, Landmark, ShieldCheck, Sparkles, Store, TrendingUp } from "lucide-react";
+import { ArrowRight, CheckCircle2, Store } from "lucide-react";
 import { investmentPlans } from "@/features/content/legacy-content";
 
 export const metadata = {
@@ -62,7 +62,7 @@ export default function PlansPage() {
                 }`}
               >
                 {isFeatured && (
-                  <span className="absolute -top-3 right-6 rounded-full bg-[var(--accent)] px-3 py-0.5 text-[0.68rem] font-bold text-[var(--ink)] uppercase tracking-wider">
+                  <span className="absolute -top-3 right-6 rounded-full bg-[var(--accent)] px-3 py-0.5 text-[0.68rem] font-bold text-[var(--surface-inverse)] uppercase tracking-wider">
                     Recommended
                   </span>
                 )}

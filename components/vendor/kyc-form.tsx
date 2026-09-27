@@ -103,7 +103,7 @@ export function KycForm() {
       <label className="grid gap-2 text-sm font-bold">3. Local government of origin<input className={fieldClass} name="localGovernment" required /></label>
       <label className="grid gap-2 text-sm font-bold">
         4. Means of identification (Image only){" "}
-        <span className="font-normal text-[var(--muted)]">NIN slip/card, driver's license, voter's card, or passport photo (JPEG, PNG, WebP up to 40 MB)</span>
+        <span className="font-normal text-[var(--muted)]">NIN slip/card, driver&apos;s license, voter&apos;s card, or passport photo (JPEG, PNG, WebP up to 40 MB)</span>
         <input className="rounded-xl border border-dashed border-[var(--line)] p-5" name="identityFile" type="file" accept="image/jpeg,image/png,image/webp" required />
       </label>
       <label className="grid gap-2 text-sm font-bold">

@@ -1,19 +1,14 @@
 import Link from "next/link";
 import {
-  CalendarClock,
   ChartNoAxesCombined,
-  Clock,
   ExternalLink,
-  Layers,
   Sparkles,
-  TrendingUp,
 } from "lucide-react";
 import { CouponCodeForm } from "@/components/portal/coupon-code-form";
 import { DataTable, EmptyState, MetricGrid, PageHeader } from "@/components/portal/page-header";
 import { Pagination } from "@/components/portal/pagination";
 import { requireRole } from "@/lib/auth/access";
 import { getPrisma } from "@/lib/db";
-import { formatMinorUnits } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -128,13 +123,13 @@ export default async function InvestmentPage({ searchParams }: Props) {
           </span>
         </div>
 
-        <DataTable columns={["Plan", "Principal", "Expected Return", "Maturity", "Status"]}>
+        <DataTable columns={["Plan", "Principal", "Expected Return", "Maturity", "Status", "Action"]}>
           {investments.map((inv) => {
             const now = new Date();
             const matureDate = new Date(inv.matureAt);
             const diffMs = matureDate.getTime() - now.getTime();
             const daysRemaining = Math.max(0, Math.ceil(diffMs / (1000 * 60 * 60 * 24)));
-            const isMatured = daysRemaining === 0 || inv.status === "MATURED";
+            const isMatured = daysRemaining === 0 || inv.status === "MATURED" || inv.status === "SETTLED";
 
             return (
               <tr key={inv.id} className="hover:bg-[var(--surface-muted)]/50 transition">
@@ -178,6 +173,19 @@ export default async function InvestmentPage({ searchParams }: Props) {
                   >
                     {inv.status}
                   </span>
+                </td>
+                <td className="px-5 py-4">
+                  <Link
+                    href={`/dashboard/withdrawals?highlight=${inv.id}`}
+                    className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition ${
+                      isMatured && inv.status !== "SETTLED"
+                        ? "bg-emerald-600 text-white shadow-sm hover:bg-emerald-700"
+                        : "bg-[var(--surface-muted)] text-[var(--ink)] hover:bg-[var(--line)]"
+                    }`}
+                  >
+                    <span>{isMatured && inv.status !== "SETTLED" ? "Withdraw" : "Payout info"}</span>
+                    <ExternalLink size={12} />
+                  </Link>
                 </td>
               </tr>
             );

@@ -3,20 +3,37 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { registrationSchema, type RegistrationValues } from "@/features/onboarding/schemas";
 import { getNeonClient } from "@/lib/neon/client";
 import { getAuthErrorMessage } from "@/lib/auth/client-errors";
 import { useApiMutation } from "@/hooks/use-api-mutation";
 
-export function RegistrationForm({ accountType, configured }: { accountType: "CUSTOMER" | "VENDOR"; configured: boolean }) {
+import { VENDOR_TIER_LIST, type VendorTierKey } from "@/lib/vendor/tiers";
+
+export function RegistrationForm({
+  accountType,
+  configured,
+  initialTier = "TIER_1_STARTER",
+}: {
+  accountType: "CUSTOMER" | "VENDOR";
+  configured: boolean;
+  initialTier?: VendorTierKey;
+}) {
   const router = useRouter();
   const {
     register,
     handleSubmit,
     setError,
+    setValue,
+    control,
     formState: { errors, isSubmitting },
-  } = useForm<RegistrationValues>({ resolver: zodResolver(registrationSchema), defaultValues: { accountType } });
+  } = useForm<RegistrationValues>({
+    resolver: zodResolver(registrationSchema),
+    defaultValues: { accountType, vendorTier: initialTier },
+  });
+
+  const selectedTier = useWatch({ control, name: "vendorTier" }) || initialTier;
 
   const { mutate, error: serverError } = useApiMutation<unknown, RegistrationValues>(
     "/api/onboarding",
@@ -70,6 +87,40 @@ export function RegistrationForm({ accountType, configured }: { accountType: "CU
         <input className={fieldClass} inputMode="numeric" autoComplete="tel" placeholder="Enter phone number" {...register("phone")} />
         {errors.phone && <span className="font-normal text-[var(--danger)]">Enter 10–15 digits.</span>}
       </label>
+
+      {accountType === "VENDOR" && (
+        <div className="space-y-2">
+          <label className="block text-sm font-bold">
+            Select Vendor Tier & Wholesale Advantage
+          </label>
+          <input type="hidden" {...register("vendorTier")} />
+          <div className="grid gap-2 sm:grid-cols-2">
+            {VENDOR_TIER_LIST.map((tier) => {
+              const isSelected = selectedTier === tier.key;
+              return (
+                <button
+                  type="button"
+                  key={tier.key}
+                  onClick={() => setValue("vendorTier", tier.key)}
+                  className={`flex flex-col text-left rounded-xl border p-3 transition ${
+                    isSelected
+                      ? "border-[var(--brand)] bg-[var(--brand)]/5 ring-1 ring-[var(--brand)]"
+                      : "border-[var(--line)] bg-white hover:bg-[var(--surface-muted)]"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-[var(--ink)]">{tier.name}</span>
+                    <span className="rounded-md bg-emerald-100 px-1.5 py-0.5 text-[0.65rem] font-bold text-emerald-800">
+                      {tier.marginPercent}% Off
+                    </span>
+                  </div>
+                  <span className="mt-1 text-[0.7rem] text-[var(--muted)]">Volume: {tier.volume}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {accountType === "CUSTOMER" && (
         <>

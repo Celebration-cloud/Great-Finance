@@ -2,15 +2,10 @@ import Link from "next/link";
 import {
   BadgeAlert,
   BadgeCheck,
-  Building2,
   Clock,
   ExternalLink,
   MessageCircle,
   Radio,
-  Receipt,
-  ShieldCheck,
-  Store,
-  Ticket,
 } from "lucide-react";
 import { PageHeader } from "@/components/portal/page-header";
 import { SettingsProfileForm } from "@/components/portal/settings-profile-form";
@@ -176,6 +171,7 @@ export default async function VendorSettingsPage() {
           bankName: profile?.bankName || null,
           accountNumberLast4: profile?.accountNumberLast4 || null,
           role: "VENDOR",
+          vendorTier: profile?.vendorTier || null,
         }}
       />
 

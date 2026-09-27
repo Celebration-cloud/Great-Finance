@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { Landmark, Mail, MessageCircle, ShieldCheck, Lock, ExternalLink } from "lucide-react";
+import { Landmark, Mail, MessageCircle, ShieldCheck, Lock } from "lucide-react";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-[var(--line)] bg-[var(--ink)] text-white">
+    <footer className="bg-[var(--surface-inverse)] text-white">
       {/* Top Banner / Trust Bar */}
       <div className="border-b border-white/10 bg-white/[0.02]">
         <div className="shell grid gap-6 py-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -73,6 +73,7 @@ export function SiteFooter() {
             <li><Link href="/" className="hover:text-white transition">Home Overview</Link></li>
             <li><Link href="/about" className="hover:text-white transition">About Great Finance</Link></li>
             <li><Link href="/plans" className="hover:text-white transition">Investment Plans</Link></li>
+            <li><Link href="/withdrawals" className="hover:text-white transition">Withdrawals & Payouts</Link></li>
             <li><Link href="/contact" className="hover:text-white transition">Support & Contact</Link></li>
           </ul>
         </div>

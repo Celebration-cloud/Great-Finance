@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Ban, CheckCircle, LoaderCircle, ShieldAlert } from "lucide-react";
+import { Ban, CheckCircle, LoaderCircle } from "lucide-react";
 import { toast } from "@/lib/toast";
 
 interface AdminUserActionsProps {

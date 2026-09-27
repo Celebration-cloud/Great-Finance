@@ -85,7 +85,7 @@ export async function redeemCoupon(
 
     const matureAt = new Date(Date.now() + coupon.durationDays * 24 * 60 * 60 * 1000);
 
-    const [updatedCoupon, investment] = await Promise.all([
+    const [, investment] = await Promise.all([
       tx.coupon.update({
         where: { id: coupon.id },
         data: { status: "REDEEMED", redeemedBy: customerId, redeemedAt: new Date() },

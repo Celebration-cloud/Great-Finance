@@ -3,12 +3,8 @@ import {
   ArrowRight,
   BadgeAlert,
   BadgeCheck,
-  CheckCircle2,
   Clock,
-  FileCheck,
   Lock,
-  RotateCcw,
-  ShieldCheck,
   Store,
 } from "lucide-react";
 import { KycForm } from "@/components/vendor/kyc-form";
@@ -47,7 +43,7 @@ export default async function KycPage() {
 
       {/* Case 1: Application is PENDING REVIEW */}
       {isPending && (
-        <div className="card max-w-2xl border-2 border-blue-200 bg-gradient-to-b from-white to-blue-50/30 p-8 sm:p-10 space-y-6">
+        <div className="card max-w-2xl bg-gradient-to-b from-[var(--surface)] to-blue-950/20 p-8 sm:p-10 space-y-6">
           <div className="flex items-center gap-3.5">
             <span className="grid size-12 place-items-center rounded-2xl bg-blue-100 text-blue-700">
               <Clock size={24} />
@@ -109,7 +105,7 @@ export default async function KycPage() {
 
       {/* Case 2: Application is APPROVED */}
       {isApproved && (
-        <div className="card max-w-2xl border-2 border-emerald-300 bg-gradient-to-b from-white to-emerald-50/30 p-8 sm:p-10 space-y-6">
+        <div className="card max-w-2xl bg-gradient-to-b from-[var(--surface)] to-emerald-950/20 p-8 sm:p-10 space-y-6">
           <div className="flex items-center gap-3.5">
             <span className="grid size-12 place-items-center rounded-2xl bg-emerald-100 text-emerald-700">
               <BadgeCheck size={26} />

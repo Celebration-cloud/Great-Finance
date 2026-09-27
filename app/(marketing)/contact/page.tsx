@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Clock, HelpCircle, Mail, MessageCircle, Phone, ShieldCheck, Store } from "lucide-react";
+import { Mail, MessageCircle, Store } from "lucide-react";
 
 export const metadata = {
   title: "Contact & Institutional Support · Great Finance",
@@ -48,7 +48,7 @@ export default function ContactPage() {
           </div>
 
           {/* WhatsApp */}
-          <div className="card border-2 border-emerald-500/20 bg-gradient-to-b from-white to-emerald-50/20 p-8 sm:p-10 space-y-6">
+          <div className="card bg-gradient-to-b from-[var(--surface)] to-emerald-950/20 p-8 sm:p-10 space-y-6">
             <span className="grid size-12 place-items-center rounded-xl bg-emerald-100 text-emerald-700">
               <MessageCircle size={24} />
             </span>

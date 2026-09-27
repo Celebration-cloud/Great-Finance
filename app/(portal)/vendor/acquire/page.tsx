@@ -4,6 +4,7 @@ import { CouponAcquirer } from "@/components/vendor/coupon-acquirer";
 import { PageHeader } from "@/components/portal/page-header";
 import { requireRole } from "@/lib/auth/access";
 import { getPrisma } from "@/lib/db";
+import { parseVendorTier } from "@/lib/vendor/tiers";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +12,7 @@ export default async function AcquireCouponPage() {
   const principal = await requireRole(["VENDOR"]);
   const db = getPrisma();
 
-  const [submission, approval] = await Promise.all([
+  const [submission, approval, profile] = await Promise.all([
     db.vendorKycSubmission.findFirst({
       where: { authUserId: principal.userId },
       orderBy: { submittedAt: "desc" },
@@ -19,6 +20,10 @@ export default async function AcquireCouponPage() {
     db.approvalRequest.findFirst({
       where: { resourceType: "vendor-kyc", requestedBy: principal.userId },
       orderBy: { createdAt: "desc" },
+    }),
+    db.profile.findUnique({
+      where: { authUserId: principal.userId },
+      select: { vendorTier: true },
     }),
   ]);
 
@@ -88,14 +93,16 @@ export default async function AcquireCouponPage() {
     );
   }
 
+  const vendorTier = parseVendorTier(profile?.vendorTier);
+
   return (
     <section>
       <PageHeader
         eyebrow="Inventory"
         title="Acquire coupon"
-        description="Select quantities from the original plan catalogue and pay through verified checkout."
+        description="Select quantities from the original plan catalogue and pay through verified checkout with your wholesale tier discount."
       />
-      <CouponAcquirer />
+      <CouponAcquirer vendorTier={vendorTier} />
     </section>
   );
 }

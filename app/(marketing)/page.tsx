@@ -3,8 +3,6 @@ import {
   ArrowRight,
   BadgeCheck,
   CheckCircle2,
-  Clock,
-  Coins,
   FileCheck2,
   Landmark,
   Lock,
@@ -12,13 +10,9 @@ import {
   MessageCircle,
   Percent,
   Receipt,
-  Shield,
   ShieldCheck,
-  Sparkles,
   Store,
   TrendingUp,
-  Users,
-  Wallet,
 } from "lucide-react";
 import { investmentPlans } from "@/features/content/legacy-content";
 
@@ -133,7 +127,7 @@ export default function MarketingHomePage() {
 
           {/* Right Hero Graphic Card */}
           <div className="relative">
-            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-[var(--ink)] via-[#0d2238] to-[#071526] p-8 text-white shadow-2xl shadow-[var(--ink)]/30">
+            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[var(--surface-inverse)] via-[var(--surface)] to-[var(--paper)] p-8 text-white shadow-2xl shadow-black/20">
               <div className="absolute -right-16 -top-16 size-56 rounded-full bg-[var(--brand)]/30 blur-3xl pointer-events-none" />
               <div className="absolute -bottom-16 -left-16 size-56 rounded-full bg-[var(--accent)]/15 blur-3xl pointer-events-none" />
 
@@ -181,7 +175,7 @@ export default function MarketingHomePage() {
                 <div className="pt-2">
                   <Link
                     href="/vendor/signup"
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--accent)] py-3 text-xs font-extrabold text-[var(--ink)] shadow transition hover:bg-[var(--accent)]/90"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--accent)] py-3 text-xs font-extrabold text-[var(--surface-inverse)] shadow transition hover:bg-[var(--accent)]/90"
                   >
                     <Store size={15} />
                     <span>Apply for Authorized Vendor Status</span>
@@ -265,7 +259,7 @@ export default function MarketingHomePage() {
           </div>
 
           {/* Card 2: Distribution Vendor */}
-          <div className="card flex flex-col justify-between border-2 border-[var(--accent)]/40 bg-gradient-to-b from-white to-[var(--surface-muted)]/50 p-8 sm:p-10 transition hover:shadow-lg">
+          <div className="card flex flex-col justify-between bg-gradient-to-b from-[var(--surface)] to-[var(--surface-muted)]/50 p-8 sm:p-10 transition hover:shadow-lg">
             <div className="space-y-6">
               <div className="inline-flex size-12 items-center justify-center rounded-xl bg-[var(--accent)]/20 text-[var(--accent-dark)]">
                 <Store size={24} />
@@ -398,7 +392,7 @@ export default function MarketingHomePage() {
       </section>
 
       {/* Vendor Partner Detailed Spotlight Section */}
-      <section className="bg-gradient-to-b from-[var(--ink)] to-[#071322] py-20 text-white">
+      <section className="bg-gradient-to-b from-[var(--surface-inverse)] to-[var(--paper)] py-20 text-white">
         <div className="shell space-y-16">
           <div className="max-w-2xl space-y-4">
             <span className="inline-block rounded-full bg-[var(--accent)]/15 px-3 py-1 text-xs font-bold text-[var(--accent)] uppercase tracking-wider">
@@ -436,7 +430,7 @@ export default function MarketingHomePage() {
               </div>
               <Link
                 href="/vendor/signup"
-                className="inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-5 py-2.5 text-xs font-bold text-[var(--ink)] shadow hover:bg-[var(--accent)]/90 transition"
+                className="inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-5 py-2.5 text-xs font-bold text-[var(--surface-inverse)] shadow hover:bg-[var(--accent)]/90 transition"
               >
                 <span>Register as Vendor Now</span>
                 <ArrowRight size={14} />
@@ -517,7 +511,7 @@ export default function MarketingHomePage() {
 
       {/* Official Support & Contact CTA */}
       <section className="shell">
-        <div className="rounded-3xl border border-[var(--line)] bg-gradient-to-br from-white via-[var(--surface-muted)] to-white p-8 sm:p-14 shadow-sm">
+        <div className="rounded-3xl bg-gradient-to-br from-[var(--surface)] via-[var(--surface-muted)] to-[var(--surface)] p-8 sm:p-14 shadow-sm">
           <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] items-center">
             <div className="space-y-4">
               <p className="eyebrow">Support & Verification</p>

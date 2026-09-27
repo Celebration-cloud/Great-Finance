@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Copy, KeyRound, Lock, LogOut, Shield, ShieldCheck } from "lucide-react";
-import { getNeonClient } from "@/lib/neon/client";
+import { Check, Copy, KeyRound, Lock, Shield, ShieldCheck } from "lucide-react";
 import { toast } from "@/lib/toast";
 
 export function SettingsSecurityCard({

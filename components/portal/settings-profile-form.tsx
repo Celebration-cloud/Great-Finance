@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { Building2, CheckCircle2, CreditCard, LoaderCircle, Phone, Save, User } from "lucide-react";
 import { useApiMutation } from "@/hooks/use-api-mutation";
 
+import { VENDOR_TIERS, parseVendorTier } from "@/lib/vendor/tiers";
+
 interface ProfileInitialData {
   displayName: string;
   phone: string | null;
@@ -12,6 +14,7 @@ interface ProfileInitialData {
   bankName: string | null;
   accountNumberLast4: string | null;
   role: "CUSTOMER" | "VENDOR" | "ADMIN" | "SUPER_ADMIN" | "REVIEWER";
+  vendorTier?: string | null;
 }
 
 export function SettingsProfileForm({ initialData }: { initialData: ProfileInitialData }) {
@@ -21,6 +24,9 @@ export function SettingsProfileForm({ initialData }: { initialData: ProfileIniti
   const [whatsapp, setWhatsapp] = useState(initialData.whatsapp || "");
   const [bankName, setBankName] = useState(initialData.bankName || "");
   const [accountNumber, setAccountNumber] = useState("");
+
+  const tierKey = parseVendorTier(initialData.vendorTier);
+  const tierConfig = VENDOR_TIERS[tierKey] ?? VENDOR_TIERS.TIER_1_STARTER;
 
   const { mutate, isLoading, error } = useApiMutation<
     { profile: unknown },
@@ -51,15 +57,27 @@ export function SettingsProfileForm({ initialData }: { initialData: ProfileIniti
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="rounded-2xl border border-[var(--line)] bg-white p-6 shadow-sm">
-        <div className="border-b border-[var(--line)] pb-4 mb-5">
-          <h3 className="text-base font-bold text-[var(--ink)]">
-            {isVendor ? "Distributor Profile & Public Contact" : "Personal Information"}
-          </h3>
-          <p className="mt-1 text-xs text-[var(--muted)]">
-            {isVendor
-              ? "Your WhatsApp contact is featured directly on the retail vendor directory so customers can reach you to purchase coupons."
-              : "Update your basic account details and preferred contact channels."}
-          </p>
+        <div className="border-b border-[var(--line)] pb-4 mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="text-base font-bold text-[var(--ink)]">
+              {isVendor ? "Distributor Profile & Public Contact" : "Personal Information"}
+            </h3>
+            <p className="mt-1 text-xs text-[var(--muted)]">
+              {isVendor
+                ? "Your WhatsApp contact is featured directly on the retail vendor directory so customers can reach you to purchase coupons."
+                : "Update your basic account details and preferred contact channels."}
+            </p>
+          </div>
+          {isVendor && (
+            <div className="flex items-center gap-2">
+              <span className="rounded-full bg-[var(--brand)]/10 px-3 py-1 text-xs font-bold text-[var(--brand)]">
+                {tierConfig.badge}
+              </span>
+              <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800">
+                {tierConfig.marginLabel}
+              </span>
+            </div>
+          )}
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2">

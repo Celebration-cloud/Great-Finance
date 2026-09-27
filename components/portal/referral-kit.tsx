@@ -49,7 +49,7 @@ export function ReferralKit({
   const whatsappShareUrl = `https://wa.me/?text=${shareText}`;
 
   return (
-    <div className="rounded-2xl border border-[var(--brand)]/20 bg-gradient-to-br from-white via-white to-[var(--surface-muted)] p-6 shadow-sm space-y-4">
+    <div className="rounded-2xl bg-gradient-to-br from-[var(--surface)] via-[var(--surface)] to-[var(--surface-muted)] p-6 shadow-sm space-y-4">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-[var(--line)] pb-4">
         <div className="flex items-center gap-2.5">
           <span className="grid size-9 place-items-center rounded-xl bg-[var(--brand)]/10 text-[var(--brand)]">

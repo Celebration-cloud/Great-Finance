@@ -1,12 +1,5 @@
 import {
   Bell,
-  Copy,
-  ExternalLink,
-  MessageCircle,
-  Share2,
-  Shield,
-  Sparkles,
-  UsersRound,
 } from "lucide-react";
 import { PageHeader } from "@/components/portal/page-header";
 import { SettingsProfileForm } from "@/components/portal/settings-profile-form";

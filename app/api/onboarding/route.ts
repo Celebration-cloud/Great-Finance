@@ -30,9 +30,10 @@ export async function POST(request: Request) {
           accountNumberLast4: parsed.data.accountType === "CUSTOMER" ? parsed.data.accountNumber?.slice(-4) : undefined,
           referralCode,
           referredByCode: parsed.data.referralCode || undefined,
+          vendorTier: parsed.data.accountType === "VENDOR" ? (parsed.data.vendorTier || "TIER_1_STARTER") : undefined,
         } },
       } });
-      await appendAuditLog(tx, { actorId: user.id, actorRole: parsed.data.accountType, action: "organization.created", entityType: "organization", entityId: created.id, metadata: { accountType: parsed.data.accountType } });
+      await appendAuditLog(tx, { actorId: user.id, actorRole: parsed.data.accountType, action: "organization.created", entityType: "organization", entityId: created.id, metadata: { accountType: parsed.data.accountType, vendorTier: parsed.data.vendorTier } });
       return created;
     });
     return apiSuccess(context, { organizationId: organization.id }, "Registration completed.", 201);

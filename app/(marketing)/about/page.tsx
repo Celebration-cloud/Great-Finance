@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, Database, Landmark, Lock, ShieldCheck, Store, Users } from "lucide-react";
+import { Database, Lock, ShieldCheck } from "lucide-react";
 import { legacyExplanation } from "@/features/content/legacy-content";
 
 export const metadata = {
@@ -88,7 +88,7 @@ export default function AboutPage() {
 
       {/* Direct Call to Action */}
       <section className="shell">
-        <div className="rounded-3xl bg-[var(--ink)] p-8 sm:p-14 text-white flex flex-col sm:flex-row items-center justify-between gap-8">
+        <div className="rounded-3xl bg-[var(--surface-inverse)] p-8 sm:p-14 text-white flex flex-col sm:flex-row items-center justify-between gap-8">
           <div className="space-y-2">
             <h3 className="text-2xl font-bold">Ready to participate in our verified financial network?</h3>
             <p className="text-sm text-white/70">Join thousands of customers and certified distribution vendors today.</p>
@@ -102,7 +102,7 @@ export default function AboutPage() {
             </Link>
             <Link
               href="/vendor/signup"
-              className="rounded-xl bg-[var(--accent)] px-6 py-3 text-xs font-bold text-[var(--ink)] hover:bg-[var(--accent)]/90 transition"
+              className="rounded-xl bg-[var(--accent)] px-6 py-3 text-xs font-bold text-[var(--surface-inverse)] hover:bg-[var(--accent)]/90 transition"
             >
               Register as Vendor
             </Link>

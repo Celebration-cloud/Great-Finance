@@ -6,7 +6,7 @@ export function MetricGrid({ items }: { items: Array<{ label: string; value: Rea
   return (
     <dl className="mt-8 grid gap-px overflow-hidden rounded-[1.35rem] bg-[var(--line)] sm:grid-cols-2 xl:grid-cols-4">
       {items.map((item) => (
-        <div className="bg-white p-6" key={item.label}>
+        <div className="bg-[var(--surface)] p-6" key={item.label}>
           <dt className="text-sm font-medium text-[var(--muted)]">{item.label}</dt>
           <dd className="mt-2 text-2xl font-bold tracking-tight text-[var(--ink)] tabular-nums">{item.value}</dd>
           {item.detail && <p className="mt-1 text-xs text-[var(--muted)]">{item.detail}</p>}
@@ -17,9 +17,9 @@ export function MetricGrid({ items }: { items: Array<{ label: string; value: Rea
 }
 
 export function EmptyState({ title, description }: { title: string; description: string }) {
-  return <div className="p-10 text-center"><p className="font-bold">{title}</p><p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[var(--muted)]">{description}</p></div>;
+  return <div className="p-10 text-center"><p className="font-bold text-[var(--ink)]">{title}</p><p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[var(--muted)]">{description}</p></div>;
 }
 
 export function DataTable({ columns, children }: { columns: string[]; children?: React.ReactNode }) {
-  return <div className="mt-8 overflow-x-auto rounded-[1.25rem] border border-[var(--line)] bg-white"><table className="min-w-full text-left text-sm"><thead className="bg-[var(--surface-muted)] text-[var(--muted)]"><tr>{columns.map((column) => <th className="px-5 py-4 font-semibold" key={column}>{column}</th>)}</tr></thead><tbody className="divide-y divide-[var(--line)]">{children}</tbody></table></div>;
+  return <div className="mt-8 overflow-x-auto rounded-[1.25rem] border border-[var(--line)] bg-[var(--surface)]"><table className="min-w-full text-left text-sm"><thead className="bg-[var(--surface-muted)] text-[var(--muted)]"><tr>{columns.map((column) => <th className="px-5 py-4 font-semibold" key={column}>{column}</th>)}</tr></thead><tbody className="divide-y divide-[var(--line)]">{children}</tbody></table></div>;
 }

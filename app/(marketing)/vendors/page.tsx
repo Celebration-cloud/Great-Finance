@@ -1,23 +1,13 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  BadgeCheck,
   CheckCircle2,
-  Clock,
-  Coins,
   FileCheck,
   HelpCircle,
-  Landmark,
-  Lock,
   MessageCircle,
-  Percent,
   Receipt,
-  ShieldAlert,
   ShieldCheck,
-  Sparkles,
   Store,
-  Users2,
-  Zap,
 } from "lucide-react";
 
 export const metadata = {
@@ -26,56 +16,7 @@ export const metadata = {
     "Join the Great Finance authorized distributor network. Wholesale coupon discounts up to 15%, immediate retail profit, real-time inventory ledger, and dedicated partner support.",
 };
 
-const tiers = [
-  {
-    name: "Tier 1: Starter Vendor",
-    volume: "₦50,000 – ₦250,000",
-    margin: "5% Wholesale Margin",
-    features: [
-      "Immediate coupon code generation",
-      "Standard Paystack checkout",
-      "Real-time inventory table",
-      "Email support desk",
-    ],
-    recommended: false,
-  },
-  {
-    name: "Tier 2: Silver Distributor",
-    volume: "₦250,000 – ₦1,000,000",
-    margin: "8% Wholesale Margin",
-    features: [
-      "All Starter Vendor perks",
-      "Priority KYC verification SLA",
-      "Dedicated WhatsApp dispatch desk",
-      "Weekly volume rebate eligibility",
-    ],
-    recommended: true,
-  },
-  {
-    name: "Tier 3: Gold Regional Partner",
-    volume: "₦1,000,000 – ₦5,000,000",
-    margin: "12% Wholesale Margin",
-    features: [
-      "All Silver Distributor perks",
-      "Custom batch allocation sizes",
-      "Direct account executive",
-      "Regional promotional listing",
-    ],
-    recommended: false,
-  },
-  {
-    name: "Tier 4: Master Liquidity Node",
-    volume: "₦5,000,000+",
-    margin: "15% Wholesale Margin",
-    features: [
-      "Maximum wholesale discount tier",
-      "Guaranteed liquidity reserve",
-      "Institutional SLA with dedicated engineer",
-      "Direct API integration for offline POS",
-    ],
-    recommended: false,
-  },
-];
+import { VENDOR_TIER_LIST } from "@/lib/vendor/tiers";
 
 const faqs = [
   {
@@ -219,9 +160,9 @@ export default function VendorsPage() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {tiers.map((tier) => (
+          {VENDOR_TIER_LIST.map((tier) => (
             <div
-              key={tier.name}
+              key={tier.key}
               className={`relative flex flex-col justify-between rounded-2xl p-7 transition ${
                 tier.recommended
                   ? "border-2 border-[var(--brand)] bg-white shadow-xl shadow-[var(--brand)]/10"
@@ -236,13 +177,13 @@ export default function VendorsPage() {
 
               <div className="space-y-5">
                 <div>
-                  <h3 className="text-sm font-bold text-[var(--ink)]">{tier.name}</h3>
+                  <h3 className="text-sm font-bold text-[var(--ink)]">{tier.badge}</h3>
                   <p className="mt-1 text-xs text-[var(--muted)]">Monthly volume: {tier.volume}</p>
                 </div>
 
                 <div className="rounded-xl bg-[var(--surface-muted)] p-4">
                   <p className="text-xs font-semibold text-[var(--muted)]">Partner Advantage</p>
-                  <p className="text-lg font-extrabold text-[var(--brand)]">{tier.margin}</p>
+                  <p className="text-lg font-extrabold text-[var(--brand)]">{tier.marginLabel}</p>
                 </div>
 
                 <ul className="space-y-2.5 text-xs text-[var(--ink)]/80">
@@ -257,7 +198,7 @@ export default function VendorsPage() {
 
               <div className="mt-8 pt-5 border-t border-[var(--line)]">
                 <Link
-                  href="/vendor/signup"
+                  href={`/vendor/signup?tier=${tier.key}`}
                   className={`flex w-full items-center justify-center rounded-xl py-2.5 text-xs font-bold transition ${
                     tier.recommended
                       ? "bg-[var(--brand)] text-white hover:bg-[var(--brand-dark)] shadow"
@@ -273,7 +214,7 @@ export default function VendorsPage() {
       </section>
 
       {/* Real Vendor Workspace Features */}
-      <section className="bg-[var(--ink)] py-20 text-white">
+      <section className="bg-[var(--surface-inverse)] py-20 text-white">
         <div className="shell space-y-16">
           <div className="max-w-2xl space-y-4">
             <span className="inline-block rounded-full bg-[var(--accent)]/15 px-3 py-1 text-xs font-bold text-[var(--accent)] uppercase tracking-wider">
@@ -326,7 +267,7 @@ export default function VendorsPage() {
             </div>
             <Link
               href="/vendor/signup"
-              className="inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-6 py-3 text-xs font-extrabold text-[var(--ink)] shadow hover:bg-[var(--accent)]/90 transition"
+              className="inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-6 py-3 text-xs font-extrabold text-[var(--surface-inverse)] shadow hover:bg-[var(--accent)]/90 transition"
             >
               <Store size={15} />
               <span>Apply for Vendor Account</span>

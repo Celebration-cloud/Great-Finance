@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { type UseFormSetError } from "react-hook-form";
 import { apiFetch } from "@/lib/http/api-fetch";
 import { toast } from "@/lib/toast";
@@ -56,14 +56,16 @@ export function useApiMutation<TData, TBody extends object | FormData = object>(
   url: string,
   options: UseApiMutationOptions<TData> = {},
 ): UseApiMutationReturn<TData, TBody> {
-  const { method = "POST", successMessage, errorMessage, setError, onSuccess, onError } = options;
+  const { method = "POST" } = options;
   const [status, setStatus] = useState<MutationStatus>("idle");
   const [data, setData] = useState<TData | undefined>(undefined);
   const [error, setErrorState] = useState<ApiErrorDetail | undefined>(undefined);
 
   // Keep options in a ref so the stable `mutate` callback always sees the latest values.
   const optsRef = useRef(options);
-  optsRef.current = options;
+  useEffect(() => {
+    optsRef.current = options;
+  }, [options]);
 
   const mutate = useCallback(
     async (body: TBody): Promise<ApiResult<TData>> => {

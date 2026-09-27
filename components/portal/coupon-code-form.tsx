@@ -1,6 +1,7 @@
 "use client";
 
 import { CheckCircle2, LoaderCircle, Sparkles, Ticket } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useApiMutation } from "@/hooks/use-api-mutation";
@@ -93,12 +94,12 @@ export function CouponCodeForm() {
 
         <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-[var(--line)]/60 pt-3 text-xs text-[var(--muted)]">
           <span>Purchased from an authorized distributor? Enter the 16-character code above.</span>
-          <a
+          <Link
             href="/dashboard/purchase"
             className="font-bold text-[var(--brand)] hover:underline"
           >
             Need a coupon? Find verified vendors →
-          </a>
+          </Link>
         </div>
       </form>
 

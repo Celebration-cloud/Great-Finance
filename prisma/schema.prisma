@@ -82,6 +82,14 @@ enum InvestmentStatus {
   CANCELLED
 }
 
+enum WithdrawalStatus {
+  PENDING
+  APPROVED
+  PROCESSING
+  COMPLETED
+  REJECTED
+}
+
 enum OutboxStatus {
   PENDING
   PROCESSING
@@ -138,6 +146,7 @@ model Profile {
   accountNumberLast4 String?      @map("account_number_last4") @db.Char(4)
   referralCode       String       @unique @map("referral_code")
   referredByCode     String?      @map("referred_by_code")
+  vendorTier         String?      @default("TIER_1_STARTER") @map("vendor_tier")
   createdAt          DateTime     @default(now()) @map("created_at")
   updatedAt          DateTime     @updatedAt @map("updated_at")
   organization       Organization @relation(fields: [organizationId], references: [id], onDelete: Restrict)
@@ -365,9 +374,38 @@ model Investment {
   createdAt    DateTime         @default(now()) @map("created_at")
   updatedAt    DateTime         @updatedAt @map("updated_at")
   coupon       Coupon           @relation(fields: [couponId], references: [id], onDelete: Restrict)
+  withdrawals  WithdrawalRequest[]
 
   @@index([customerId, status, matureAt])
   @@index([orgId, createdAt])
   @@index([status, matureAt])
   @@map("investments")
+}
+
+// ─── Withdrawal System ────────────────────────────────────────────────────────
+
+model WithdrawalRequest {
+  id                  String           @id @default(cuid())
+  investmentId        String           @map("investment_id")
+  customerId          String           @map("customer_id")       // auth_user_id
+  orgId               String           @map("org_id")            // customer org
+  amountMinor         BigInt           @map("amount_minor")      // payout in kobo
+  currency            String           @default("NGN") @db.Char(3)
+  bankName            String           @map("bank_name")
+  accountNumber       String           @map("account_number")    // full 10-digit NUBAN
+  accountName         String           @map("account_name")
+  status              WithdrawalStatus @default(PENDING)
+  note                String?                                    // admin review note
+  reviewedBy          String?          @map("reviewed_by")
+  reviewedAt          DateTime?        @map("reviewed_at")
+  processedAt         DateTime?        @map("processed_at")
+  transferCode        String?          @map("transfer_code")     // Paystack transfer code if automated
+  createdAt           DateTime         @default(now()) @map("created_at")
+  updatedAt           DateTime         @updatedAt @map("updated_at")
+  investment          Investment       @relation(fields: [investmentId], references: [id], onDelete: Restrict)
+
+  @@index([customerId, status, createdAt])
+  @@index([orgId, createdAt])
+  @@index([status, createdAt])
+  @@map("withdrawal_requests")
 }
