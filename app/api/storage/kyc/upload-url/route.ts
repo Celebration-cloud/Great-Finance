@@ -4,6 +4,7 @@ import { requireApiPrincipal, requireApiRole } from "@/lib/auth/api";
 import { AppError, errors } from "@/lib/errors/app-error";
 import { apiSuccess, readJson, withApiHandler } from "@/lib/http/api-response";
 import { createUploadUrl } from "@/lib/storage/neon";
+import { assertRateLimit, RATE_LIMIT_RULES } from "@/lib/security/rate-limit";
 
 const extensions: Record<string, string> = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "application/pdf": "pdf" };
 
@@ -11,6 +12,7 @@ export async function POST(request: Request) {
   return withApiHandler(request, "vendor-kyc.upload.prepare", async (context) => {
     const principal = await requireApiPrincipal();
     requireApiRole(principal, ["VENDOR"], "Vendor access required.");
+    assertRateLimit(request, "kyc.upload", RATE_LIMIT_RULES.KYC_UPLOAD, principal.userId);
     const parsed = kycUploadRequestSchema.safeParse(await readJson(request));
     if (!parsed.success) throw errors.validation("Invalid KYC file.", parsed.error.flatten().fieldErrors);
     const extension = extensions[parsed.data.contentType];

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { AlertTriangle, Trash2, X, ShieldAlert } from "lucide-react";
 import { toast } from "@/lib/toast";
 
@@ -10,6 +11,7 @@ interface DeleteAccountModalProps {
 }
 
 export function DeleteAccountModal({ role, onDeleted }: DeleteAccountModalProps) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [phrase, setPhrase] = useState("");
   const [loading, setLoading] = useState(false);
@@ -35,7 +37,7 @@ export function DeleteAccountModal({ role, onDeleted }: DeleteAccountModalProps)
       onDeleted?.();
       // Redirect to home after brief delay
       setTimeout(() => {
-        window.location.href = "/";
+        router.push("/");
       }, 2000);
     } catch {
       toast.error("A network error occurred. Please try again.");

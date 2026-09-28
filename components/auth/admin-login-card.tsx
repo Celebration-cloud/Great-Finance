@@ -2,11 +2,13 @@ import { hasAuthConfig } from "@/lib/env/server";
 import { SignInForm } from "@/app/auth/sign-in/sign-in-form";
 import { SovereignMark } from "@/components/brand/brand-logo";
 import { ShieldCheck } from "lucide-react";
+import { AnimatedContent } from "@/components/ui/animated-content";
 
 export function AdminLoginCard() {
   return (
     <main className="shell grid min-h-[calc(100vh-73px)] place-items-center py-12">
-      <section className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] w-full max-w-md p-8 sm:p-10 shadow-2xl relative overflow-hidden">
+      <AnimatedContent className="w-full max-w-md" distance={18} scale={0.975}>
+      <section className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] w-full p-8 sm:p-10 shadow-2xl relative overflow-hidden">
         {/* Red-tinted accent border at top — signifies restricted access */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-500 via-orange-400 to-red-500" />
 
@@ -40,6 +42,7 @@ export function AdminLoginCard() {
           Lost access? Contact your Super Admin to issue a new invitation link.
         </p>
       </section>
+      </AnimatedContent>
     </main>
   );
 }

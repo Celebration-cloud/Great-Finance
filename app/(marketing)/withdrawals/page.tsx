@@ -4,16 +4,13 @@ import {
   Banknote,
   CheckCircle2,
   Clock,
-  FileCheck2,
   FileText,
   HelpCircle,
-  Lock,
   ShieldCheck,
   TrendingUp,
   Zap,
 } from "lucide-react";
 import type { Metadata } from "next";
-import { GuillochePattern } from "@/components/brand/illustrations/guilloche-pattern";
 
 export const metadata: Metadata = {
   title: "Withdrawals and Payouts | Great Finance",

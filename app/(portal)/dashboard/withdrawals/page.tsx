@@ -12,7 +12,9 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { PageHeader } from "@/components/portal/page-header";
+import { MaturityProgress } from "@/components/portal/maturity-progress";
 import { WithdrawalRequestForm } from "@/components/portal/withdrawal-request-form";
+import { AnimatedContent } from "@/components/ui/animated-content";
 import { requireRole } from "@/lib/auth/access";
 import { getPrisma } from "@/lib/db";
 
@@ -66,9 +68,9 @@ export default async function WithdrawalsPage() {
   const activeCount    = processed.filter((i) => !i.isMatured).length;
 
   const statusColor: Record<string, string> = {
-    ACTIVE:  "bg-blue-100 text-blue-800 border-blue-200",
-    MATURED: "bg-emerald-100 text-emerald-800 border-emerald-200",
-    SETTLED: "bg-slate-100 text-slate-600 border-slate-200",
+    ACTIVE:  "bg-[var(--info-soft)] text-[var(--info-ink)] border-[var(--info-line)]",
+    MATURED: "bg-[var(--success-soft)] text-[var(--success-ink)] border-[var(--success-line)]",
+    SETTLED: "bg-[var(--surface-muted)] text-[var(--muted)] border-[var(--line)]",
   };
 
   return (
@@ -207,7 +209,7 @@ export default async function WithdrawalsPage() {
         <div className="space-y-5">
           <h3 className="font-bold text-[var(--ink)]">Your investment plans</h3>
 
-          {processed.map((inv) => {
+          {processed.map((inv, index) => {
             const maturityLabel = inv.matureAt.toLocaleDateString("en-NG", {
               weekday: "long",
               day: "numeric",
@@ -224,8 +226,12 @@ export default async function WithdrawalsPage() {
             const profit = inv.returnAmount - inv.planAmount;
 
             return (
-              <div
+              <AnimatedContent
                 key={inv.id}
+                delay={Math.min(index * 0.06, 0.24)}
+                distance={18}
+              >
+              <article
                 className={`rounded-2xl border-2 bg-white shadow-sm overflow-hidden transition ${
                   inv.isMatured && !inv.isFullySettled
                     ? "border-emerald-300 shadow-emerald-100"
@@ -236,21 +242,21 @@ export default async function WithdrawalsPage() {
                 {inv.isMatured && !inv.isFullySettled && !inv.hasActivePending && (
                   <div className="flex items-center gap-2 bg-emerald-600 px-5 py-2.5 text-white">
                     <TrendingUp size={15} />
-                    <span className="text-sm font-bold">🎉 Plan matured — your payout is ready!</span>
+                    <span className="text-sm font-bold">Plan matured. Your payout is ready.</span>
                   </div>
                 )}
 
                 {inv.hasActivePending && (
                   <div className="flex items-center gap-2 bg-amber-500 px-5 py-2.5 text-white">
                     <Clock size={15} />
-                    <span className="text-sm font-bold">Withdrawal request submitted — admin reviewing</span>
+                    <span className="text-sm font-bold">Withdrawal request submitted and under review</span>
                   </div>
                 )}
 
                 {inv.isFullySettled && (
                   <div className="flex items-center gap-2 bg-slate-600 px-5 py-2.5 text-white">
                     <CheckCircle2 size={15} />
-                    <span className="text-sm font-bold">Payout complete — funds sent to your bank</span>
+                    <span className="text-sm font-bold">Payout complete. Funds were sent to your bank.</span>
                   </div>
                 )}
 
@@ -285,8 +291,10 @@ export default async function WithdrawalsPage() {
                 </div>
 
                 {/* Maturity date row */}
-                <div className={`flex flex-wrap items-center justify-between gap-3 px-5 py-3 border-b border-[var(--line)] ${
-                  inv.isMatured ? "bg-emerald-50" : "bg-blue-50/50"
+                <div className={`flex flex-wrap items-center justify-between gap-3 px-5 py-3 border-b ${
+                  inv.isMatured
+                    ? "border-[var(--success-line)] bg-[var(--success-soft)]"
+                    : "border-[var(--info-line)] bg-[var(--info-soft)]"
                 }`}>
                   <div className="flex items-center gap-2">
                     <CalendarClock size={15} className={inv.isMatured ? "text-emerald-600" : "text-blue-600"} />
@@ -300,36 +308,25 @@ export default async function WithdrawalsPage() {
                     </div>
                   </div>
                   {!inv.isMatured && (
-                    <span className="rounded-full bg-blue-100 border border-blue-200 px-3 py-1 text-xs font-bold text-blue-800">
+                    <span className="rounded-full border border-[var(--info-line)] bg-[var(--surface)] px-3 py-1 text-xs font-bold text-[var(--info-ink)]">
                       {inv.daysLeft === 0
                         ? `${inv.hoursLeft}h remaining`
                         : `${inv.daysLeft} day${inv.daysLeft !== 1 ? "s" : ""} remaining`}
                     </span>
                   )}
                   {inv.isMatured && !inv.isFullySettled && (
-                    <span className="rounded-full bg-emerald-200 border border-emerald-300 px-3 py-1 text-xs font-bold text-emerald-900">
-                      ✓ Ready to withdraw
+                    <span className="rounded-full border border-[var(--success-line)] bg-[var(--surface)] px-3 py-1 text-xs font-bold text-[var(--success-ink)]">
+                      Ready to withdraw
                     </span>
                   )}
                 </div>
 
                 {/* Progress bar — only for active plans */}
                 {!inv.isMatured && (
-                  <div className="px-5 py-3 border-b border-[var(--line)] bg-white">
-                    <div className="flex items-center justify-between text-[0.7rem] text-[var(--muted)] mb-1.5">
-                      <span>Plan progress</span>
-                      <span className="font-semibold">{Math.round(inv.progressPct)}% complete</span>
-                    </div>
-                    <div className="h-2 w-full rounded-full bg-slate-100 overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-[var(--brand)] to-emerald-400 transition-all"
-                        style={{ width: `${inv.progressPct}%` }}
-                      />
-                    </div>
-                    <p className="mt-1.5 text-[0.7rem] text-[var(--muted)]">
-                      Withdraw button unlocks automatically on {inv.matureAt.toLocaleDateString("en-NG", { day: "numeric", month: "short" })}
-                    </p>
-                  </div>
+                  <MaturityProgress
+                    progress={inv.progressPct}
+                    unlockLabel={inv.matureAt.toLocaleDateString("en-NG", { day: "numeric", month: "short" })}
+                  />
                 )}
 
                 {/* Settled payout record */}
@@ -361,7 +358,8 @@ export default async function WithdrawalsPage() {
                     />
                   </div>
                 )}
-              </div>
+              </article>
+              </AnimatedContent>
             );
           })}
         </div>

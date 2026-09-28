@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, MessageCircle, Store, Clock, ArrowRight, ShieldCheck } from "lucide-react";
+import { Mail, MessageCircle, Store, Clock } from "lucide-react";
 
 export const metadata = {
   title: "Contact and Support | Great Finance",

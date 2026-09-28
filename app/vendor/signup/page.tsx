@@ -2,6 +2,7 @@ import Link from "next/link";
 import { RegistrationForm } from "@/components/auth/registration-form";
 import { hasAuthConfig, hasDatabaseConfig } from "@/lib/env/server";
 import { parseVendorTier, VENDOR_TIERS } from "@/lib/vendor/tiers";
+import { AuthPageReveal } from "@/components/auth/auth-page-reveal";
 
 export default async function VendorSignupPage({
   searchParams,
@@ -14,7 +15,8 @@ export default async function VendorSignupPage({
 
   return (
     <main className="shell grid place-items-center py-12">
-      <section className="card w-full max-w-xl p-7 sm:p-9">
+      <AuthPageReveal className="w-full max-w-xl">
+      <section className="card w-full p-7 sm:p-9">
         <div className="flex items-center justify-between">
           <p className="eyebrow">Vendor account</p>
           <span className="rounded-full bg-[var(--brand)]/10 px-3 py-1 text-xs font-bold text-[var(--brand)]">
@@ -39,6 +41,7 @@ export default async function VendorSignupPage({
           </Link>
         </p>
       </section>
+      </AuthPageReveal>
     </main>
   );
 }

@@ -5,7 +5,6 @@ import {
   FileCheck,
   HelpCircle,
   MessageCircle,
-  Percent,
   Receipt,
   ShieldCheck,
   Store,

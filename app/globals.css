@@ -140,30 +140,41 @@ button:disabled { cursor: not-allowed; }
 }
 
 /* Dark equivalents for legacy status utilities. */
-.bg-emerald-50, .bg-emerald-100, .bg-teal-50 { background-color: var(--success-soft); }
+.bg-emerald-50, .bg-emerald-100, .bg-teal-50,
+.bg-emerald-50\/90 { background-color: var(--success-soft); }
+.bg-emerald-200 { background-color: color-mix(in srgb, var(--success-soft) 82%, var(--success-ink)); }
 .border-emerald-200, .border-emerald-300, .border-teal-200 { border-color: var(--success-line); }
 .text-emerald-600, .text-emerald-700, .text-emerald-800, .text-emerald-900, .text-emerald-950, .text-teal-700 { color: var(--success-ink); }
 .hover\:bg-emerald-100:hover, .hover\:bg-teal-100:hover { background-color: color-mix(in srgb, var(--success-soft) 78%, white); }
 
-.bg-amber-50, .bg-amber-100 { background-color: var(--warning-soft); }
+.bg-amber-50, .bg-amber-100,
+.bg-amber-50\/60, .bg-amber-50\/70, .bg-amber-50\/80, .bg-amber-50\/90 { background-color: var(--warning-soft); }
+.bg-amber-200 { background-color: color-mix(in srgb, var(--warning-soft) 82%, var(--warning-ink)); }
 .border-amber-200, .border-amber-300 { border-color: var(--warning-line); }
-.text-amber-600, .text-amber-700, .text-amber-800, .text-amber-900 { color: var(--warning-ink); }
+.text-amber-600, .text-amber-700, .text-amber-800, .text-amber-900, .text-amber-950 { color: var(--warning-ink); }
 .hover\:bg-amber-100:hover { background-color: color-mix(in srgb, var(--warning-soft) 78%, white); }
 
-.bg-red-50, .bg-red-100 { background-color: var(--danger-soft); }
+.bg-red-50, .bg-red-100, .bg-red-50\/50, .bg-red-50\/70 { background-color: var(--danger-soft); }
 .border-red-200, .border-red-300 { border-color: var(--danger-line); }
 .text-red-600, .text-red-700, .text-red-800, .text-red-900, .text-red-950 { color: var(--danger-ink); }
 .hover\:bg-red-100:hover { background-color: color-mix(in srgb, var(--danger-soft) 78%, white); }
 
-.bg-blue-50, .bg-blue-100 { background-color: var(--info-soft); }
+.bg-blue-50, .bg-blue-100, .bg-blue-50\/50, .bg-blue-50\/60, .bg-blue-50\/90 { background-color: var(--info-soft); }
 .border-blue-200, .border-blue-300 { border-color: var(--info-line); }
-.text-blue-600, .text-blue-700, .text-blue-800, .text-blue-900 { color: var(--info-ink); }
+.text-blue-600, .text-blue-700, .text-blue-800, .text-blue-900, .text-blue-950 { color: var(--info-ink); }
 .hover\:bg-blue-100:hover { background-color: color-mix(in srgb, var(--info-soft) 78%, white); }
 
 .bg-slate-50, .bg-slate-100, .bg-neutral-100 { background-color: var(--surface-muted); }
 .border-slate-200, .border-slate-300 { border-color: var(--line); }
 .text-slate-600, .text-slate-700, .text-slate-800, .text-slate-900,
 .text-neutral-600, .text-neutral-700, .text-neutral-800, .text-neutral-900 { color: var(--muted); }
+
+.bg-gray-50, .bg-gray-100 { background-color: var(--surface-muted); }
+.border-gray-200, .border-gray-300 { border-color: var(--line); }
+.text-gray-400, .text-gray-500 { color: var(--muted); }
+.text-gray-700, .text-gray-900 { color: var(--ink); }
+.hover\:bg-gray-50:hover { background-color: var(--surface-elevated); }
+.hover\:text-gray-700:hover { color: var(--ink); }
 
 input, select, textarea {
   color: var(--ink);

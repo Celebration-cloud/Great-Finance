@@ -2,21 +2,26 @@ import Link from "next/link";
 import { hasAuthConfig } from "@/lib/env/server";
 import { SignInForm } from "@/app/auth/sign-in/sign-in-form";
 import { SovereignMark } from "@/components/brand/brand-logo";
+import { AnimatedContent } from "@/components/ui/animated-content";
+import { CheckCircle2 } from "lucide-react";
 
 export function LoginCard({
   title,
   eyebrow,
   redirectTo,
   signupHref,
+  resetSuccess,
 }: {
   title: string;
   eyebrow: string;
   redirectTo: string;
   signupHref: string;
+  resetSuccess?: boolean;
 }) {
   return (
     <main className="shell grid min-h-[calc(100vh-73px)] place-items-center py-12">
-      <section className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] w-full max-w-md p-8 sm:p-10 shadow-2xl relative overflow-hidden">
+      <AnimatedContent className="w-full max-w-md" distance={18} scale={0.975}>
+      <section className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] w-full p-8 sm:p-10 shadow-2xl relative overflow-hidden">
         {/* Subtle accent border at top */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-amber-400 to-emerald-500" />
 
@@ -34,6 +39,13 @@ export function LoginCard({
           {title}
         </h1>
 
+        {resetSuccess && (
+          <div className="mt-4 flex items-center gap-2.5 rounded-xl border border-emerald-500/30 bg-emerald-950/20 p-3.5 text-xs text-emerald-300">
+            <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />
+            <span>Password successfully changed. Sign in with your new credentials.</span>
+          </div>
+        )}
+
         <div className="mt-6">
           <SignInForm configured={hasAuthConfig()} redirectTo={redirectTo} label="Sign in" />
         </div>
@@ -50,7 +62,7 @@ export function LoginCard({
           </span>
         </div>
       </section>
+      </AnimatedContent>
     </main>
   );
 }
-

@@ -7,6 +7,7 @@ import { z } from "zod";
 import { requireRole } from "@/lib/auth/access";
 import { getPrisma } from "@/lib/db";
 import { appendAuditLog } from "@/features/audit/service";
+import { assertRateLimit, RATE_LIMIT_RULES } from "@/lib/security/rate-limit";
 
 const schema = z.object({
   investmentId: z.string().cuid("Invalid investment ID"),
@@ -19,6 +20,7 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   const session = await requireRole(["CUSTOMER"]);
+  assertRateLimit(req, "withdrawal.create", RATE_LIMIT_RULES.WITHDRAWAL_SUBMIT, session.userId);
   const body = await req.json().catch(() => ({}));
   const parsed = schema.safeParse(body);
   if (!parsed.success) {

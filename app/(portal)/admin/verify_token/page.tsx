@@ -17,18 +17,6 @@ export default async function VerifyTokenPage() {
     take: 100,
   });
 
-  // Calculate time since creation
-  function timeSince(date: Date) {
-    const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
-    if (seconds < 60) return `${seconds}s ago`;
-    const minutes = Math.floor(seconds / 60);
-    if (minutes < 60) return `${minutes}m ago`;
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) return `${hours}h ago`;
-    const days = Math.floor(hours / 24);
-    return `${days}d ago`;
-  }
-
   return (
     <section className="space-y-8">
       <PageHeader
@@ -58,8 +46,8 @@ export default async function VerifyTokenPage() {
       >
         {payments.map((payment) => {
           const formatted = formatMinorUnits(payment.amountMinor, payment.currency);
-          const ageMs = Date.now() - payment.createdAt.getTime();
-          const isOld = ageMs > 3 * 60 * 60 * 1000; // older than 3 hours
+          const dateStr = payment.createdAt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+          const timeStr = payment.createdAt.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
 
           return (
             <tr key={payment.id}>
@@ -80,14 +68,14 @@ export default async function VerifyTokenPage() {
                 <div className="flex items-center gap-1.5">
                   <Clock
                     size={12}
-                    className={isOld ? "text-amber-500" : "text-[var(--muted)]"}
+                    className="text-[var(--muted)]"
                   />
                   <div>
-                    <p className={`text-xs font-bold ${isOld ? "text-amber-700" : "text-[var(--ink)]"}`}>
-                      {timeSince(payment.createdAt)}
+                    <p className="text-xs font-bold text-[var(--ink)]">
+                      {dateStr}
                     </p>
                     <p className="text-[0.67rem] text-[var(--muted)]">
-                      {payment.createdAt.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}
+                      {timeStr}
                     </p>
                   </div>
                 </div>

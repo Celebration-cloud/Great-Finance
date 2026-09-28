@@ -1,4 +1,4 @@
-type AuthAction = "sign-in" | "sign-up";
+type AuthAction = "sign-in" | "sign-up" | "reset-password" | "recovery";
 
 export function getAuthErrorMessage(error: unknown, action: AuthAction) {
   const raw = error instanceof Error ? error.message : typeof error === "string" ? error : "";
@@ -8,5 +8,8 @@ export function getAuthErrorMessage(error: unknown, action: AuthAction) {
   if (/already.*(exist|register)|user.*exist/.test(message)) return "An account already exists for this email address.";
   if (/rate|too many|limit/.test(message)) return "Too many authentication attempts. Please wait and try again.";
   if (/network|fetch|timeout|unavailable|failed to connect/.test(message)) return "Authentication is temporarily unavailable. Please try again.";
+  if (/expired|invalid.*token|token.*invalid/.test(message)) return "This link has expired or is no longer valid. Please request a new one.";
+  if (action === "reset-password") return "Password reset failed. Please request a new recovery link and try again.";
+  if (action === "recovery") return "Recovery request could not be sent. Please try again.";
   return action === "sign-in" ? "Sign in failed. Check your details and try again." : "Registration could not be completed. Please try again.";
 }

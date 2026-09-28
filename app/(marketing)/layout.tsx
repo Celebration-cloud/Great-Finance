@@ -2,6 +2,7 @@ import { unstable_rethrow } from "next/navigation";
 import { getPrincipal } from "@/lib/auth/principal";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
+import { PublicMotionOrchestrator } from "@/components/marketing/public-motion-orchestrator";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +17,9 @@ export default async function MarketingLayout({ children }: { children: React.Re
   return (
     <>
       <SiteHeader principal={principal} />
-      <div id="main-content">{children}</div>
+      <div id="main-content">
+        <PublicMotionOrchestrator>{children}</PublicMotionOrchestrator>
+      </div>
       <SiteFooter />
     </>
   );

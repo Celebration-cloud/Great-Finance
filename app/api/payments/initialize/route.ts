@@ -4,11 +4,13 @@ import { requireApiPermission, requireApiPrincipal } from "@/lib/auth/api";
 import { getServerEnv } from "@/lib/env/server";
 import { errors } from "@/lib/errors/app-error";
 import { apiSuccess, readJson, withApiHandler } from "@/lib/http/api-response";
+import { assertRateLimit, RATE_LIMIT_RULES } from "@/lib/security/rate-limit";
 
 export async function POST(request: Request) {
   return withApiHandler(request, "payment.initialize", async (context) => {
     const principal = await requireApiPrincipal();
     requireApiPermission(principal, "payment:create");
+    assertRateLimit(request, "payment.init", RATE_LIMIT_RULES.PAYMENT_INIT, principal.userId);
     const body = initializePaymentSchema.safeParse(await readJson(request));
     if (!body.success) throw errors.validation("Invalid payment request.", body.error.flatten().fieldErrors);
     if (principal.role === "VENDOR") {

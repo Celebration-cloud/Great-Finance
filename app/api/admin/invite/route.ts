@@ -6,6 +6,7 @@ import { errors } from "@/lib/errors/app-error";
 import { apiSuccess, readJson, withApiHandler } from "@/lib/http/api-response";
 import { appendAuditLog } from "@/features/audit/service";
 import { sendEmail } from "@/lib/email/mailer";
+import { assertRateLimit, RATE_LIMIT_RULES } from "@/lib/security/rate-limit";
 
 const inviteAdminSchema = z.object({
   email: z.string().email("A valid email address is required."),
@@ -19,6 +20,7 @@ export async function POST(request: Request) {
   return withApiHandler(request, "admin.invite", async (context) => {
     const principal = await requireApiPrincipal();
     requireApiRole(principal, ["SUPER_ADMIN"], "Only a Super Admin can invite new administrators.");
+    assertRateLimit(request, "admin.invite", RATE_LIMIT_RULES.ADMIN_SENSITIVE, principal.userId);
 
     const body = inviteAdminSchema.safeParse(await readJson(request));
     if (!body.success) {

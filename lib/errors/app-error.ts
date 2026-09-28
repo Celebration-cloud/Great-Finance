@@ -86,4 +86,12 @@ export const errors = {
   providerUnavailable: (message: string, cause?: unknown) => new AppError("PROVIDER_UNAVAILABLE", { status: 503, message, retryable: true, cause }),
   storageUnavailable: (message: string, cause?: unknown) => new AppError("STORAGE_UNAVAILABLE", { status: 503, message, retryable: true, cause }),
   invariant: (message: string, cause?: unknown) => new AppError("FINANCIAL_INVARIANT_VIOLATION", { status: 409, message, report: "error", cause }),
+  rateLimited: (message = "Too many requests. Please wait a moment before trying again.", retryAfterSeconds?: number) =>
+    new AppError("RATE_LIMITED", {
+      status: 429,
+      message,
+      retryable: true,
+      details: retryAfterSeconds !== undefined ? { retryAfter: retryAfterSeconds } : undefined,
+      report: "warn",
+    }),
 };

@@ -44,7 +44,9 @@ export function apiError(context: ApiContext, input: unknown, fallbackMessage?: 
 
   const fieldErrors = error.details?.fieldErrors;
   const headers: Record<string, string> = { ...responseHeaders(context), "Cache-Control": "no-store" };
-  if (error.code === "RATE_LIMITED") headers["Retry-After"] = "60";
+  if (error.code === "RATE_LIMITED") {
+    headers["Retry-After"] = String(error.details?.retryAfter ?? "60");
+  }
   return NextResponse.json({
     success: false,
     error: {

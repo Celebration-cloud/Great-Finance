@@ -5,6 +5,7 @@ import { errors } from "@/lib/errors/app-error";
 import { apiMessage, readJson, withApiHandler } from "@/lib/http/api-response";
 import { appendAuditLog } from "@/features/audit/service";
 import { getAuth } from "@/lib/auth/server";
+import { assertRateLimit, RATE_LIMIT_RULES } from "@/lib/security/rate-limit";
 
 const deleteAccountSchema = z.object({
   confirmationPhrase: z
@@ -18,6 +19,7 @@ export async function DELETE(request: Request) {
   return withApiHandler(request, "account.delete", async (context) => {
     const principal = await requireApiPrincipal();
     requireApiRole(principal, ["CUSTOMER", "VENDOR"]);
+    assertRateLimit(request, "account.delete", RATE_LIMIT_RULES.ACCOUNT_DESTRUCTIVE, principal.userId);
 
     const body = deleteAccountSchema.safeParse(await readJson(request));
     if (!body.success) {

@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { ArrowRight, Database, Lock, ShieldCheck, FileCheck2, Cpu } from "lucide-react";
+import { ArrowRight, Database, Lock, ShieldCheck } from "lucide-react";
 import { legacyExplanation } from "@/features/content/legacy-content";
 import { TundeAuditVault } from "@/components/brand/illustrations/tunde-audit-vault";
-import { GuillochePattern } from "@/components/brand/illustrations/guilloche-pattern";
 
 export const metadata = {
   title: "About Great Finance | How the Platform Works",

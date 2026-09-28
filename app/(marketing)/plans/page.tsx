@@ -1,18 +1,7 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-  BadgeCheck,
-  CheckCircle2,
-  Clock,
-  HelpCircle,
-  ShieldCheck,
-  Store,
-  TrendingUp,
-  Zap,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2, Store } from "lucide-react";
 import { investmentPlans } from "@/features/content/legacy-content";
 import { EmekaInvestorScene } from "@/components/brand/illustrations/emeka-investor-scene";
-import { GuillochePattern } from "@/components/brand/illustrations/guilloche-pattern";
 
 export const metadata = {
   title: "Investment Plans | Great Finance",

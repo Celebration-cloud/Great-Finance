@@ -387,7 +387,7 @@ export default function MarketingHomePage() {
                 <span className="font-mono text-3xl font-black text-amber-400">02</span>
                 <h4 className="font-display text-base font-bold text-white">Submit Tier-1 KYC</h4>
                 <p className="text-xs leading-relaxed text-white/60">
-                  Upload a verified government identity document (NIN, Passport, Voter's Card) via our encrypted document vault.
+                  Upload a verified government identity document (NIN, Passport, Voter&apos;s Card) via our encrypted document vault.
                 </p>
               </div>
               <div className="space-y-3">

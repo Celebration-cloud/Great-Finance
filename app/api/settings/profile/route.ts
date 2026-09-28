@@ -4,6 +4,7 @@ import { getPrisma } from "@/lib/db";
 import { errors } from "@/lib/errors/app-error";
 import { apiSuccess, readJson, withApiHandler } from "@/lib/http/api-response";
 import { appendAuditLog } from "@/features/audit/service";
+import { assertRateLimit, RATE_LIMIT_RULES } from "@/lib/security/rate-limit";
 
 const updateProfileSchema = z.object({
   displayName: z.string().trim().min(2, "Display name must be at least 2 characters.").max(100),
@@ -16,6 +17,7 @@ const updateProfileSchema = z.object({
 export async function PATCH(request: Request) {
   return withApiHandler(request, "settings.profile.update", async (context) => {
     const principal = await requireApiPrincipal();
+    assertRateLimit(request, "profile.update", RATE_LIMIT_RULES.PROFILE_UPDATE, principal.userId);
     const rawBody = await readJson(request);
     const parsed = updateProfileSchema.safeParse(rawBody);
 
