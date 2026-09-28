@@ -15,7 +15,7 @@ import { EmekaInvestorScene } from "@/components/brand/illustrations/emeka-inves
 import { GuillochePattern } from "@/components/brand/illustrations/guilloche-pattern";
 
 export const metadata = {
-  title: "Investment Plans & Yield Catalogue · Great Finance",
+  title: "Investment Plans | Great Finance",
   description:
     "Explore verified investment plans from ₦2,000 to ₦50,000 with guaranteed returns, double-entry ledger security, and coupon voucher activation.",
 };
@@ -29,15 +29,7 @@ export default function PlansPage() {
       <section className="shell relative">
         <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-950/20 px-4 py-1.5 text-xs font-mono font-bold text-emerald-400">
-              <ShieldCheck size={14} />
-              <span>GUARANTEED FIXED-TERM YIELDS</span>
-            </div>
-
-            <div className="space-y-3">
-              <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--accent)]">
-                [CATALOGUE // CAPITAL MATURATION]
-              </span>
+            <div>
               <h1 className="font-display text-4xl sm:text-6xl font-black tracking-tight text-[var(--ink)] leading-[1.08]">
                 Transparent yield plans backed by{" "}
                 <span className="text-[var(--brand)]">verified reserves</span>.
@@ -101,9 +93,6 @@ export default function PlansPage() {
               Select any tier below to activate via coupon voucher in your customer workspace
             </p>
           </div>
-          <span className="rounded-full bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 text-xs font-mono text-emerald-400 font-bold">
-            ALL SETTLEMENTS CBN REGULATED
-          </span>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -189,10 +178,7 @@ export default function PlansPage() {
       {/* ========================================================================= */}
       <section className="shell">
         <div className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-8 sm:p-14 space-y-10 shadow-xl">
-          <div className="max-w-2xl space-y-3">
-            <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
-              [ONBOARDING // 4 STEPS]
-            </span>
+          <div className="max-w-2xl">
             <h3 className="font-display text-2xl sm:text-4xl font-extrabold text-[var(--ink)]">
               How to activate an investment plan
             </h3>

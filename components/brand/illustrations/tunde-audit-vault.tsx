@@ -69,7 +69,7 @@ export function TundeAuditVault({ className }: { className?: string }) {
 
           <text x="20" y="32" fontFamily="monospace" fontSize="9" fontWeight="bold" fill="#F59E0B">NUBAN BANK TRANSFER APPROVED</text>
           <text x="20" y="58" fontFamily="monospace" fontSize="20" fontWeight="900" fill="#10B981">₦150,000.00</text>
-          <text x="20" y="78" fontFamily="system-ui" fontSize="9" fill="#94A3B8">Bank: GTBank · Acc: 012****891</text>
+          <text x="20" y="78" fontFamily="system-ui" fontSize="9" fill="#94A3B8">GTBank account: 012****891</text>
           <text x="20" y="94" fontFamily="system-ui" fontSize="9" fill="#94A3B8">Hash: e3b0c44298fc1c149afbf4c8996fb924</text>
 
           {/* Verification Badge */}

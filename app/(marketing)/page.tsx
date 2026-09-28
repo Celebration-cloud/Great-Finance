@@ -1,21 +1,16 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  BadgeCheck,
   CheckCircle2,
   FileCheck2,
-  HelpCircle,
-  Landmark,
   Lock,
   Mail,
   MessageCircle,
   Percent,
   Receipt,
   ShieldCheck,
-  Sparkles,
   Store,
   TrendingUp,
-  Zap,
 } from "lucide-react";
 import { investmentPlans } from "@/features/content/legacy-content";
 import { AminaVendorScene } from "@/components/brand/illustrations/amina-vendor-scene";
@@ -23,17 +18,10 @@ import { KineticLedgerWheel } from "@/components/brand/illustrations/kinetic-led
 import { GuillochePattern } from "@/components/brand/illustrations/guilloche-pattern";
 
 export const metadata = {
-  title: "Great Finance · Institutional Ledger, Verified Yield & Regional Distribution",
+  title: "Great Finance | Investment Plans and Vendor Services",
   description:
     "Exceed your financial struggles with Great Finance. Verifiable double-entry ledgers, high-yield investment plans, and a high-margin authorized vendor distribution network across Nigeria.",
 };
-
-const metrics = [
-  { label: "Ledger Volume Reconciled", value: "₦480M+", sub: "Verified via double-entry" },
-  { label: "Authorized Vendors", value: "1,240+", sub: "Regional liquidity partners" },
-  { label: "Average Settlement SLA", value: "< 2 Hours", sub: "Automated Paystack verification" },
-  { label: "Audit Trail Integrity", value: "100%", sub: "Cryptographic hash-chained" },
-];
 
 const vendorPerks = [
   {
@@ -44,7 +32,7 @@ const vendorPerks = [
   {
     icon: Receipt,
     title: "Real-Time Inventory Ledger",
-    desc: "Every acquired coupon code is cryptographically recorded in your vendor dashboard with live redemption tracking and delivery timestamps.",
+    desc: "Every purchased coupon appears in your vendor dashboard with its redemption status and delivery time.",
   },
   {
     icon: ShieldCheck,
@@ -67,23 +55,10 @@ export default function MarketingHomePage() {
       <section className="shell relative">
         <div className="grid items-center gap-12 lg:grid-cols-[1.12fr_0.88fr]">
           <div className="space-y-7">
-            {/* Architectural Ledger Status Tag */}
-            <div className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-emerald-950/20 px-4 py-1.5 text-xs font-mono font-bold text-emerald-400">
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex size-2 rounded-full bg-emerald-500"></span>
-              </span>
-              <span>NODE: NEON-NG-01 · DOUBLE-ENTRY VERIFIED</span>
-            </div>
-
-            {/* Asymmetric Confident Headline */}
-            <div className="space-y-3">
-              <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--accent)]">
-                [01 // SOVEREIGN ENGINE]
-              </span>
+            <div>
               <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-[var(--ink)] leading-[1.06]">
-                Exceed financial friction with{" "}
-                <span className="bg-gradient-to-r from-emerald-400 via-emerald-300 to-amber-300 bg-clip-text text-transparent">
+                Build a stronger financial future with{" "}
+                <span className="text-[var(--brand)]">
                   Great Finance
                 </span>
                 .
@@ -92,7 +67,7 @@ export default function MarketingHomePage() {
 
             {/* Subtitle */}
             <p className="max-w-2xl text-base sm:text-lg leading-relaxed text-[var(--muted)]">
-              A dual-engine financial platform: grow your capital through verified, high-yield fixed-term plans or build a profitable distribution business as an authorized regional vendor.
+              Choose a fixed-term investment plan or grow a coupon distribution business as an authorized vendor.
             </p>
 
             {/* Dual Asymmetrical Action Deck */}
@@ -101,7 +76,7 @@ export default function MarketingHomePage() {
                 href="/signup"
                 className="group relative inline-flex items-center gap-3 overflow-hidden rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 px-7 py-4 text-sm font-bold text-white shadow-xl shadow-emerald-900/30 transition hover:from-emerald-500 hover:to-emerald-400"
               >
-                <span>Open Investor Vault</span>
+                <span>Create an account</span>
                 <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />
               </Link>
 
@@ -110,31 +85,15 @@ export default function MarketingHomePage() {
                 className="inline-flex items-center gap-2.5 rounded-xl border border-amber-500/50 bg-amber-500/10 px-6 py-4 text-sm font-bold text-amber-300 shadow-sm transition hover:bg-amber-500/20"
               >
                 <Store size={18} className="text-amber-400" />
-                <span>Become Regional Vendor</span>
+                <span>Become a vendor</span>
               </Link>
 
               <Link
                 href="/plans"
                 className="inline-flex items-center gap-1.5 rounded-xl px-5 py-4 text-sm font-semibold text-[var(--ink)] hover:bg-[var(--surface-muted)] transition"
               >
-                <span>View Catalogue</span>
+                <span>View plans</span>
               </Link>
-            </div>
-
-            {/* Micro Trust Proofs */}
-            <div className="flex flex-wrap items-center gap-6 pt-4 text-xs font-mono text-[var(--muted)]">
-              <span className="flex items-center gap-2">
-                <ShieldCheck size={16} className="text-emerald-400" />
-                Double-Entry Accounting
-              </span>
-              <span className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-emerald-400" />
-                Paystack Verified
-              </span>
-              <span className="flex items-center gap-2">
-                <BadgeCheck size={16} className="text-emerald-400" />
-                Instant Coupon Issuance
-              </span>
             </div>
           </div>
 
@@ -142,25 +101,6 @@ export default function MarketingHomePage() {
           <div className="relative">
             <AminaVendorScene />
           </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 02. LEDGER TELEMETRY STRIP (NON-CARD HORIZONTAL TICKER) */}
-      {/* ========================================================================= */}
-      <section className="shell">
-        <div className="grid grid-cols-2 gap-4 rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 sm:grid-cols-4 sm:p-8 shadow-xl">
-          {metrics.map((m) => (
-            <div key={m.label} className="space-y-1 border-l-2 border-emerald-500/40 pl-4">
-              <p className="font-mono text-2xl font-black tracking-tight text-[var(--ink)] sm:text-3xl tabular-nums">
-                {m.value}
-              </p>
-              <p className="text-xs font-bold uppercase tracking-wider text-[var(--brand)]">
-                {m.label}
-              </p>
-              <p className="text-[0.72rem] text-[var(--muted)] font-mono">{m.sub}</p>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -176,14 +116,11 @@ export default function MarketingHomePage() {
       {/* ========================================================================= */}
       <section className="shell space-y-12">
         <div className="space-y-3 max-w-2xl">
-          <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
-            [02 // COMPREHENSIVE SPREAD]
-          </span>
           <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--ink)]">
-            Two parallel paths to financial sovereignty
+            Two ways to use Great Finance
           </h2>
           <p className="text-base leading-relaxed text-[var(--muted)]">
-            Whether you are deploying individual capital for fixed-term yields or building a high-margin regional coupon distribution network, Great Finance enforces mathematical transparency.
+            Invest in a fixed-term plan or purchase coupon inventory to sell as an authorized vendor.
           </p>
         </div>
 
@@ -195,9 +132,6 @@ export default function MarketingHomePage() {
                 <span className="grid size-12 place-items-center rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-400">
                   <TrendingUp size={24} />
                 </span>
-                <span className="font-mono text-xs font-bold text-emerald-400 uppercase tracking-widest">
-                  CUSTOMER TRACK
-                </span>
               </div>
 
               <div className="space-y-2">
@@ -205,7 +139,7 @@ export default function MarketingHomePage() {
                   Individual Wealth Building
                 </h3>
                 <p className="text-sm leading-relaxed text-[var(--muted)]">
-                  Invest in verified financial plans through official coupon vouchers. Your principal and returns are secured on an immutable double-entry ledger.
+                  Activate a fixed-term plan with an official coupon and follow its status from your dashboard.
                 </p>
               </div>
 
@@ -249,9 +183,6 @@ export default function MarketingHomePage() {
               <div className="flex items-center justify-between">
                 <span className="grid size-12 place-items-center rounded-2xl bg-amber-950/40 border border-amber-500/30 text-amber-400">
                   <Store size={24} />
-                </span>
-                <span className="font-mono text-xs font-bold text-amber-400 uppercase tracking-widest">
-                  DISTRIBUTOR TRACK
                 </span>
               </div>
 
@@ -306,11 +237,8 @@ export default function MarketingHomePage() {
       <section className="shell space-y-12">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between border-b border-[var(--line)] pb-6">
           <div>
-            <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
-              [03 // VERIFIED BOND CATALOGUE]
-            </span>
             <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--ink)] mt-1">
-              Guaranteed Yield Plans
+              Investment plans
             </h2>
           </div>
           <Link
@@ -406,11 +334,8 @@ export default function MarketingHomePage() {
 
         <div className="shell space-y-16 relative z-10">
           <div className="max-w-2xl space-y-4">
-            <span className="inline-block rounded-full bg-amber-500/15 border border-amber-500/30 px-3.5 py-1 text-xs font-mono font-bold text-amber-300 uppercase tracking-wider">
-              HIGH-YIELD DISTRIBUTION NETWORK
-            </span>
             <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-              Why top financial distributors partner with Great Finance
+              Why vendors choose Great Finance
             </h2>
             <p className="text-base text-white/70 leading-relaxed">
               Our vendor program provides a legitimate, low-barrier, high-margin opportunity for entrepreneurs, community leaders, and financial agents across Nigeria.
@@ -482,14 +407,11 @@ export default function MarketingHomePage() {
       {/* ========================================================================= */}
       <section className="shell space-y-12">
         <div className="space-y-3 max-w-2xl">
-          <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
-            [04 // ARCHITECTURAL INTEGRITY]
-          </span>
           <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--ink)]">
-            Built on institutional financial foundations
+            How your records are protected
           </h2>
           <p className="text-sm leading-relaxed text-[var(--muted)]">
-            We reject fragile web gimmicks. Every financial movement, coupon generation, and withdrawal is safeguarded by strict database primitives.
+            Payments, coupon activity, and withdrawal approvals are recorded with clear controls and a review history.
           </p>
         </div>
 
@@ -508,7 +430,7 @@ export default function MarketingHomePage() {
             <span className="grid size-12 place-items-center rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-400">
               <Lock size={22} />
             </span>
-            <h3 className="font-display text-lg font-bold text-[var(--ink)]">Zero-Exposure Private Vault</h3>
+            <h3 className="font-display text-lg font-bold text-[var(--ink)]">Private document storage</h3>
             <p className="text-xs leading-relaxed text-[var(--muted)]">
               KYC documents are delivered directly to private cloud storage using signed, short-lived URLs. Documents are never stored in public buckets.
             </p>
@@ -518,9 +440,9 @@ export default function MarketingHomePage() {
             <span className="grid size-12 place-items-center rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-400">
               <FileCheck2 size={22} />
             </span>
-            <h3 className="font-display text-lg font-bold text-[var(--ink)]">Cryptographic Audit Trail</h3>
+            <h3 className="font-display text-lg font-bold text-[var(--ink)]">Approval history</h3>
             <p className="text-xs leading-relaxed text-[var(--muted)]">
-              Administrative approvals and payouts generate SHA-256 hash-chained audit records, preventing retroactive modification or unauthorized tampering.
+              Administrative approvals and payouts are recorded so authorized staff can review when and why each action occurred.
             </p>
           </div>
         </div>
@@ -533,9 +455,6 @@ export default function MarketingHomePage() {
         <div className="rounded-3xl border border-[var(--line)] bg-gradient-to-br from-[var(--surface)] via-[var(--surface-muted)] to-[var(--surface)] p-8 sm:p-14 shadow-2xl">
           <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] items-center">
             <div className="space-y-5">
-              <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--accent)]">
-                [05 // DIRECT DESK]
-              </span>
               <h2 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ink)]">
                 Have questions before starting?
               </h2>

@@ -5,9 +5,9 @@ import { TundeAuditVault } from "@/components/brand/illustrations/tunde-audit-va
 import { GuillochePattern } from "@/components/brand/illustrations/guilloche-pattern";
 
 export const metadata = {
-  title: "About Great Finance · Institutional Architecture & Governance",
+  title: "About Great Finance | How the Platform Works",
   description:
-    "Learn about Great Finance, our double-entry ledger architecture, security practices, and our mission to provide transparent, verified financial yield.",
+    "Learn how Great Finance records transactions, protects customer information, and supports investment and vendor accounts.",
 };
 
 export default function AboutPage() {
@@ -19,15 +19,7 @@ export default function AboutPage() {
       <section className="shell relative">
         <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-950/20 px-4 py-1.5 text-xs font-mono font-bold text-emerald-400">
-              <ShieldCheck size={14} />
-              <span>INSTITUTIONAL GOVERNANCE & LEDGER PROFILE</span>
-            </div>
-
-            <div className="space-y-3">
-              <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--accent)]">
-                [FOUNDATION // MATHEMATICAL INVARIANTS]
-              </span>
+            <div>
               <h1 className="font-display text-4xl sm:text-6xl font-black tracking-tight text-[var(--ink)] leading-[1.08]">
                 A clearer path through every{" "}
                 <span className="text-[var(--brand)]">financial action</span>.
@@ -68,24 +60,19 @@ export default function AboutPage() {
         <div className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-8 sm:p-14 shadow-2xl space-y-8">
           <div className="grid gap-10 lg:grid-cols-[0.4fr_1fr] items-start">
             <div className="space-y-2">
-              <span className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-400">
-                Foundational Truth
-              </span>
               <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[var(--ink)]">
-                Built on Immutable Records
+                Built on balanced records
               </h2>
             </div>
             <div className="space-y-6 text-sm sm:text-base leading-relaxed text-[var(--muted)]">
               <p>{legacyExplanation}</p>
               <p>
-                Unlike informal savings clubs or opaque online schemes, Great Finance is built on modern financial engineering primitives: isolated tenant organizations, double-entry ledger accounts with debit/credit balance invariants, signed object vaults, and automated webhook reconciliation.
+                Great Finance keeps each organization separate, records matching debit and credit entries, stores documents privately, and confirms payments before updating balances.
               </p>
 
               {/* The Equation Callout */}
               <div className="rounded-2xl border border-emerald-500/30 bg-emerald-950/20 p-6 space-y-2">
-                <span className="font-mono text-xs font-bold text-emerald-400 uppercase tracking-widest block">
-                  The Universal Ledger Law
-                </span>
+                <span className="text-sm font-bold text-emerald-400 block">How balances are checked</span>
                 <p className="font-mono text-xl sm:text-2xl font-black text-[var(--ink)]">
                   ∑ Debits ≡ ∑ Credits (Assets - Liabilities = 0)
                 </p>
@@ -103,9 +90,6 @@ export default function AboutPage() {
       {/* ========================================================================= */}
       <section className="shell space-y-12">
         <div className="space-y-3">
-          <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
-            [INFRASTRUCTURE // SECURITY PROTOCOLS]
-          </span>
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ink)]">
             The Technology Behind Great Finance
           </h2>

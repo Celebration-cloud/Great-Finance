@@ -92,7 +92,7 @@ export function EmekaInvestorScene({ className }: EmekaInvestorSceneProps) {
           <rect x="14" y="14" width="100" height="8" rx="2" fill="#F59E0B" />
           <text x="14" y="38" fontFamily="system-ui" fontSize="10" fontWeight="bold" fill="#94A3B8">PLATINUM PLAN MATURITY</text>
           <text x="14" y="66" fontFamily="monospace" fontSize="22" fontWeight="900" fill="#10B981">₦70,000.00</text>
-          <text x="14" y="86" fontFamily="system-ui" fontSize="9" fill="#F8FAFC">Principal: ₦50,000 · ROI: +40%</text>
+          <text x="14" y="86" fontFamily="system-ui" fontSize="9" fill="#F8FAFC">Principal: ₦50,000, ROI: +40%</text>
 
           {/* Double-entry status tag */}
           <rect x="14" y="104" width="130" height="24" rx="4" fill="rgba(16, 185, 129, 0.15)" stroke="#10B981" strokeWidth="1" />

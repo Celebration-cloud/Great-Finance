@@ -15,7 +15,7 @@ import { AminaVendorScene } from "@/components/brand/illustrations/amina-vendor-
 import { GuillochePattern } from "@/components/brand/illustrations/guilloche-pattern";
 
 export const metadata = {
-  title: "Authorized Vendor Partner Program · Great Finance",
+  title: "Vendor Program | Great Finance",
   description:
     "Join the Great Finance authorized distributor network. Wholesale coupon discounts up to 15%, immediate retail profit, real-time inventory ledger, and dedicated partner support.",
 };
@@ -27,7 +27,7 @@ const faqs = [
   },
   {
     q: "How are acquired coupons delivered to me?",
-    a: "Once your Paystack payment completes and verifies, your coupon codes are cryptographically minted into your private Vendor Workspace (/vendor/dashboard). You can copy individual codes, view active status, and track redemption in real time.",
+    a: "Once Paystack confirms your payment, your coupon codes appear in your private Vendor Workspace (/vendor/dashboard). You can copy individual codes, view their status, and track redemption in real time.",
   },
   {
     q: "What documents are required for Tier-1 KYC verification?",
@@ -43,7 +43,7 @@ const faqs = [
   },
   {
     q: "What if a customer has difficulty redeeming a coupon I issued?",
-    a: "Every coupon has an immutable ledger entry. You and our compliance desk can verify redemption timestamp and associated customer account in real time through our administration gateway.",
+    a: "Every coupon has a permanent transaction record. You and our compliance team can check its redemption time and associated customer account from the dashboard.",
   },
 ];
 
@@ -56,15 +56,7 @@ export default function VendorsPage() {
       <section className="shell relative">
         <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
           <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/40 bg-amber-500/10 px-4 py-1.5 text-xs font-mono font-bold text-amber-300">
-              <Store size={14} className="text-amber-400" />
-              <span>OFFICIAL REGIONAL LIQUIDITY NETWORK</span>
-            </div>
-
-            <div className="space-y-3">
-              <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--accent)]">
-                [DISTRIBUTION // HIGH-MARGIN RETAIL]
-              </span>
+            <div>
               <h1 className="font-display text-4xl sm:text-6xl font-black tracking-tight text-[var(--ink)] leading-[1.08]">
                 Build a high-margin distribution business as a{" "}
                 <span className="text-[var(--brand)]">Great Finance</span> vendor.
@@ -119,10 +111,7 @@ export default function VendorsPage() {
       {/* 02. HOW THE VENDOR MODEL WORKS */}
       {/* ========================================================================= */}
       <section className="shell space-y-12">
-        <div className="space-y-3 max-w-2xl">
-          <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
-            [OPERATING ARCHITECTURE // 4 NODES]
-          </span>
+        <div className="max-w-2xl">
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ink)]">
             How the Vendor Distribution Model Works
           </h2>
@@ -152,7 +141,7 @@ export default function VendorsPage() {
             <span className="font-mono text-3xl font-black text-amber-400">03</span>
             <h3 className="font-display text-base font-bold text-[var(--ink)]">Instant Delivery</h3>
             <p className="text-xs text-[var(--muted)] leading-relaxed">
-              Cryptographically signed coupon codes are instantly minted into your private Vendor Workspace, ready for client delivery.
+              Purchased coupon codes appear in your private Vendor Workspace, ready for client delivery.
             </p>
           </div>
 
@@ -170,15 +159,12 @@ export default function VendorsPage() {
       {/* 03. WHOLESALE MARGIN TIERS MATRIX */}
       {/* ========================================================================= */}
       <section className="shell space-y-12">
-        <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--accent)]">
-            [TIERED DISCOUNTS // WHOLESALE MARGINS]
-          </span>
+        <div className="text-center max-w-2xl mx-auto">
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ink)]">
             Transparent Vendor Margin Tiers
           </h2>
           <p className="text-sm leading-relaxed text-[var(--muted)]">
-            As your distribution volume grows, your wholesale cost decreases—allowing you to generate higher net margins per coupon batch.
+            As your distribution volume grows, your wholesale cost decreases, allowing you to earn a higher margin on each coupon batch.
           </p>
         </div>
 
@@ -250,14 +236,11 @@ export default function VendorsPage() {
 
         <div className="shell space-y-16 relative z-10">
           <div className="max-w-2xl space-y-4">
-            <span className="inline-block rounded-full bg-emerald-500/15 border border-emerald-500/30 px-3.5 py-1 text-xs font-mono font-bold text-emerald-300 uppercase tracking-wider">
-              OPERATIONAL SOFTWARE
-            </span>
             <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
               Professional tools for high-volume distributors
             </h2>
             <p className="text-base text-white/70 leading-relaxed">
-              Your Great Finance Vendor Workspace gives you deep operational visibility, zero accounting headaches, and verified cryptographic proofs.
+              Your Great Finance Vendor Workspace keeps inventory, sales, and redemption activity in one place.
             </p>
           </div>
 
@@ -288,7 +271,7 @@ export default function VendorsPage() {
               </span>
               <h3 className="font-display text-lg font-bold text-white">Double-Entry Purchase History</h3>
               <p className="text-xs text-white/60 leading-relaxed">
-                Every acquisition references an immutable ledger payment intent with provider reference, timestamp, and minor unit accuracy.
+                Every purchase includes the payment reference, amount, and transaction time needed for reconciliation.
               </p>
             </div>
           </div>
@@ -299,10 +282,7 @@ export default function VendorsPage() {
       {/* 05. COMPREHENSIVE VENDOR FAQS */}
       {/* ========================================================================= */}
       <section id="faq" className="shell space-y-12">
-        <div className="space-y-3">
-          <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
-            [KNOWLEDGE BASE // VENDOR FAQS]
-          </span>
+        <div>
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ink)]">
             Frequently Asked Questions
           </h2>

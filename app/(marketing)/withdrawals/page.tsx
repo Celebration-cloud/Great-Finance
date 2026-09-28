@@ -16,9 +16,9 @@ import type { Metadata } from "next";
 import { GuillochePattern } from "@/components/brand/illustrations/guilloche-pattern";
 
 export const metadata: Metadata = {
-  title: "Withdrawals & Payouts · Great Finance",
+  title: "Withdrawals and Payouts | Great Finance",
   description:
-    "Understand exactly how Great Finance pays your investment returns — the maturity timeline, bank transfer process, and everything you need to know before requesting a payout.",
+    "Understand the maturity timeline, bank transfer process, and what you need before requesting a payout from Great Finance.",
 };
 
 const steps = [
@@ -45,7 +45,7 @@ const steps = [
   {
     icon: Zap,
     title: "Bank transfer",
-    body: "Approved payouts are processed within 1–3 business days. Funds land directly in your bank account — no wallets, no middlemen.",
+    body: "Approved payouts are processed within 1-3 business days and sent directly to your bank account.",
   },
 ];
 
@@ -88,15 +88,7 @@ export default function WithdrawalsPage() {
       {/* ========================================================================= */}
       <section className="shell relative">
         <div className="max-w-3xl space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-950/20 px-4 py-1.5 text-xs font-mono font-bold text-emerald-400">
-            <Banknote size={14} />
-            <span>DIRECT NUBAN DISBURSEMENT PROTOCOL</span>
-          </div>
-
-          <div className="space-y-3">
-            <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--accent)]">
-              [DISBURSEMENT // SETTLEMENT SLA]
-            </span>
+          <div>
             <h1 className="font-display text-4xl sm:text-6xl font-black tracking-tight text-[var(--ink)] leading-[1.08]">
               Getting your capital{" "}
               <span className="text-[var(--brand)]">back to your bank</span>.
@@ -104,7 +96,7 @@ export default function WithdrawalsPage() {
           </div>
 
           <p className="text-base sm:text-lg text-[var(--muted)] leading-relaxed">
-            Every naira you invest matures into a guaranteed return. This page explains exactly how and when you receive your payout — zero ambiguity, zero fine print, settled directly to your Nigerian commercial bank account.
+            This page explains when a plan matures, how to request a withdrawal, and when an approved payout reaches your Nigerian bank account.
           </p>
 
           <div className="flex flex-wrap items-center gap-4 pt-2">
@@ -131,7 +123,7 @@ export default function WithdrawalsPage() {
       <section className="shell">
         <div className="grid grid-cols-2 gap-4 rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 sm:grid-cols-4 sm:p-8 shadow-xl">
           {[
-            { value: "1–3 Days", label: "Settlement SLA", sub: "Same-day typical" },
+            { value: "1-3 Days", label: "Processing time", sub: "After approval" },
             { value: "₦0.00", label: "Withdrawal Fee", sub: "Zero deductions" },
             { value: "100%", label: "Direct Bank Transfer", sub: "CBN commercial banks" },
             { value: "All Banks", label: "Coverage", sub: "NUBAN licensed" },
@@ -149,10 +141,7 @@ export default function WithdrawalsPage() {
       {/* 03. 5-STEP DISBURSEMENT TIMELINE */}
       {/* ========================================================================= */}
       <section className="shell space-y-12">
-        <div className="space-y-3 max-w-2xl">
-          <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
-            [PIPELINE // 5 NODES]
-          </span>
+        <div className="max-w-2xl">
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ink)]">
             5 steps from activation to bank payout
           </h2>
@@ -199,12 +188,12 @@ export default function WithdrawalsPage() {
 
           <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface-inverse)] overflow-hidden">
             {[
-              { icon: FileText, day: "Day 0", event: "You redeem a Lincon coupon code", sub: "Invest ₦2,000 — plan locks for 7 days" },
-              { icon: Clock, day: "Days 1–6", event: "Plan is ACTIVE — automated timer runs", sub: "Dashboard shows days remaining and projected return" },
-              { icon: TrendingUp, day: "Day 7", event: "Plan matures at midnight", sub: "Withdraw button unlocks — expected return: ₦6,000" },
-              { icon: Banknote, day: "Day 7", event: "You enter your bank details and submit", sub: "NUBAN, bank name, account name — takes 30 seconds" },
-              { icon: ShieldCheck, day: "Day 7–9", event: "Settlement desk reviews and approves", sub: "Audit-logged, maker-checker verified" },
-              { icon: CheckCircle2, day: "Day 7–9", event: "₦6,000 transferred to your bank", sub: "Direct NUBAN bank credit — transaction SETTLED" },
+              { icon: FileText, day: "Day 0", event: "You redeem a Lincon coupon code", sub: "A ₦2,000 plan starts with a 7-day term" },
+              { icon: Clock, day: "Days 1-6", event: "The plan remains active", sub: "Your dashboard shows the remaining days and projected return" },
+              { icon: TrendingUp, day: "Day 7", event: "The plan matures", sub: "The withdrawal option becomes available with an expected return of ₦6,000" },
+              { icon: Banknote, day: "Day 7", event: "You submit your bank details", sub: "Enter your NUBAN, bank name, and account name" },
+              { icon: ShieldCheck, day: "Days 7-9", event: "The settlement team reviews the request", sub: "The review and approval are recorded" },
+              { icon: CheckCircle2, day: "Days 7-9", event: "₦6,000 is transferred to your bank", sub: "The dashboard marks the withdrawal as settled" },
             ].map((item, i) => (
               <div
                 key={i}
@@ -230,10 +219,7 @@ export default function WithdrawalsPage() {
       {/* 05. FAQS */}
       {/* ========================================================================= */}
       <section className="shell space-y-12">
-        <div className="space-y-3">
-          <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
-            [KNOWLEDGE BASE // SETTLEMENT FAQS]
-          </span>
+        <div>
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ink)]">
             Frequently Asked Questions
           </h2>

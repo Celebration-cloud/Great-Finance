@@ -18,7 +18,7 @@ export function SovereignMark({ className, size = 36 }: { className?: string; si
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn("shrink-0 transition-transform duration-300", className)}
-      aria-label="Great Finance Sovereign Monogram"
+      aria-label="Great Finance logo"
     >
       <defs>
         <linearGradient id="gf-emerald-grad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -87,9 +87,9 @@ export function BrandLogo({
   };
 
   const textStyles = {
-    sm: { title: "text-sm", subtitle: "text-[0.58rem]" },
-    md: { title: "text-base tracking-tight", subtitle: "text-[0.62rem]" },
-    lg: { title: "text-xl tracking-tight", subtitle: "text-[0.72rem]" },
+    sm: "text-sm",
+    md: "text-base tracking-tight",
+    lg: "text-xl tracking-tight",
   };
 
   const content = (
@@ -105,11 +105,6 @@ export function BrandLogo({
           size={pixelSizes[size]}
           className="shadow-lg shadow-emerald-950/40 group-hover:scale-105"
         />
-        {/* Subtle status pulse dot */}
-        <span className="absolute -top-0.5 -right-0.5 flex size-2">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
-          <span className="relative inline-flex size-2 rounded-full bg-emerald-500"></span>
-        </span>
       </div>
 
       {variant !== "symbol" && (
@@ -118,20 +113,12 @@ export function BrandLogo({
             <span
               className={cn(
                 "font-display font-extrabold uppercase text-[var(--ink)]",
-                textStyles[size].title
+                textStyles[size]
               )}
             >
               Great<span className="text-[var(--brand)] font-black">Finance</span>
             </span>
           </div>
-          <span
-            className={cn(
-              "font-mono font-bold tracking-widest uppercase text-[var(--muted)] block",
-              textStyles[size].subtitle
-            )}
-          >
-            Verified Balanced Ledger
-          </span>
         </div>
       )}
     </div>

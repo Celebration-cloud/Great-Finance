@@ -116,34 +116,7 @@ export function AminaVendorScene({ className }: AminaVendorSceneProps) {
 
           {/* Verification Chip Button */}
           <rect x="16" y="165" width="128" height="26" rx="6" fill="#10B981" />
-          <text x="36" y="182" fontFamily="system-ui" fontSize="9" fontWeight="bold" fill="#080C0E">BATCH DISPATCHED</text>
-        </g>
-
-        {/* ================= FLOATING HOLOGRAPHIC NODES ================= */}
-        {/* Floating Node 1: Wholesale Margin Badge */}
-        <g transform="translate(60, 180)">
-          <rect x="0" y="0" width="170" height="64" rx="10" fill="#0E1418" stroke="#F59E0B" strokeWidth="1.5" />
-          <circle cx="28" cy="32" r="16" fill="rgba(245, 158, 11, 0.15)" />
-          <text x="23" y="37" fontFamily="system-ui" fontSize="15" fontWeight="bold" fill="#F59E0B">%</text>
-          <text x="54" y="27" fontFamily="system-ui" fontSize="10" fontWeight="bold" fill="#94A3B8">WHOLESALE DISCOUNT</text>
-          <text x="54" y="47" fontFamily="monospace" fontSize="15" fontWeight="extrabold" fill="#F8FAFC">Up to 15.0%</text>
-        </g>
-
-        {/* Floating Node 2: Paystack Verified Escrow */}
-        <g transform="translate(430, 100)">
-          <rect x="0" y="0" width="170" height="56" rx="10" fill="#0E1418" stroke="#10B981" strokeWidth="1.5" />
-          <circle cx="26" cy="28" r="14" fill="rgba(16, 185, 129, 0.2)" />
-          {/* Checkmark */}
-          <path d="M21 28 L25 32 L32 23" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-          <text x="48" y="24" fontFamily="system-ui" fontSize="9" fontWeight="bold" fill="#94A3B8">PAYSTACK SECURED</text>
-          <text x="48" y="42" fontFamily="monospace" fontSize="13" fontWeight="bold" fill="#10B981">Zero Holding Risk</text>
-        </g>
-
-        {/* Floating Coupon Code Hologram Token */}
-        <g transform="translate(90, 430) rotate(8)">
-          <polygon points="6,0 154,0 160,6 160,54 154,60 6,60 0,54 0,6" fill="#151D24" stroke="#10B981" strokeWidth="1.5" />
-          <text x="14" y="24" fontFamily="monospace" fontSize="8" fill="#F59E0B">COUPON VOUCHER #GF-904</text>
-          <text x="14" y="44" fontFamily="monospace" fontSize="14" fontWeight="extrabold" fill="#F8FAFC">₦50,000 · ACTIVE</text>
+          <text x="33" y="182" fontFamily="system-ui" fontSize="9" fontWeight="bold" fill="#080C0E">COUPON INVENTORY</text>
         </g>
 
         {/* Projection Laser Guideline (linking Tablet to Base) */}

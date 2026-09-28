@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Mail, MessageCircle, Store, Clock, ArrowRight, ShieldCheck } from "lucide-react";
 
 export const metadata = {
-  title: "Contact & Institutional Support · Great Finance",
+  title: "Contact and Support | Great Finance",
   description:
     "Official communication channels for Great Finance. Reach our customer support desk and regional vendor dispatch via email and verified WhatsApp.",
 };
@@ -15,15 +15,7 @@ export default function ContactPage() {
       {/* ========================================================================= */}
       <section className="shell">
         <div className="max-w-3xl space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-950/20 px-4 py-1.5 text-xs font-mono font-bold text-emerald-400">
-            <MessageCircle size={14} />
-            <span>COMMUNICATION & VERIFICATION DESKS</span>
-          </div>
-
-          <div className="space-y-3">
-            <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--accent)]">
-              [DISPATCH // DIRECT CHANNELS]
-            </span>
+          <div>
             <h1 className="font-display text-4xl sm:text-6xl font-black tracking-tight text-[var(--ink)] leading-[1.08]">
               We are here to assist your{" "}
               <span className="text-[var(--brand)]">financial journey</span>.
@@ -47,9 +39,7 @@ export default function ContactPage() {
               <Mail size={24} />
             </span>
             <div className="space-y-3">
-              <span className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-400">
-                GENERAL ENQUIRIES & VERIFICATION
-              </span>
+              <span className="text-sm font-bold text-emerald-400">General enquiries</span>
               <h2 className="font-display text-2xl font-bold text-[var(--ink)]">
                 Official Support Email
               </h2>
@@ -75,9 +65,7 @@ export default function ContactPage() {
               <MessageCircle size={24} />
             </span>
             <div className="space-y-3">
-              <span className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-300">
-                PRIORITY VENDOR & DISPATCH
-              </span>
+              <span className="text-sm font-bold text-emerald-300">Vendor support</span>
               <h2 className="font-display text-2xl font-bold text-[var(--ink)]">
                 Direct WhatsApp Desk
               </h2>
@@ -95,7 +83,7 @@ export default function ContactPage() {
             </div>
             <div className="border-t border-[var(--line)] pt-4 flex items-center gap-2 text-xs font-mono text-emerald-400">
               <Clock size={14} />
-              <span>Hours: Mon – Sat, 8:00 AM – 8:00 PM WAT</span>
+              <span>Hours: Mon-Sat, 8:00 AM-8:00 PM WAT</span>
             </div>
           </div>
         </div>
@@ -108,9 +96,7 @@ export default function ContactPage() {
         <div className="rounded-3xl border border-amber-500/30 bg-gradient-to-r from-[var(--surface)] via-amber-950/10 to-[var(--surface)] p-8 sm:p-14 space-y-6 shadow-xl">
           <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="space-y-2">
-              <span className="font-mono text-xs font-bold uppercase tracking-wider text-amber-400">
-                Distributor Operations
-              </span>
+              <span className="text-sm font-bold text-amber-400">Distributor operations</span>
               <h3 className="font-display text-2xl sm:text-3xl font-bold text-[var(--ink)]">
                 Looking to Become an Authorized Regional Vendor?
               </h3>
