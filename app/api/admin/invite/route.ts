@@ -10,7 +10,7 @@ import { sendEmail } from "@/lib/email/mailer";
 const inviteAdminSchema = z.object({
   email: z.string().email("A valid email address is required."),
   role: z.enum(["ADMIN", "REVIEWER"], {
-    errorMap: () => ({ message: "Role must be ADMIN or REVIEWER." }),
+    error: "Role must be ADMIN or REVIEWER.",
   }),
   note: z.string().max(500).optional(),
 });
