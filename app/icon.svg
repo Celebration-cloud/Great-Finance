@@ -1,0 +1,28 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 100 100"
+  role="img"
+  aria-label="Great Finance mark"
+>
+  <defs>
+    <linearGradient id="emerald" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#10b981" />
+      <stop offset="1" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="ochre" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fbbf24" />
+      <stop offset="1" stop-color="#d97706" />
+    </linearGradient>
+  </defs>
+
+  <path
+    d="M14 1h72l13 13v72L86 99H14L1 86V14L14 1Z"
+    fill="#0e1418"
+    stroke="#33404b"
+    stroke-width="2"
+  />
+  <path d="M26 24h48v12H42v8h24v12H42v20H26V24Z" fill="url(#emerald)" />
+  <path d="M74 48H58v12h4v4H44v10h30V48Z" fill="url(#ochre)" />
+  <path d="m50 42 8 8-8 8-8-8 8-8Z" fill="#080c0e" stroke="#10b981" stroke-width="2" />
+  <circle cx="50" cy="50" r="2.5" fill="#fbbf24" />
+</svg>
