@@ -4,6 +4,7 @@ import {
   BadgeCheck,
   CheckCircle2,
   FileCheck2,
+  HelpCircle,
   Landmark,
   Lock,
   Mail,
@@ -11,15 +12,20 @@ import {
   Percent,
   Receipt,
   ShieldCheck,
+  Sparkles,
   Store,
   TrendingUp,
+  Zap,
 } from "lucide-react";
 import { investmentPlans } from "@/features/content/legacy-content";
+import { AminaVendorScene } from "@/components/brand/illustrations/amina-vendor-scene";
+import { KineticLedgerWheel } from "@/components/brand/illustrations/kinetic-ledger-wheel";
+import { GuillochePattern } from "@/components/brand/illustrations/guilloche-pattern";
 
 export const metadata = {
-  title: "Great Finance · Institutional Ledger, Verified Yield & Vendor Network",
+  title: "Great Finance · Institutional Ledger, Verified Yield & Regional Distribution",
   description:
-    "Exceed your financial struggles with Great Finance. Verifiable double-entry ledgers, high-yield investment plans, and a high-margin authorized vendor distribution network.",
+    "Exceed your financial struggles with Great Finance. Verifiable double-entry ledgers, high-yield investment plans, and a high-margin authorized vendor distribution network across Nigeria.",
 };
 
 const metrics = [
@@ -54,277 +60,264 @@ const vendorPerks = [
 
 export default function MarketingHomePage() {
   return (
-    <div className="space-y-24 py-10 sm:space-y-32 sm:py-16">
-      {/* Hero Section */}
-      <section className="shell">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+    <div className="space-y-24 py-8 sm:space-y-36 sm:py-14">
+      {/* ========================================================================= */}
+      {/* 01. SIGNATURE HERO SECTION: THE KINETIC LEDGER */}
+      {/* ========================================================================= */}
+      <section className="shell relative">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.12fr_0.88fr]">
           <div className="space-y-7">
-            {/* Live Indicator Pill */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--brand)]/20 bg-[var(--brand)]/5 px-3.5 py-1 text-xs font-bold text-[var(--brand)]">
+            {/* Architectural Ledger Status Tag */}
+            <div className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-emerald-950/20 px-4 py-1.5 text-xs font-mono font-bold text-emerald-400">
               <span className="relative flex size-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--brand)] opacity-75"></span>
-                <span className="relative inline-flex size-2 rounded-full bg-[var(--brand)]"></span>
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex size-2 rounded-full bg-emerald-500"></span>
               </span>
-              <span>VERIFIED INSTITUTIONAL LEDGER & VENDOR NETWORK</span>
+              <span>NODE: NEON-NG-01 · DOUBLE-ENTRY VERIFIED</span>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl font-extrabold tracking-tight text-[var(--ink)] sm:text-6xl sm:leading-[1.08] lg:text-7xl">
-              Exceed your financial struggles today with{" "}
-              <span className="bg-gradient-to-r from-[var(--brand)] to-[var(--brand-dark)] bg-clip-text text-transparent">
-                Great Finance
+            {/* Asymmetric Confident Headline */}
+            <div className="space-y-3">
+              <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--accent)]">
+                [01 // SOVEREIGN ENGINE]
               </span>
-              .
-            </h1>
+              <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-[var(--ink)] leading-[1.06]">
+                Exceed financial friction with{" "}
+                <span className="bg-gradient-to-r from-emerald-400 via-emerald-300 to-amber-300 bg-clip-text text-transparent">
+                  Great Finance
+                </span>
+                .
+              </h1>
+            </div>
 
             {/* Subtitle */}
-            <p className="max-w-2xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
-              A dual-engine financial platform: grow your personal wealth with audited, high-yield investment plans or build a profitable distribution business as an authorized regional vendor.
+            <p className="max-w-2xl text-base sm:text-lg leading-relaxed text-[var(--muted)]">
+              A dual-engine financial platform: grow your capital through verified, high-yield fixed-term plans or build a profitable distribution business as an authorized regional vendor.
             </p>
 
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3.5 pt-2">
+            {/* Dual Asymmetrical Action Deck */}
+            <div className="flex flex-wrap items-center gap-4 pt-2">
               <Link
                 href="/signup"
-                className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand)] px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-[var(--brand)]/25 transition hover:bg-[var(--brand-dark)]"
+                className="group relative inline-flex items-center gap-3 overflow-hidden rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 px-7 py-4 text-sm font-bold text-white shadow-xl shadow-emerald-900/30 transition hover:from-emerald-500 hover:to-emerald-400"
               >
-                <span>Create Customer Account</span>
-                <ArrowRight size={16} />
+                <span>Open Investor Vault</span>
+                <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />
               </Link>
 
               <Link
                 href="/vendor/signup"
-                className="inline-flex items-center gap-2 rounded-xl border border-[var(--accent)]/60 bg-gradient-to-r from-[var(--accent)]/20 to-[var(--accent)]/5 px-6 py-3.5 text-sm font-bold text-[var(--accent-dark)] shadow-sm transition hover:bg-[var(--accent)]/30"
+                className="inline-flex items-center gap-2.5 rounded-xl border border-amber-500/50 bg-amber-500/10 px-6 py-4 text-sm font-bold text-amber-300 shadow-sm transition hover:bg-amber-500/20"
               >
-                <Store size={18} />
-                <span>Register as Vendor Partner</span>
+                <Store size={18} className="text-amber-400" />
+                <span>Become Regional Vendor</span>
               </Link>
 
               <Link
                 href="/plans"
-                className="inline-flex items-center gap-1.5 rounded-xl px-5 py-3.5 text-sm font-semibold text-[var(--ink)] hover:bg-[var(--surface-muted)] transition"
+                className="inline-flex items-center gap-1.5 rounded-xl px-5 py-4 text-sm font-semibold text-[var(--ink)] hover:bg-[var(--surface-muted)] transition"
               >
-                <span>View Plans</span>
+                <span>View Catalogue</span>
               </Link>
             </div>
 
-            {/* Micro Trust Points */}
-            <div className="flex flex-wrap items-center gap-6 pt-3 text-xs text-[var(--muted)]">
-              <span className="flex items-center gap-1.5 font-medium">
-                <ShieldCheck size={16} className="text-emerald-600" />
+            {/* Micro Trust Proofs */}
+            <div className="flex flex-wrap items-center gap-6 pt-4 text-xs font-mono text-[var(--muted)]">
+              <span className="flex items-center gap-2">
+                <ShieldCheck size={16} className="text-emerald-400" />
                 Double-Entry Accounting
               </span>
-              <span className="flex items-center gap-1.5 font-medium">
-                <CheckCircle2 size={16} className="text-emerald-600" />
+              <span className="flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-400" />
                 Paystack Verified
               </span>
-              <span className="flex items-center gap-1.5 font-medium">
-                <BadgeCheck size={16} className="text-emerald-600" />
+              <span className="flex items-center gap-2">
+                <BadgeCheck size={16} className="text-emerald-400" />
                 Instant Coupon Issuance
               </span>
             </div>
           </div>
 
-          {/* Right Hero Graphic Card */}
+          {/* Right Hero Integrated Vector Artwork (Amina, The Regional Vendor) */}
           <div className="relative">
-            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[var(--surface-inverse)] via-[var(--surface)] to-[var(--paper)] p-8 text-white shadow-2xl shadow-black/20">
-              <div className="absolute -right-16 -top-16 size-56 rounded-full bg-[var(--brand)]/30 blur-3xl pointer-events-none" />
-              <div className="absolute -bottom-16 -left-16 size-56 rounded-full bg-[var(--accent)]/15 blur-3xl pointer-events-none" />
-
-              <div className="relative space-y-6">
-                <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                  <div className="flex items-center gap-2.5">
-                    <span className="grid size-9 place-items-center rounded-lg bg-white/10 text-[var(--accent)]">
-                      <Landmark size={18} />
-                    </span>
-                    <div>
-                      <p className="text-xs font-bold text-white">Great Finance Core</p>
-                      <p className="text-[0.65rem] text-white/60">Live Production Ledger</p>
-                    </div>
-                  </div>
-                  <span className="rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-[0.68rem] font-bold text-emerald-400">
-                    Active Node
-                  </span>
-                </div>
-
-                {/* Simulated Ledger Entry */}
-                <div className="rounded-xl border border-white/10 bg-white/5 p-4 space-y-3">
-                  <p className="text-xs font-semibold text-white/70">Verified Coupon Settlement</p>
-                  <div className="flex items-baseline justify-between">
-                    <span className="text-2xl font-extrabold tracking-tight text-white tabular-nums">₦150,000.00</span>
-                    <span className="text-xs font-semibold text-emerald-400">+100% Guaranteed</span>
-                  </div>
-                  <div className="flex items-center justify-between text-[0.68rem] text-white/50 pt-1 border-t border-white/5">
-                    <span>Batch #GF-2026-904</span>
-                    <span>Status: POSTED</span>
-                  </div>
-                </div>
-
-                {/* Two Column Feature Highlight */}
-                <div className="grid grid-cols-2 gap-3 pt-2">
-                  <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
-                    <p className="text-[0.68rem] font-bold uppercase tracking-wider text-[var(--accent)]">For Investors</p>
-                    <p className="mt-1 text-xs text-white/80 font-medium">Guaranteed return durations from 30 to 120 days.</p>
-                  </div>
-                  <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
-                    <p className="text-[0.68rem] font-bold uppercase tracking-wider text-emerald-400">For Vendors</p>
-                    <p className="mt-1 text-xs text-white/80 font-medium">Direct bulk coupon distribution with instant margins.</p>
-                  </div>
-                </div>
-
-                <div className="pt-2">
-                  <Link
-                    href="/vendor/signup"
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--accent)] py-3 text-xs font-extrabold text-[var(--surface-inverse)] shadow transition hover:bg-[var(--accent)]/90"
-                  >
-                    <Store size={15} />
-                    <span>Apply for Authorized Vendor Status</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
+            <AminaVendorScene />
           </div>
         </div>
       </section>
 
-      {/* Metrics Strip */}
+      {/* ========================================================================= */}
+      {/* 02. LEDGER TELEMETRY STRIP (NON-CARD HORIZONTAL TICKER) */}
+      {/* ========================================================================= */}
       <section className="shell">
-        <div className="grid grid-cols-2 gap-4 rounded-2xl border border-[var(--line)] bg-white p-6 shadow-sm sm:grid-cols-4 sm:p-8">
+        <div className="grid grid-cols-2 gap-4 rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 sm:grid-cols-4 sm:p-8 shadow-xl">
           {metrics.map((m) => (
-            <div key={m.label} className="space-y-1">
-              <p className="text-2xl font-black tracking-tight text-[var(--ink)] sm:text-3xl tabular-nums">{m.value}</p>
-              <p className="text-xs font-bold text-[var(--brand)]">{m.label}</p>
-              <p className="text-[0.7rem] text-[var(--muted)]">{m.sub}</p>
+            <div key={m.label} className="space-y-1 border-l-2 border-emerald-500/40 pl-4">
+              <p className="font-mono text-2xl font-black tracking-tight text-[var(--ink)] sm:text-3xl tabular-nums">
+                {m.value}
+              </p>
+              <p className="text-xs font-bold uppercase tracking-wider text-[var(--brand)]">
+                {m.label}
+              </p>
+              <p className="text-[0.72rem] text-[var(--muted)] font-mono">{m.sub}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Dual Ecosystem: Investor vs Vendor Breakdown */}
+      {/* ========================================================================= */}
+      {/* 03. SIGNATURE MOMENT 1: KINETIC DOUBLE-ENTRY ECOSYSTEM */}
+      {/* ========================================================================= */}
+      <section className="shell">
+        <KineticLedgerWheel />
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 04. EDITORIAL DUAL SPREAD: INVESTOR VS VENDOR FOLIO */}
+      {/* ========================================================================= */}
       <section className="shell space-y-12">
-        <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <p className="eyebrow">Comprehensive Ecosystem</p>
-          <h2 className="text-3xl font-extrabold tracking-tight text-[var(--ink)] sm:text-4xl">
-            Two powerful ways to capitalize with Great Finance
+        <div className="space-y-3 max-w-2xl">
+          <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
+            [02 // COMPREHENSIVE SPREAD]
+          </span>
+          <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--ink)]">
+            Two parallel paths to financial sovereignty
           </h2>
-          <p className="text-sm leading-relaxed text-[var(--muted)]">
-            Whether you want passive returns on personal investments or an active, profitable distribution business, our platform provides complete transparency.
+          <p className="text-base leading-relaxed text-[var(--muted)]">
+            Whether you are deploying individual capital for fixed-term yields or building a high-margin regional coupon distribution network, Great Finance enforces mathematical transparency.
           </p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-2">
-          {/* Card 1: Individual Investor */}
-          <div className="card flex flex-col justify-between p-8 sm:p-10 transition hover:shadow-lg">
+        <div className="grid gap-8 lg:grid-cols-2 items-stretch">
+          {/* Folio Left: Individual Customer Path */}
+          <div className="relative flex flex-col justify-between rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-8 sm:p-12 shadow-xl overflow-hidden group hover:border-emerald-500/40 transition">
             <div className="space-y-6">
-              <div className="inline-flex size-12 items-center justify-center rounded-xl bg-[var(--brand)]/10 text-[var(--brand)]">
-                <TrendingUp size={24} />
+              <div className="flex items-center justify-between">
+                <span className="grid size-12 place-items-center rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-400">
+                  <TrendingUp size={24} />
+                </span>
+                <span className="font-mono text-xs font-bold text-emerald-400 uppercase tracking-widest">
+                  CUSTOMER TRACK
+                </span>
               </div>
+
               <div className="space-y-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-[var(--brand)]">Customer Track</span>
-                <h3 className="text-2xl font-bold tracking-tight text-[var(--ink)]">Individual Wealth Building</h3>
-                <p className="text-sm text-[var(--muted)] leading-relaxed">
+                <h3 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[var(--ink)]">
+                  Individual Wealth Building
+                </h3>
+                <p className="text-sm leading-relaxed text-[var(--muted)]">
                   Invest in verified financial plans through official coupon vouchers. Your principal and returns are secured on an immutable double-entry ledger.
                 </p>
               </div>
 
-              <ul className="space-y-3 text-sm text-[var(--ink)]/80">
-                <li className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
-                  <span>Returns starting from ₦10,000 up to ₦150,000 plans</span>
+              <ul className="space-y-3.5 text-sm text-[var(--ink)]/90 pt-2 font-medium">
+                <li className="flex items-center gap-3">
+                  <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
+                  <span>Fixed yields starting from ₦2,000 up to ₦50,000 plans</span>
                 </li>
-                <li className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
-                  <span>Automated redemption via vendor or direct online payment</span>
+                <li className="flex items-center gap-3">
+                  <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
+                  <span>Instant activation via authorized regional vendor or Paystack</span>
                 </li>
-                <li className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
-                  <span>Transparent referral bonuses with live tracking dashboard</span>
+                <li className="flex items-center gap-3">
+                  <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
+                  <span>Transparent referral incentives with live workspace attribution</span>
                 </li>
-                <li className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
-                  <span>Withdraw directly to your verified commercial bank account</span>
+                <li className="flex items-center gap-3">
+                  <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
+                  <span>Direct automated disbursement to your verified CBN bank account</span>
                 </li>
               </ul>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-[var(--line)]">
+            <div className="mt-10 pt-6 border-t border-[var(--line)] flex items-center justify-between">
               <Link
                 href="/signup"
-                className="inline-flex items-center gap-2 text-sm font-bold text-[var(--brand)] hover:underline"
+                className="inline-flex items-center gap-2 text-sm font-bold text-emerald-400 hover:text-emerald-300 transition"
               >
-                <span>Register as Customer</span>
+                <span>Register Customer Account</span>
                 <ArrowRight size={16} />
+              </Link>
+              <Link href="/plans" className="text-xs font-mono text-[var(--muted)] hover:underline">
+                View All Plans →
               </Link>
             </div>
           </div>
 
-          {/* Card 2: Distribution Vendor */}
-          <div className="card flex flex-col justify-between bg-gradient-to-b from-[var(--surface)] to-[var(--surface-muted)]/50 p-8 sm:p-10 transition hover:shadow-lg">
+          {/* Folio Right: Authorized Vendor Path */}
+          <div className="relative flex flex-col justify-between rounded-3xl border border-amber-500/30 bg-gradient-to-b from-[var(--surface)] to-amber-950/10 p-8 sm:p-12 shadow-xl overflow-hidden group hover:border-amber-500/50 transition">
             <div className="space-y-6">
-              <div className="inline-flex size-12 items-center justify-center rounded-xl bg-[var(--accent)]/20 text-[var(--accent-dark)]">
-                <Store size={24} />
+              <div className="flex items-center justify-between">
+                <span className="grid size-12 place-items-center rounded-2xl bg-amber-950/40 border border-amber-500/30 text-amber-400">
+                  <Store size={24} />
+                </span>
+                <span className="font-mono text-xs font-bold text-amber-400 uppercase tracking-widest">
+                  DISTRIBUTOR TRACK
+                </span>
               </div>
+
               <div className="space-y-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-[var(--accent-dark)]">Vendor Track</span>
-                <h3 className="text-2xl font-bold tracking-tight text-[var(--ink)]">Authorized Distribution Partner</h3>
-                <p className="text-sm text-[var(--muted)] leading-relaxed">
-                  Become an authorized regional vendor. Acquire coupon inventory in bulk at exclusive wholesale discounts and distribute to customers for immediate retail margin.
+                <h3 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[var(--ink)]">
+                  Authorized Regional Vendor
+                </h3>
+                <p className="text-sm leading-relaxed text-[var(--muted)]">
+                  Become an authorized regional partner. Acquire coupon inventory in bulk at exclusive wholesale discounts and distribute to customers for immediate retail profit.
                 </p>
               </div>
 
-              <ul className="space-y-3 text-sm text-[var(--ink)]/80">
-                <li className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-[var(--accent-dark)] shrink-0" />
+              <ul className="space-y-3.5 text-sm text-[var(--ink)]/90 pt-2 font-medium">
+                <li className="flex items-center gap-3">
+                  <CheckCircle2 size={16} className="text-amber-400 shrink-0" />
                   <span>Earn up to 15% wholesale profit margin per coupon batch</span>
                 </li>
-                <li className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-[var(--accent-dark)] shrink-0" />
-                  <span>Serve offline investors who prefer cash, USSD, or direct bank transfer</span>
+                <li className="flex items-center gap-3">
+                  <CheckCircle2 size={16} className="text-amber-400 shrink-0" />
+                  <span>Serve community investors who prefer cash, USSD, or direct transfer</span>
                 </li>
-                <li className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-[var(--accent-dark)] shrink-0" />
-                  <span>Full inventory tracking dashboard with real-time redemption logs</span>
+                <li className="flex items-center gap-3">
+                  <CheckCircle2 size={16} className="text-amber-400 shrink-0" />
+                  <span>Private vendor dashboard with live inventory & redemption logs</span>
                 </li>
-                <li className="flex items-center gap-2.5">
-                  <CheckCircle2 size={16} className="text-[var(--accent-dark)] shrink-0" />
-                  <span>Fast KYC verification with dedicated WhatsApp partner support</span>
+                <li className="flex items-center gap-3">
+                  <CheckCircle2 size={16} className="text-amber-400 shrink-0" />
+                  <span>Fast Tier-1 KYC verification with dedicated WhatsApp partner desk</span>
                 </li>
               </ul>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-[var(--line)] flex items-center justify-between">
+            <div className="mt-10 pt-6 border-t border-[var(--line)] flex items-center justify-between">
               <Link
                 href="/vendor/signup"
-                className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand)] px-5 py-2.5 text-xs font-bold text-white hover:bg-[var(--brand-dark)] transition"
+                className="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-5 py-2.5 text-xs font-bold text-[var(--surface-inverse)] shadow hover:bg-amber-400 transition"
               >
-                <span>Register as Vendor</span>
+                <span>Apply as Authorized Vendor</span>
                 <ArrowRight size={14} />
               </Link>
-              <Link
-                href="/vendors"
-                className="text-xs font-bold text-[var(--accent-dark)] hover:underline"
-              >
-                View Vendor Guide →
+              <Link href="/vendors" className="text-xs font-mono text-amber-300 hover:underline">
+                Vendor Margin Guide →
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Investment Plans Preview */}
+      {/* ========================================================================= */}
+      {/* 05. TABULAR BOND CATALOGUE: INVESTMENT PLANS */}
+      {/* ========================================================================= */}
       <section className="shell space-y-12">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between border-b border-[var(--line)] pb-6">
           <div>
-            <p className="eyebrow">Catalogue</p>
-            <h2 className="text-3xl font-extrabold tracking-tight text-[var(--ink)] sm:text-4xl">
-              Verified Investment Yields
+            <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
+              [03 // VERIFIED BOND CATALOGUE]
+            </span>
+            <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--ink)] mt-1">
+              Guaranteed Yield Plans
             </h2>
           </div>
           <Link
             href="/plans"
-            className="inline-flex items-center gap-1.5 text-sm font-bold text-[var(--brand)] hover:underline"
+            className="inline-flex items-center gap-2 text-sm font-bold text-emerald-400 hover:underline"
           >
-            <span>View All Plans & Tenure Details</span>
+            <span>Explore Full Catalogue</span>
             <ArrowRight size={16} />
           </Link>
         </div>
@@ -332,57 +325,69 @@ export default function MarketingHomePage() {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {investmentPlans.map((plan, index) => {
             const isFeatured = index === 3;
+            const yieldPercent = Math.round(((plan.returnAmount - plan.amount) / plan.amount) * 100);
             return (
               <article
                 key={plan.name}
-                className={`relative flex flex-col justify-between rounded-2xl p-7 transition ${
+                className={`relative flex flex-col justify-between rounded-3xl p-8 transition-all ${
                   isFeatured
-                    ? "bg-gradient-to-br from-[var(--brand)] to-[var(--brand-dark)] text-white shadow-xl shadow-[var(--brand)]/20"
-                    : "border border-[var(--line)] bg-white shadow-sm hover:shadow-md"
+                    ? "border-2 border-emerald-500 bg-gradient-to-br from-emerald-950/60 to-[var(--surface)] shadow-2xl shadow-emerald-950/50"
+                    : "border border-[var(--line)] bg-[var(--surface)] hover:border-emerald-500/30"
                 }`}
               >
-                <div className="space-y-4">
+                {isFeatured && (
+                  <span className="absolute -top-3 right-6 rounded-full bg-amber-400 px-3 py-0.5 text-[0.68rem] font-mono font-black text-[var(--surface-inverse)] uppercase tracking-wider">
+                    FEATURED TIER
+                  </span>
+                )}
+
+                <div className="space-y-6">
                   <div className="flex items-center justify-between">
-                    <span
-                      className={`text-xs font-bold uppercase tracking-wider ${
-                        isFeatured ? "text-[var(--accent)]" : "text-[var(--brand)]"
-                      }`}
-                    >
+                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-400">
                       {plan.name}
                     </span>
-                    <span
-                      className={`rounded-full px-2.5 py-0.5 text-[0.65rem] font-bold ${
-                        isFeatured ? "bg-white/20 text-white" : "bg-[var(--surface-muted)] text-[var(--muted)]"
-                      }`}
-                    >
-                      {plan.duration} Days
+                    <span className="rounded-full bg-white/5 border border-white/10 px-3 py-1 font-mono text-xs font-bold text-[var(--ink)]">
+                      {plan.duration} Days Tenure
                     </span>
                   </div>
 
                   <div>
-                    <p className={`text-xs ${isFeatured ? "text-white/70" : "text-[var(--muted)]"}`}>Principal Required</p>
-                    <p className="text-3xl font-extrabold tabular-nums tracking-tight">
+                    <p className="text-xs font-mono uppercase text-[var(--muted)]">Principal Investment</p>
+                    <p className="font-mono text-3xl sm:text-4xl font-black text-[var(--ink)] tabular-nums mt-1">
                       ₦{plan.amount.toLocaleString("en-NG")}
                     </p>
                   </div>
 
-                  <div className={`rounded-xl p-3.5 ${isFeatured ? "bg-white/10" : "bg-[var(--surface-muted)]"}`}>
-                    <p className={`text-xs ${isFeatured ? "text-white/70" : "text-[var(--muted)]"}`}>Matured Return Payout</p>
-                    <p className="text-xl font-bold tabular-nums text-emerald-400">
+                  <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface-muted)]/60 p-4">
+                    <div className="flex items-baseline justify-between">
+                      <span className="text-xs font-mono text-[var(--muted)]">Guaranteed Matured Return</span>
+                      <span className="text-xs font-mono font-bold text-emerald-400">+{yieldPercent}% ROI</span>
+                    </div>
+                    <p className="font-mono text-2xl font-black text-emerald-400 tabular-nums mt-1">
                       ₦{plan.returnAmount.toLocaleString("en-NG")}
                     </p>
                   </div>
+
+                  <ul className="space-y-2.5 text-xs text-[var(--muted)]">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 size={14} className="text-emerald-400 shrink-0" />
+                      <span>Instant coupon voucher activation</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 size={14} className="text-emerald-400 shrink-0" />
+                      <span>Automated NUBAN bank settlement on maturity</span>
+                    </li>
+                  </ul>
                 </div>
 
-                <div className="mt-6 pt-5 border-t border-current/15 flex items-center justify-between">
-                  <span className="text-xs font-medium">Coupon Activated</span>
+                <div className="mt-8 pt-6 border-t border-[var(--line)] flex items-center justify-between">
+                  <span className="text-xs font-mono text-[var(--muted)]">Single Coupon Mint</span>
                   <Link
                     href="/dashboard/investment"
-                    className={`text-xs font-bold hover:underline ${
-                      isFeatured ? "text-[var(--accent)]" : "text-[var(--brand)]"
-                    }`}
+                    className="inline-flex items-center gap-1.5 font-mono text-xs font-extrabold text-emerald-400 hover:text-emerald-300"
                   >
-                    Invest Now →
+                    <span>Invest Now</span>
+                    <ArrowRight size={14} />
                   </Link>
                 </div>
               </article>
@@ -391,14 +396,20 @@ export default function MarketingHomePage() {
         </div>
       </section>
 
-      {/* Vendor Partner Detailed Spotlight Section */}
-      <section className="bg-gradient-to-b from-[var(--surface-inverse)] to-[var(--paper)] py-20 text-white">
-        <div className="shell space-y-16">
+      {/* ========================================================================= */}
+      {/* 06. WHOLESALE DISTRIBUTOR NETWORK SPOTLIGHT & ROADMAP */}
+      {/* ========================================================================= */}
+      <section className="bg-[var(--surface-inverse)] py-20 border-y border-[var(--line)] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-15 pointer-events-none">
+          <GuillochePattern />
+        </div>
+
+        <div className="shell space-y-16 relative z-10">
           <div className="max-w-2xl space-y-4">
-            <span className="inline-block rounded-full bg-[var(--accent)]/15 px-3 py-1 text-xs font-bold text-[var(--accent)] uppercase tracking-wider">
-              High-Yield Distribution Network
+            <span className="inline-block rounded-full bg-amber-500/15 border border-amber-500/30 px-3.5 py-1 text-xs font-mono font-bold text-amber-300 uppercase tracking-wider">
+              HIGH-YIELD DISTRIBUTION NETWORK
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight sm:text-5xl">
+            <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
               Why top financial distributors partner with Great Finance
             </h2>
             <p className="text-base text-white/70 leading-relaxed">
@@ -410,53 +421,55 @@ export default function MarketingHomePage() {
             {vendorPerks.map((perk) => (
               <div
                 key={perk.title}
-                className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 space-y-4 hover:bg-white/[0.07] transition"
+                className="rounded-3xl border border-white/10 bg-white/[0.03] p-7 space-y-4 hover:border-amber-500/40 transition"
               >
-                <span className="grid size-11 place-items-center rounded-xl bg-white/10 text-[var(--accent)]">
+                <span className="grid size-12 place-items-center rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400">
                   <perk.icon size={22} />
                 </span>
-                <h3 className="text-base font-bold text-white">{perk.title}</h3>
+                <h3 className="font-display text-base font-bold text-white">{perk.title}</h3>
                 <p className="text-xs leading-relaxed text-white/60">{perk.desc}</p>
               </div>
             ))}
           </div>
 
           {/* 3-Step Vendor Onboarding Roadmap */}
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 sm:p-12 space-y-8">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div className="rounded-3xl border border-white/10 bg-[var(--surface)] p-8 sm:p-12 space-y-8">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-white/10 pb-5">
               <div>
-                <h3 className="text-xl font-bold text-white">3 Simple Steps to Start Earning as a Vendor</h3>
-                <p className="text-xs text-white/60">Fast onboarding, instantaneous activation upon KYC review</p>
+                <h3 className="font-display text-xl sm:text-2xl font-bold text-white">
+                  3 Simple Steps to Start Earning as a Vendor
+                </h3>
+                <p className="text-xs font-mono text-white/60">Fast onboarding, instantaneous activation upon KYC review</p>
               </div>
               <Link
                 href="/vendor/signup"
-                className="inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-5 py-2.5 text-xs font-bold text-[var(--surface-inverse)] shadow hover:bg-[var(--accent)]/90 transition"
+                className="inline-flex items-center gap-2 rounded-xl bg-amber-400 px-5 py-2.5 text-xs font-mono font-black text-[var(--surface-inverse)] shadow hover:bg-amber-300 transition"
               >
                 <span>Register as Vendor Now</span>
                 <ArrowRight size={14} />
               </Link>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid gap-8 md:grid-cols-3">
               <div className="space-y-3">
-                <span className="font-mono text-2xl font-bold text-[var(--accent)]">01</span>
-                <h4 className="text-sm font-bold text-white">Create Vendor Profile</h4>
+                <span className="font-mono text-3xl font-black text-amber-400">01</span>
+                <h4 className="font-display text-base font-bold text-white">Create Vendor Profile</h4>
                 <p className="text-xs leading-relaxed text-white/60">
                   Register with your business or personal name, active email, and WhatsApp telephone number for verification.
                 </p>
               </div>
               <div className="space-y-3">
-                <span className="font-mono text-2xl font-bold text-[var(--accent)]">02</span>
-                <h4 className="text-sm font-bold text-white">Submit Tier-1 KYC</h4>
+                <span className="font-mono text-3xl font-black text-amber-400">02</span>
+                <h4 className="font-display text-base font-bold text-white">Submit Tier-1 KYC</h4>
                 <p className="text-xs leading-relaxed text-white/60">
-                  Upload a verified government identity document and quick selfie via our encrypted, zero-exposure document vault.
+                  Upload a verified government identity document (NIN, Passport, Voter's Card) via our encrypted document vault.
                 </p>
               </div>
               <div className="space-y-3">
-                <span className="font-mono text-2xl font-bold text-[var(--accent)]">03</span>
-                <h4 className="text-sm font-bold text-white">Acquire & Distribute</h4>
+                <span className="font-mono text-3xl font-black text-amber-400">03</span>
+                <h4 className="font-display text-base font-bold text-white">Acquire & Distribute</h4>
                 <p className="text-xs leading-relaxed text-white/60">
-                  Purchase coupon packs in bulk at wholesale rates using Paystack, sell to investors, and pocket instant margins.
+                  Purchase coupon packs in bulk at wholesale discount using Paystack, distribute to investors, and pocket instant margins.
                 </p>
               </div>
             </div>
@@ -464,58 +477,66 @@ export default function MarketingHomePage() {
         </div>
       </section>
 
-      {/* Security & Architectural Integrity */}
+      {/* ========================================================================= */}
+      {/* 07. INSTITUTIONAL GOVERNANCE & SECURITY BLUEPRINT */}
+      {/* ========================================================================= */}
       <section className="shell space-y-12">
-        <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <p className="eyebrow">Enterprise Governance</p>
-          <h2 className="text-3xl font-extrabold tracking-tight text-[var(--ink)] sm:text-4xl">
+        <div className="space-y-3 max-w-2xl">
+          <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
+            [04 // ARCHITECTURAL INTEGRITY]
+          </span>
+          <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--ink)]">
             Built on institutional financial foundations
           </h2>
           <p className="text-sm leading-relaxed text-[var(--muted)]">
-            We reject fragile web gimmicks. Every financial movement, coupon generation, and withdrawal is safeguarded by institutional database primitives.
+            We reject fragile web gimmicks. Every financial movement, coupon generation, and withdrawal is safeguarded by strict database primitives.
           </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
-          <div className="card p-7 space-y-4">
-            <span className="grid size-10 place-items-center rounded-xl bg-[var(--brand)]/10 text-[var(--brand)]">
-              <ShieldCheck size={20} />
+          <div className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-8 space-y-4">
+            <span className="grid size-12 place-items-center rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-400">
+              <ShieldCheck size={22} />
             </span>
-            <h3 className="text-base font-bold text-[var(--ink)]">Double-Entry Ledger Integrity</h3>
+            <h3 className="font-display text-lg font-bold text-[var(--ink)]">Double-Entry Ledger Integrity</h3>
             <p className="text-xs leading-relaxed text-[var(--muted)]">
-              Every deposit, coupon sale, and interest payment creates balanced debit and credit entries. Total assets always reconcile against liabilities.
+              Every deposit, coupon sale, and return payout creates balanced debit and credit entries. Total assets always reconcile against liabilities.
             </p>
           </div>
 
-          <div className="card p-7 space-y-4">
-            <span className="grid size-10 place-items-center rounded-xl bg-[var(--brand)]/10 text-[var(--brand)]">
-              <Lock size={20} />
+          <div className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-8 space-y-4">
+            <span className="grid size-12 place-items-center rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-400">
+              <Lock size={22} />
             </span>
-            <h3 className="text-base font-bold text-[var(--ink)]">Zero-Exposure Private Vault</h3>
+            <h3 className="font-display text-lg font-bold text-[var(--ink)]">Zero-Exposure Private Vault</h3>
             <p className="text-xs leading-relaxed text-[var(--muted)]">
               KYC documents are delivered directly to private cloud storage using signed, short-lived URLs. Documents are never stored in public buckets.
             </p>
           </div>
 
-          <div className="card p-7 space-y-4">
-            <span className="grid size-10 place-items-center rounded-xl bg-[var(--brand)]/10 text-[var(--brand)]">
-              <FileCheck2 size={20} />
+          <div className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-8 space-y-4">
+            <span className="grid size-12 place-items-center rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-400">
+              <FileCheck2 size={22} />
             </span>
-            <h3 className="text-base font-bold text-[var(--ink)]">Cryptographic Audit Trail</h3>
+            <h3 className="font-display text-lg font-bold text-[var(--ink)]">Cryptographic Audit Trail</h3>
             <p className="text-xs leading-relaxed text-[var(--muted)]">
-              Administrative approvals and payouts generate SHA-256 hash-chained audit logs, preventing retroactive modification or unauthorized tampering.
+              Administrative approvals and payouts generate SHA-256 hash-chained audit records, preventing retroactive modification or unauthorized tampering.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Official Support & Contact CTA */}
+      {/* ========================================================================= */}
+      {/* 08. VERIFIED SUPPORT & CONTACT FOLIO */}
+      {/* ========================================================================= */}
       <section className="shell">
-        <div className="rounded-3xl bg-gradient-to-br from-[var(--surface)] via-[var(--surface-muted)] to-[var(--surface)] p-8 sm:p-14 shadow-sm">
-          <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] items-center">
-            <div className="space-y-4">
-              <p className="eyebrow">Support & Verification</p>
-              <h2 className="text-3xl font-extrabold tracking-tight text-[var(--ink)] sm:text-4xl">
+        <div className="rounded-3xl border border-[var(--line)] bg-gradient-to-br from-[var(--surface)] via-[var(--surface-muted)] to-[var(--surface)] p-8 sm:p-14 shadow-2xl">
+          <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] items-center">
+            <div className="space-y-5">
+              <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--accent)]">
+                [05 // DIRECT DESK]
+              </span>
+              <h2 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ink)]">
                 Have questions before starting?
               </h2>
               <p className="text-sm leading-relaxed text-[var(--muted)] max-w-xl">
@@ -526,14 +547,14 @@ export default function MarketingHomePage() {
                   href="https://wa.me/2347031069524"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-xs font-bold text-white shadow-md transition hover:bg-emerald-700"
+                  className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-3.5 text-xs font-mono font-bold text-white shadow-md transition hover:bg-emerald-500"
                 >
                   <MessageCircle size={16} />
                   <span>Chat on WhatsApp (07031069524)</span>
                 </a>
                 <a
                   href="mailto:greatfinanceng@gmail.com"
-                  className="inline-flex items-center gap-2 rounded-xl border border-[var(--line)] bg-white px-5 py-3 text-xs font-bold text-[var(--ink)] shadow-sm hover:bg-[var(--surface-muted)] transition"
+                  className="inline-flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[var(--surface)] px-6 py-3.5 text-xs font-mono font-bold text-[var(--ink)] shadow-sm hover:bg-[var(--surface-elevated)] transition"
                 >
                   <Mail size={16} />
                   <span>greatfinanceng@gmail.com</span>
@@ -541,23 +562,35 @@ export default function MarketingHomePage() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-[var(--line)] bg-white p-6 space-y-4 shadow-sm">
-              <h3 className="text-sm font-bold text-[var(--ink)]">Quick Resource Links</h3>
-              <div className="grid gap-2 text-xs">
-                <Link href="/plans" className="flex items-center justify-between rounded-lg p-2.5 hover:bg-[var(--surface-muted)] transition">
+            <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface-inverse)] p-6 space-y-4">
+              <h3 className="font-display text-sm font-bold text-[var(--ink)]">Quick Resource Access</h3>
+              <div className="grid gap-2.5 text-xs font-mono">
+                <Link
+                  href="/plans"
+                  className="flex items-center justify-between rounded-xl p-3 border border-[var(--line)] hover:border-emerald-500/40 bg-[var(--surface)] transition"
+                >
                   <span className="font-semibold text-[var(--ink)]">Catalogue of Investment Plans</span>
-                  <span className="text-[var(--brand)] font-bold">View →</span>
+                  <span className="text-emerald-400 font-bold">View →</span>
                 </Link>
-                <Link href="/vendors" className="flex items-center justify-between rounded-lg p-2.5 hover:bg-[var(--surface-muted)] transition">
+                <Link
+                  href="/vendors"
+                  className="flex items-center justify-between rounded-xl p-3 border border-[var(--line)] hover:border-emerald-500/40 bg-[var(--surface)] transition"
+                >
                   <span className="font-semibold text-[var(--ink)]">Vendor Partner Program Guide</span>
-                  <span className="text-[var(--brand)] font-bold">Read →</span>
+                  <span className="text-emerald-400 font-bold">Read →</span>
                 </Link>
-                <Link href="/about" className="flex items-center justify-between rounded-lg p-2.5 hover:bg-[var(--surface-muted)] transition">
-                  <span className="font-semibold text-[var(--ink)]">Institutional Governance & Ledger</span>
-                  <span className="text-[var(--brand)] font-bold">Explore →</span>
+                <Link
+                  href="/withdrawals"
+                  className="flex items-center justify-between rounded-xl p-3 border border-[var(--line)] hover:border-emerald-500/40 bg-[var(--surface)] transition"
+                >
+                  <span className="font-semibold text-[var(--ink)]">Withdrawal & Payout Rules</span>
+                  <span className="text-emerald-400 font-bold">Inspect →</span>
                 </Link>
-                <Link href="/vendor/signup" className="flex items-center justify-between rounded-lg p-2.5 bg-[var(--accent)]/10 text-[var(--accent-dark)] font-bold transition">
-                  <span>Register as Authorized Vendor</span>
+                <Link
+                  href="/vendor/signup"
+                  className="flex items-center justify-between rounded-xl p-3 bg-amber-500/10 border border-amber-500/30 text-amber-300 font-bold transition hover:bg-amber-500/20"
+                >
+                  <span>Apply for Authorized Vendor Status</span>
                   <span>Apply →</span>
                 </Link>
               </div>

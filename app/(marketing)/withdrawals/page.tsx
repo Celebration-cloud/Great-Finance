@@ -4,6 +4,7 @@ import {
   Banknote,
   CheckCircle2,
   Clock,
+  FileCheck2,
   FileText,
   HelpCircle,
   Lock,
@@ -12,9 +13,10 @@ import {
   Zap,
 } from "lucide-react";
 import type { Metadata } from "next";
+import { GuillochePattern } from "@/components/brand/illustrations/guilloche-pattern";
 
 export const metadata: Metadata = {
-  title: "Withdrawals & Payouts | Great Finance",
+  title: "Withdrawals & Payouts · Great Finance",
   description:
     "Understand exactly how Great Finance pays your investment returns — the maturity timeline, bank transfer process, and everything you need to know before requesting a payout.",
 };
@@ -66,7 +68,7 @@ const faqs = [
   },
   {
     q: "What banks are supported?",
-    a: "All CBN-licensed Nigerian commercial banks with a valid 10-digit NUBAN. This covers Access, GTBank, Zenith, First Bank, UBA, Opay, Palmpay, and all others.",
+    a: "All CBN-licensed Nigerian commercial banks with a valid 10-digit NUBAN. This covers Access, GTBank, Zenith, First Bank, UBA, Opay, Palmpay, Kuda, Moniepoint, and all others.",
   },
   {
     q: "How long does the settlement desk take?",
@@ -80,117 +82,143 @@ const faqs = [
 
 export default function WithdrawalsPage() {
   return (
-    <main>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[var(--surface-inverse)] via-[var(--surface)] to-[var(--paper)] px-6 pb-24 pt-20 text-white">
-        <div className="relative mx-auto max-w-4xl text-center">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[var(--accent)]">
-            <Banknote size={12} />
-            Payout system
-          </span>
-          <h1 className="mt-4 text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
-            Getting your money{" "}
-            <span className="text-[var(--accent)]">back to you</span>
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/75 leading-relaxed">
-            Every naira you invest matures into a guaranteed return. This page explains exactly how and when you receive your payout — no surprises, no fine print.
+    <div className="space-y-24 py-8 sm:space-y-36 sm:py-14">
+      {/* ========================================================================= */}
+      {/* 01. HERO */}
+      {/* ========================================================================= */}
+      <section className="shell relative">
+        <div className="max-w-3xl space-y-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-950/20 px-4 py-1.5 text-xs font-mono font-bold text-emerald-400">
+            <Banknote size={14} />
+            <span>DIRECT NUBAN DISBURSEMENT PROTOCOL</span>
+          </div>
+
+          <div className="space-y-3">
+            <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--accent)]">
+              [DISBURSEMENT // SETTLEMENT SLA]
+            </span>
+            <h1 className="font-display text-4xl sm:text-6xl font-black tracking-tight text-[var(--ink)] leading-[1.08]">
+              Getting your capital{" "}
+              <span className="text-[var(--brand)]">back to your bank</span>.
+            </h1>
+          </div>
+
+          <p className="text-base sm:text-lg text-[var(--muted)] leading-relaxed">
+            Every naira you invest matures into a guaranteed return. This page explains exactly how and when you receive your payout — zero ambiguity, zero fine print, settled directly to your Nigerian commercial bank account.
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+
+          <div className="flex flex-wrap items-center gap-4 pt-2">
             <Link
               href="/auth/sign-in"
-              className="inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-6 py-3 text-sm font-bold text-[var(--surface-inverse)] hover:opacity-90 transition"
+              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-7 py-4 text-sm font-mono font-bold text-white shadow-xl shadow-emerald-900/30 hover:bg-emerald-500 transition"
             >
-              Go to my dashboard
+              <span>Go to My Dashboard</span>
               <ArrowRight size={16} />
             </Link>
             <Link
               href="/plans"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/25 bg-white/10 px-6 py-3 text-sm font-bold text-white hover:bg-white/20 transition"
+              className="inline-flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[var(--surface)] px-6 py-4 text-sm font-mono font-bold text-[var(--ink)] hover:bg-[var(--surface-elevated)] transition"
             >
-              View all plans
+              <span>View All Plans</span>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Key facts strip */}
-      <section className="border-b border-[var(--line)] bg-white">
-        <div className="mx-auto grid max-w-5xl grid-cols-2 divide-x divide-[var(--line)] sm:grid-cols-4">
+      {/* ========================================================================= */}
+      {/* 02. KEY FACTS STRIP */}
+      {/* ========================================================================= */}
+      <section className="shell">
+        <div className="grid grid-cols-2 gap-4 rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 sm:grid-cols-4 sm:p-8 shadow-xl">
           {[
-            { value: "1–3 days",  label: "Payout processing" },
-            { value: "₦0",        label: "Withdrawal fee" },
-            { value: "100%",      label: "Direct bank transfer" },
-            { value: "All banks", label: "CBN-licensed supported" },
+            { value: "1–3 Days", label: "Settlement SLA", sub: "Same-day typical" },
+            { value: "₦0.00", label: "Withdrawal Fee", sub: "Zero deductions" },
+            { value: "100%", label: "Direct Bank Transfer", sub: "CBN commercial banks" },
+            { value: "All Banks", label: "Coverage", sub: "NUBAN licensed" },
           ].map((stat) => (
-            <div key={stat.label} className="px-6 py-6 text-center">
-              <p className="text-2xl font-extrabold text-[var(--brand)]">{stat.value}</p>
-              <p className="mt-1 text-xs font-semibold text-[var(--muted)]">{stat.label}</p>
+            <div key={stat.label} className="space-y-1 border-l-2 border-emerald-500/40 pl-4">
+              <p className="font-mono text-2xl sm:text-3xl font-black text-[var(--ink)]">{stat.value}</p>
+              <p className="text-xs font-bold uppercase tracking-wider text-[var(--brand)]">{stat.label}</p>
+              <p className="text-[0.72rem] text-[var(--muted)] font-mono">{stat.sub}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="px-6 py-20 bg-[var(--surface-muted)]">
-        <div className="mx-auto max-w-4xl">
-          <div className="mb-12 text-center">
-            <span className="text-xs font-bold uppercase tracking-widest text-[var(--brand)]">Process</span>
-            <h2 className="mt-2 text-3xl font-extrabold text-[var(--ink)]">5 steps from activation to payout</h2>
-          </div>
-          <ol className="relative space-y-0">
-            {steps.map((step, i) => (
-              <li key={step.title} className="flex gap-6">
-                {/* Timeline */}
-                <div className="flex flex-col items-center">
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-[var(--brand)] text-white font-bold text-sm shadow-lg">
-                    {i + 1}
-                  </div>
-                  {i < steps.length - 1 && (
-                    <div className="mt-1 w-px flex-1 bg-[var(--line)]" style={{ minHeight: "3rem" }} />
-                  )}
+      {/* ========================================================================= */}
+      {/* 03. 5-STEP DISBURSEMENT TIMELINE */}
+      {/* ========================================================================= */}
+      <section className="shell space-y-12">
+        <div className="space-y-3 max-w-2xl">
+          <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
+            [PIPELINE // 5 NODES]
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ink)]">
+            5 steps from activation to bank payout
+          </h2>
+          <p className="text-sm text-[var(--muted)] leading-relaxed">
+            Every step is recorded on the double-entry ledger with timestamp verification.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-5">
+          {steps.map((step, i) => (
+            <div
+              key={step.title}
+              className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-6 flex flex-col justify-between space-y-4"
+            >
+              <div className="space-y-3">
+                <span className="font-mono text-2xl font-black text-emerald-400">0{i + 1}</span>
+                <div className="flex items-center gap-2">
+                  <step.icon size={16} className="text-emerald-400" />
+                  <h3 className="font-display text-sm font-bold text-[var(--ink)]">{step.title}</h3>
                 </div>
-                {/* Content */}
-                <div className="pb-10">
-                  <div className="flex items-center gap-2 mb-1">
-                    <step.icon size={16} className="text-[var(--brand)]" />
-                    <h3 className="font-bold text-[var(--ink)]">{step.title}</h3>
-                  </div>
-                  <p className="text-sm text-[var(--muted)] leading-relaxed max-w-lg">{step.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
+                <p className="text-xs text-[var(--muted)] leading-relaxed">{step.body}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Maturity example */}
-      <section className="px-6 py-20 bg-white">
-        <div className="mx-auto max-w-4xl">
-          <div className="mb-10 text-center">
-            <span className="text-xs font-bold uppercase tracking-widest text-[var(--brand)]">Example</span>
-            <h2 className="mt-2 text-3xl font-extrabold text-[var(--ink)]">Real scenario: Lincon Plan</h2>
-            <p className="mt-3 text-[var(--muted)] max-w-xl mx-auto text-sm">
-              Here is exactly what happens from the moment you redeem a coupon to the moment money hits your account.
+      {/* ========================================================================= */}
+      {/* 04. REAL SCENARIO: LINCON PLAN MATURITY SIMULATOR */}
+      {/* ========================================================================= */}
+      <section className="shell">
+        <div className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-8 sm:p-14 space-y-8 shadow-xl">
+          <div className="space-y-2">
+            <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--accent)]">
+              Real Scenario Example
+            </span>
+            <h3 className="font-display text-2xl sm:text-3xl font-bold text-[var(--ink)]">
+              Maturity Breakdown: Lincon Plan
+            </h3>
+            <p className="text-xs font-mono text-[var(--muted)]">
+              Invest ₦2,000 → Plan locks for 7 days → Withdraw ₦6,000 direct to bank
             </p>
           </div>
 
-          <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface-muted)] overflow-hidden">
+          <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface-inverse)] overflow-hidden">
             {[
-              { icon: FileText,    day: "Day 0",         event: "You redeem a Lincon coupon code",               sub: "Invest ₦2,000 — plan locks for 7 days" },
-              { icon: Clock,       day: "Days 1–6",      event: "Plan is ACTIVE — no action needed",             sub: "Dashboard shows days remaining + projected return" },
-              { icon: TrendingUp,  day: "Day 7 (Oct 4)", event: "Plan matures",                                  sub: "Withdraw button unlocks — expected return: ₦6,000" },
-              { icon: Banknote,    day: "Day 7",         event: "You enter your bank details and submit",        sub: "NUBAN, bank name, account name — takes 30 seconds" },
-              { icon: ShieldCheck, day: "Day 7–9",       event: "Settlement desk reviews and approves",          sub: "Audit-logged, maker-checker verified" },
-              { icon: CheckCircle2,day: "Day 7–9",       event: "₦6,000 transferred to your bank",              sub: "Investment marked SETTLED — complete" },
+              { icon: FileText, day: "Day 0", event: "You redeem a Lincon coupon code", sub: "Invest ₦2,000 — plan locks for 7 days" },
+              { icon: Clock, day: "Days 1–6", event: "Plan is ACTIVE — automated timer runs", sub: "Dashboard shows days remaining and projected return" },
+              { icon: TrendingUp, day: "Day 7", event: "Plan matures at midnight", sub: "Withdraw button unlocks — expected return: ₦6,000" },
+              { icon: Banknote, day: "Day 7", event: "You enter your bank details and submit", sub: "NUBAN, bank name, account name — takes 30 seconds" },
+              { icon: ShieldCheck, day: "Day 7–9", event: "Settlement desk reviews and approves", sub: "Audit-logged, maker-checker verified" },
+              { icon: CheckCircle2, day: "Day 7–9", event: "₦6,000 transferred to your bank", sub: "Direct NUBAN bank credit — transaction SETTLED" },
             ].map((item, i) => (
-              <div key={i} className={`flex flex-wrap items-center gap-4 px-5 py-4 ${i > 0 ? "border-t border-[var(--line)]" : ""}`}>
-                <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-[var(--brand)]/10">
-                  <item.icon size={16} className="text-[var(--brand)]" />
+              <div
+                key={i}
+                className={`flex flex-wrap items-center gap-4 px-6 py-4 ${
+                  i > 0 ? "border-t border-[var(--line)]" : ""
+                }`}
+              >
+                <div className="grid size-9 shrink-0 place-items-center rounded-xl bg-emerald-950/40 border border-emerald-500/20 text-emerald-400">
+                  <item.icon size={16} />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs font-bold text-[var(--brand)]">{item.day}</p>
-                  <p className="font-semibold text-sm text-[var(--ink)]">{item.event}</p>
-                  <p className="text-xs text-[var(--muted)]">{item.sub}</p>
+                  <p className="font-mono text-xs font-bold text-emerald-400">{item.day}</p>
+                  <p className="font-display font-semibold text-sm text-[var(--ink)]">{item.event}</p>
+                  <p className="font-mono text-xs text-[var(--muted)]">{item.sub}</p>
                 </div>
               </div>
             ))}
@@ -198,74 +226,31 @@ export default function WithdrawalsPage() {
         </div>
       </section>
 
-      {/* Security strip */}
-      <section className="bg-gradient-to-r from-[var(--surface-inverse)] to-[var(--surface)] px-6 py-14 text-white">
-        <div className="mx-auto max-w-4xl grid gap-6 sm:grid-cols-3">
-          {[
-            { icon: Lock,       title: "Ledger-backed",   body: "Every payout is double-entry ledger accounted. No fund can move without a corresponding audit trail." },
-            { icon: ShieldCheck,title: "Maker-Checker",   body: "No single admin can approve their own review. All settlement actions require independent authorisation." },
-            { icon: FileText,   title: "Audit log",       body: "Immutable hash-chained audit logs record every request, approval, and transfer timestamp." },
-          ].map((item) => (
-            <div key={item.title} className="flex gap-4">
-              <div className="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-xl bg-white/10">
-                <item.icon size={18} className="text-[var(--accent)]" />
-              </div>
-              <div>
-                <h3 className="font-bold mb-1">{item.title}</h3>
-                <p className="text-sm text-white/65 leading-relaxed">{item.body}</p>
-              </div>
+      {/* ========================================================================= */}
+      {/* 05. FAQS */}
+      {/* ========================================================================= */}
+      <section className="shell space-y-12">
+        <div className="space-y-3">
+          <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
+            [KNOWLEDGE BASE // SETTLEMENT FAQS]
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ink)]">
+            Frequently Asked Questions
+          </h2>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          {faqs.map((faq) => (
+            <div key={faq.q} className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-8 space-y-3">
+              <h3 className="font-display text-base font-bold text-[var(--ink)] flex items-start gap-3">
+                <HelpCircle size={18} className="text-emerald-400 shrink-0 mt-0.5" />
+                <span>{faq.q}</span>
+              </h3>
+              <p className="text-xs leading-relaxed text-[var(--muted)] pl-7">{faq.a}</p>
             </div>
           ))}
         </div>
       </section>
-
-      {/* FAQ */}
-      <section className="px-6 py-20 bg-[var(--surface-muted)]">
-        <div className="mx-auto max-w-3xl">
-          <div className="mb-10 text-center">
-            <span className="text-xs font-bold uppercase tracking-widest text-[var(--brand)]">FAQ</span>
-            <h2 className="mt-2 text-3xl font-extrabold text-[var(--ink)]">Frequently asked questions</h2>
-          </div>
-          <div className="space-y-4">
-            {faqs.map((faq) => (
-              <div key={faq.q} className="rounded-xl border border-[var(--line)] bg-white p-5">
-                <div className="flex gap-3">
-                  <HelpCircle size={18} className="mt-0.5 shrink-0 text-[var(--brand)]" />
-                  <div>
-                    <h3 className="font-bold text-[var(--ink)] mb-1.5">{faq.q}</h3>
-                    <p className="text-sm text-[var(--muted)] leading-relaxed">{faq.a}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="px-6 py-16 bg-white text-center border-t border-[var(--line)]">
-        <div className="mx-auto max-w-xl">
-          <h2 className="text-2xl font-extrabold text-[var(--ink)] mb-3">Ready to invest?</h2>
-          <p className="text-[var(--muted)] text-sm mb-7">
-            Choose a plan, redeem your coupon, and let Great Finance grow your money.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            <Link
-              href="/plans"
-              className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand)] px-6 py-3 text-sm font-bold text-white hover:bg-[var(--brand-dark)] transition"
-            >
-              View investment plans
-              <ArrowRight size={15} />
-            </Link>
-            <Link
-              href="/auth/sign-in"
-              className="inline-flex items-center gap-2 rounded-xl border border-[var(--line)] bg-white px-6 py-3 text-sm font-bold text-[var(--ink)] hover:bg-[var(--surface-muted)] transition"
-            >
-              Sign in to dashboard
-            </Link>
-          </div>
-        </div>
-      </section>
-    </main>
+    </div>
   );
 }

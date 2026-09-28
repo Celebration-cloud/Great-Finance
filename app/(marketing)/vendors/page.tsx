@@ -5,18 +5,20 @@ import {
   FileCheck,
   HelpCircle,
   MessageCircle,
+  Percent,
   Receipt,
   ShieldCheck,
   Store,
 } from "lucide-react";
+import { VENDOR_TIER_LIST } from "@/lib/vendor/tiers";
+import { AminaVendorScene } from "@/components/brand/illustrations/amina-vendor-scene";
+import { GuillochePattern } from "@/components/brand/illustrations/guilloche-pattern";
 
 export const metadata = {
   title: "Authorized Vendor Partner Program · Great Finance",
   description:
     "Join the Great Finance authorized distributor network. Wholesale coupon discounts up to 15%, immediate retail profit, real-time inventory ledger, and dedicated partner support.",
 };
-
-import { VENDOR_TIER_LIST } from "@/lib/vendor/tiers";
 
 const faqs = [
   {
@@ -47,99 +49,116 @@ const faqs = [
 
 export default function VendorsPage() {
   return (
-    <div className="space-y-24 py-12 sm:space-y-32 sm:py-20">
-      {/* Hero Section */}
-      <section className="shell">
-        <div className="max-w-3xl space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--accent)]/50 bg-[var(--accent)]/15 px-3.5 py-1 text-xs font-bold text-[var(--accent-dark)]">
-            <Store size={14} />
-            <span>OFFICIAL DISTRIBUTOR & LIQUIDITY PROGRAM</span>
+    <div className="space-y-24 py-8 sm:space-y-36 sm:py-14">
+      {/* ========================================================================= */}
+      {/* 01. HERO WITH AMINA VENDOR SCENE */}
+      {/* ========================================================================= */}
+      <section className="shell relative">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="space-y-6">
+            <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/40 bg-amber-500/10 px-4 py-1.5 text-xs font-mono font-bold text-amber-300">
+              <Store size={14} className="text-amber-400" />
+              <span>OFFICIAL REGIONAL LIQUIDITY NETWORK</span>
+            </div>
+
+            <div className="space-y-3">
+              <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--accent)]">
+                [DISTRIBUTION // HIGH-MARGIN RETAIL]
+              </span>
+              <h1 className="font-display text-4xl sm:text-6xl font-black tracking-tight text-[var(--ink)] leading-[1.08]">
+                Build a high-margin distribution business as a{" "}
+                <span className="text-[var(--brand)]">Great Finance</span> vendor.
+              </h1>
+            </div>
+
+            <p className="max-w-2xl text-base sm:text-lg leading-relaxed text-[var(--muted)]">
+              Bridge digital yield with local liquidity. Acquire bulk coupon batches at up to 15% wholesale discount, serve community investors who prefer cash or local bank transfers, and keep 100% of your retail margin.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <Link
+                href="/vendor/signup"
+                className="inline-flex items-center gap-2.5 rounded-xl bg-amber-400 px-7 py-4 text-sm font-mono font-black text-[var(--surface-inverse)] shadow-xl transition hover:bg-amber-300"
+              >
+                <Store size={17} />
+                <span>Register as Vendor Partner</span>
+              </Link>
+
+              <Link
+                href="/vendor/login"
+                className="inline-flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[var(--surface)] px-6 py-4 text-sm font-mono font-bold text-[var(--ink)] shadow-sm hover:bg-[var(--surface-elevated)] transition"
+              >
+                <span>Vendor Workspace Sign In</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-6 pt-3 text-xs font-mono text-[var(--muted)]">
+              <span className="flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-400" />
+                Instant wholesale discount
+              </span>
+              <span className="flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-400" />
+                Automated Paystack verification
+              </span>
+              <span className="flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-400" />
+                Zero inventory holding risk
+              </span>
+            </div>
           </div>
 
-          <h1 className="text-4xl font-extrabold tracking-tight text-[var(--ink)] sm:text-6xl sm:leading-[1.1]">
-            Build a high-margin distribution business as a{" "}
-            <span className="text-[var(--brand)]">Great Finance</span> vendor.
-          </h1>
-
-          <p className="text-lg leading-relaxed text-[var(--muted)]">
-            Bridge digital yield with local liquidity. Acquire bulk coupon batches at up to 15% wholesale discount, serve community investors who prefer cash or local transfers, and keep 100% of your retail margin.
-          </p>
-
-          <div className="flex flex-wrap items-center gap-3.5 pt-3">
-            <Link
-              href="/vendor/signup"
-              className="inline-flex items-center gap-2 rounded-xl bg-[var(--brand)] px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-[var(--brand)]/25 transition hover:bg-[var(--brand-dark)]"
-            >
-              <Store size={16} />
-              <span>Register as Vendor Partner</span>
-            </Link>
-
-            <Link
-              href="/vendor/login"
-              className="inline-flex items-center gap-2 rounded-xl border border-[var(--line)] bg-white px-6 py-3.5 text-sm font-bold text-[var(--ink)] shadow-sm hover:bg-[var(--surface-muted)] transition"
-            >
-              <span>Vendor Workspace Sign In</span>
-              <ArrowRight size={14} />
-            </Link>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-6 pt-4 text-xs text-[var(--muted)]">
-            <span className="flex items-center gap-1.5 font-medium">
-              <CheckCircle2 size={16} className="text-emerald-600" />
-              Instant wholesale margin
-            </span>
-            <span className="flex items-center gap-1.5 font-medium">
-              <CheckCircle2 size={16} className="text-emerald-600" />
-              Automated Paystack verification
-            </span>
-            <span className="flex items-center gap-1.5 font-medium">
-              <CheckCircle2 size={16} className="text-emerald-600" />
-              Zero holding risk
-            </span>
+          <div className="relative">
+            <AminaVendorScene />
           </div>
         </div>
       </section>
 
-      {/* How It Works Diagram / Process */}
+      {/* ========================================================================= */}
+      {/* 02. HOW THE VENDOR MODEL WORKS */}
+      {/* ========================================================================= */}
       <section className="shell space-y-12">
-        <div className="space-y-3">
-          <p className="eyebrow">Operating Model</p>
-          <h2 className="text-3xl font-extrabold tracking-tight text-[var(--ink)] sm:text-4xl">
+        <div className="space-y-3 max-w-2xl">
+          <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
+            [OPERATING ARCHITECTURE // 4 NODES]
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ink)]">
             How the Vendor Distribution Model Works
           </h2>
-          <p className="text-sm leading-relaxed text-[var(--muted)] max-w-2xl">
-            A frictionless, legally compliant distribution workflow designed for maximum turnover and crystal-clear accounting.
+          <p className="text-sm leading-relaxed text-[var(--muted)]">
+            A frictionless, legally compliant distribution workflow designed for rapid turnover and crystal-clear double-entry accounting.
           </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-4">
-          <div className="card p-6 space-y-4">
-            <span className="font-mono text-3xl font-bold text-[var(--brand)]">01</span>
-            <h3 className="text-base font-bold text-[var(--ink)]">Onboard & Verify</h3>
+          <div className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-7 space-y-3">
+            <span className="font-mono text-3xl font-black text-amber-400">01</span>
+            <h3 className="font-display text-base font-bold text-[var(--ink)]">Onboard & Verify</h3>
             <p className="text-xs text-[var(--muted)] leading-relaxed">
               Create your vendor profile with active WhatsApp contact. Upload your government ID and live selfie to pass Tier-1 compliance.
             </p>
           </div>
 
-          <div className="card p-6 space-y-4">
-            <span className="font-mono text-3xl font-bold text-[var(--brand)]">02</span>
-            <h3 className="text-base font-bold text-[var(--ink)]">Acquire Inventory</h3>
+          <div className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-7 space-y-3">
+            <span className="font-mono text-3xl font-black text-amber-400">02</span>
+            <h3 className="font-display text-base font-bold text-[var(--ink)]">Acquire Inventory</h3>
             <p className="text-xs text-[var(--muted)] leading-relaxed">
-              Select desired coupon denominations (₦10,000, ₦20,000, ₦50,000, ₦100,000) and pay via verified Paystack checkout at wholesale rate.
+              Select coupon denominations (₦2,000, ₦4,000, ₦10,000, ₦20,000, ₦50,000) and pay via Paystack checkout at wholesale rate.
             </p>
           </div>
 
-          <div className="card p-6 space-y-4">
-            <span className="font-mono text-3xl font-bold text-[var(--brand)]">03</span>
-            <h3 className="text-base font-bold text-[var(--ink)]">Instant Delivery</h3>
+          <div className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-7 space-y-3">
+            <span className="font-mono text-3xl font-black text-amber-400">03</span>
+            <h3 className="font-display text-base font-bold text-[var(--ink)]">Instant Delivery</h3>
             <p className="text-xs text-[var(--muted)] leading-relaxed">
-              Cryptographically signed coupon codes are instantly logged to your private Vendor Dashboard, ready for distribution.
+              Cryptographically signed coupon codes are instantly minted into your private Vendor Workspace, ready for client delivery.
             </p>
           </div>
 
-          <div className="card p-6 space-y-4">
-            <span className="font-mono text-3xl font-bold text-[var(--brand)]">04</span>
-            <h3 className="text-base font-bold text-[var(--ink)]">Retail & Retain</h3>
+          <div className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-7 space-y-3">
+            <span className="font-mono text-3xl font-black text-amber-400">04</span>
+            <h3 className="font-display text-base font-bold text-[var(--ink)]">Retail & Retain</h3>
             <p className="text-xs text-[var(--muted)] leading-relaxed">
               Distribute coupon codes to clients for face value. Collect cash or bank transfer directly into your personal account. Margin is 100% yours.
             </p>
@@ -147,11 +166,15 @@ export default function VendorsPage() {
         </div>
       </section>
 
-      {/* Margin Tiers Comparison Table */}
+      {/* ========================================================================= */}
+      {/* 03. WHOLESALE MARGIN TIERS MATRIX */}
+      {/* ========================================================================= */}
       <section className="shell space-y-12">
         <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <p className="eyebrow">Wholesale Economics</p>
-          <h2 className="text-3xl font-extrabold tracking-tight text-[var(--ink)] sm:text-4xl">
+          <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--accent)]">
+            [TIERED DISCOUNTS // WHOLESALE MARGINS]
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ink)]">
             Transparent Vendor Margin Tiers
           </h2>
           <p className="text-sm leading-relaxed text-[var(--muted)]">
@@ -163,46 +186,50 @@ export default function VendorsPage() {
           {VENDOR_TIER_LIST.map((tier) => (
             <div
               key={tier.key}
-              className={`relative flex flex-col justify-between rounded-2xl p-7 transition ${
+              className={`relative flex flex-col justify-between rounded-3xl p-8 transition-all ${
                 tier.recommended
-                  ? "border-2 border-[var(--brand)] bg-white shadow-xl shadow-[var(--brand)]/10"
-                  : "border border-[var(--line)] bg-white shadow-sm"
+                  ? "border-2 border-amber-400 bg-gradient-to-b from-amber-950/40 to-[var(--surface)] shadow-2xl shadow-amber-950/40"
+                  : "border border-[var(--line)] bg-[var(--surface)] hover:border-amber-500/40"
               }`}
             >
               {tier.recommended && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[var(--brand)] px-3 py-0.5 text-[0.68rem] font-bold text-white uppercase tracking-wider">
-                  Most Popular
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-amber-400 px-3 py-0.5 text-[0.68rem] font-mono font-black text-[var(--surface-inverse)] uppercase tracking-wider">
+                  MOST POPULAR TIER
                 </span>
               )}
 
-              <div className="space-y-5">
+              <div className="space-y-6">
                 <div>
-                  <h3 className="text-sm font-bold text-[var(--ink)]">{tier.badge}</h3>
-                  <p className="mt-1 text-xs text-[var(--muted)]">Monthly volume: {tier.volume}</p>
+                  <h3 className="font-display text-lg font-bold text-[var(--ink)]">{tier.badge}</h3>
+                  <p className="mt-1 font-mono text-xs text-[var(--muted)]">Volume: {tier.volume}</p>
                 </div>
 
-                <div className="rounded-xl bg-[var(--surface-muted)] p-4">
-                  <p className="text-xs font-semibold text-[var(--muted)]">Partner Advantage</p>
-                  <p className="text-lg font-extrabold text-[var(--brand)]">{tier.marginLabel}</p>
+                <div className="rounded-2xl border border-[var(--line)] bg-[var(--surface-muted)]/70 p-4">
+                  <span className="text-[0.68rem] font-mono text-[var(--muted)] uppercase block">
+                    Distributor Margin
+                  </span>
+                  <p className="font-mono text-xl font-black text-amber-300 mt-0.5">
+                    {tier.marginLabel}
+                  </p>
                 </div>
 
-                <ul className="space-y-2.5 text-xs text-[var(--ink)]/80">
+                <ul className="space-y-2.5 text-xs text-[var(--muted)]">
                   {tier.features.map((f) => (
                     <li key={f} className="flex items-start gap-2">
-                      <CheckCircle2 size={14} className="text-emerald-600 shrink-0 mt-0.5" />
+                      <CheckCircle2 size={14} className="text-emerald-400 shrink-0 mt-0.5" />
                       <span>{f}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="mt-8 pt-5 border-t border-[var(--line)]">
+              <div className="mt-8 pt-6 border-t border-[var(--line)]">
                 <Link
                   href={`/vendor/signup?tier=${tier.key}`}
-                  className={`flex w-full items-center justify-center rounded-xl py-2.5 text-xs font-bold transition ${
+                  className={`flex w-full items-center justify-center rounded-xl py-3 text-xs font-mono font-bold transition ${
                     tier.recommended
-                      ? "bg-[var(--brand)] text-white hover:bg-[var(--brand-dark)] shadow"
-                      : "bg-[var(--surface-muted)] text-[var(--ink)] hover:bg-[var(--line)]"
+                      ? "bg-amber-400 text-[var(--surface-inverse)] hover:bg-amber-300 shadow"
+                      : "bg-[var(--surface-muted)] text-[var(--ink)] hover:bg-[var(--surface-elevated)]"
                   }`}
                 >
                   Register at this Tier
@@ -213,14 +240,20 @@ export default function VendorsPage() {
         </div>
       </section>
 
-      {/* Real Vendor Workspace Features */}
-      <section className="bg-[var(--surface-inverse)] py-20 text-white">
-        <div className="shell space-y-16">
+      {/* ========================================================================= */}
+      {/* 04. VENDOR WORKSPACE SOFTWARE FEATURES */}
+      {/* ========================================================================= */}
+      <section className="bg-[var(--surface-inverse)] py-20 border-y border-[var(--line)] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-15 pointer-events-none">
+          <GuillochePattern />
+        </div>
+
+        <div className="shell space-y-16 relative z-10">
           <div className="max-w-2xl space-y-4">
-            <span className="inline-block rounded-full bg-[var(--accent)]/15 px-3 py-1 text-xs font-bold text-[var(--accent)] uppercase tracking-wider">
-              Software Tooling
+            <span className="inline-block rounded-full bg-emerald-500/15 border border-emerald-500/30 px-3.5 py-1 text-xs font-mono font-bold text-emerald-300 uppercase tracking-wider">
+              OPERATIONAL SOFTWARE
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight sm:text-5xl">
+            <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
               Professional tools for high-volume distributors
             </h2>
             <p className="text-base text-white/70 leading-relaxed">
@@ -229,70 +262,60 @@ export default function VendorsPage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-3">
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-7 space-y-4">
-              <span className="grid size-11 place-items-center rounded-xl bg-white/10 text-[var(--accent)]">
+            <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 space-y-4">
+              <span className="grid size-12 place-items-center rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400">
                 <Receipt size={22} />
               </span>
-              <h3 className="text-lg font-bold text-white">Live Inventory Table</h3>
+              <h3 className="font-display text-lg font-bold text-white">Live Inventory Table</h3>
               <p className="text-xs text-white/60 leading-relaxed">
                 Filter by denomination, issuance date, and active vs redeemed status. Export records or copy individual voucher codes with one click.
               </p>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-7 space-y-4">
-              <span className="grid size-11 place-items-center rounded-xl bg-white/10 text-[var(--accent)]">
+            <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 space-y-4">
+              <span className="grid size-12 place-items-center rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
                 <ShieldCheck size={22} />
               </span>
-              <h3 className="text-lg font-bold text-white">Private KYC Document Vault</h3>
+              <h3 className="font-display text-lg font-bold text-white">Private KYC Vault</h3>
               <p className="text-xs text-white/60 leading-relaxed">
-                Protected by end-to-end encrypted storage. Verified compliance status unlocks higher monthly purchasing limits and priority allocations.
+                Protected by zero-exposure presigned credentials. Verified compliance status unlocks higher monthly purchasing limits and priority allocations.
               </p>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-7 space-y-4">
-              <span className="grid size-11 place-items-center rounded-xl bg-white/10 text-[var(--accent)]">
+            <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 space-y-4">
+              <span className="grid size-12 place-items-center rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400">
                 <FileCheck size={22} />
               </span>
-              <h3 className="text-lg font-bold text-white">Double-Entry Purchase History</h3>
+              <h3 className="font-display text-lg font-bold text-white">Double-Entry Purchase History</h3>
               <p className="text-xs text-white/60 leading-relaxed">
                 Every acquisition references an immutable ledger payment intent with provider reference, timestamp, and minor unit accuracy.
               </p>
             </div>
           </div>
-
-          <div className="rounded-2xl border border-[var(--accent)]/30 bg-gradient-to-r from-[var(--accent)]/15 via-transparent to-[var(--accent)]/5 p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-lg font-bold text-white">Ready to operate as a licensed distributor?</h3>
-              <p className="text-xs text-white/70">Registration takes under two minutes. No upfront licensing fees.</p>
-            </div>
-            <Link
-              href="/vendor/signup"
-              className="inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-6 py-3 text-xs font-extrabold text-[var(--surface-inverse)] shadow hover:bg-[var(--accent)]/90 transition"
-            >
-              <Store size={15} />
-              <span>Apply for Vendor Account</span>
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* Comprehensive Vendor FAQ */}
+      {/* ========================================================================= */}
+      {/* 05. COMPREHENSIVE VENDOR FAQS */}
+      {/* ========================================================================= */}
       <section id="faq" className="shell space-y-12">
         <div className="space-y-3">
-          <p className="eyebrow">Vendor Intelligence</p>
-          <h2 className="text-3xl font-extrabold tracking-tight text-[var(--ink)] sm:text-4xl">
+          <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
+            [KNOWLEDGE BASE // VENDOR FAQS]
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ink)]">
             Frequently Asked Questions
           </h2>
-          <p className="text-sm leading-relaxed text-[var(--muted)]">
+          <p className="text-sm leading-relaxed text-[var(--muted)] max-w-2xl">
             Everything you need to know about purchasing, distributing, and profiting from Great Finance coupon inventory.
           </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
           {faqs.map((faq) => (
-            <div key={faq.q} className="card p-7 space-y-3">
-              <h3 className="text-base font-bold text-[var(--ink)] flex items-start gap-2.5">
-                <HelpCircle size={18} className="text-[var(--brand)] shrink-0 mt-0.5" />
+            <div key={faq.q} className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-8 space-y-3">
+              <h3 className="font-display text-base font-bold text-[var(--ink)] flex items-start gap-3">
+                <HelpCircle size={18} className="text-emerald-400 shrink-0 mt-0.5" />
                 <span>{faq.q}</span>
               </h3>
               <p className="text-xs leading-relaxed text-[var(--muted)] pl-7">{faq.a}</p>
@@ -301,20 +324,28 @@ export default function VendorsPage() {
         </div>
       </section>
 
-      {/* Direct Contact Desk for High-Volume Vendors */}
+      {/* ========================================================================= */}
+      {/* 06. DIRECT DESK FOR HIGH-VOLUME VENDORS */}
+      {/* ========================================================================= */}
       <section className="shell">
-        <div className="rounded-2xl border border-[var(--line)] bg-white p-8 sm:p-12 space-y-6">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <span className="eyebrow">Institutional Desk</span>
-              <h3 className="mt-1 text-2xl font-bold text-[var(--ink)]">Need Custom High-Volume Allocations?</h3>
-              <p className="text-xs text-[var(--muted)]">For distributor batches exceeding ₦10,000,000 or regional exclusivity inquiries.</p>
+        <div className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-8 sm:p-14 space-y-6 shadow-xl">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="space-y-1">
+              <span className="font-mono text-xs font-bold uppercase tracking-wider text-[var(--accent)]">
+                Institutional Desk
+              </span>
+              <h3 className="font-display text-2xl font-bold text-[var(--ink)]">
+                Need Custom High-Volume Allocations?
+              </h3>
+              <p className="text-xs font-mono text-[var(--muted)]">
+                For distributor batches exceeding ₦10,000,000 or regional exclusivity inquiries.
+              </p>
             </div>
             <a
               href="https://wa.me/2347031069524"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-xs font-bold text-white shadow-sm hover:bg-emerald-700 transition"
+              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-3.5 text-xs font-mono font-bold text-white shadow-sm hover:bg-emerald-500 transition"
             >
               <MessageCircle size={16} />
               <span>Contact Senior Dispatch Desk</span>

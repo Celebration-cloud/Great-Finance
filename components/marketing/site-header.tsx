@@ -18,6 +18,8 @@ import { getNeonClient } from "@/lib/neon/client";
 import { cn } from "@/lib/utils";
 import type { Principal } from "@/lib/auth/principal";
 
+import { BrandLogo } from "@/components/brand/brand-logo";
+
 const primaryNavItems = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
@@ -77,20 +79,8 @@ export function SiteHeader({ principal }: { principal?: Principal | null }) {
     <>
       <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-[var(--paper)]/95 backdrop-blur-md transition-all">
         <div className="shell flex min-h-16 items-center justify-between gap-4 py-2.5">
-          {/* Brand Logo */}
-          <Link
-            href="/"
-            className="group flex items-center gap-2.5 font-bold text-[var(--ink)] transition"
-            aria-label="Great Finance home"
-          >
-            <span className="grid size-9 place-items-center rounded-xl bg-gradient-to-br from-[var(--brand)] to-[var(--brand-dark)] text-white shadow-md shadow-[var(--brand)]/20 transition group-hover:scale-105">
-              <Landmark size={18} />
-            </span>
-            <div className="leading-none">
-              <span className="block text-base tracking-tight font-extrabold text-[var(--ink)]">Great Finance</span>
-              <span className="block text-[0.62rem] font-semibold uppercase tracking-wider text-[var(--muted)]">Institutional Ledger</span>
-            </div>
-          </Link>
+          {/* Sovereign Brand Logo */}
+          <BrandLogo variant="horizontal" size="md" />
 
           {/* Desktop Navigation Links */}
           <nav aria-label="Primary navigation" className="hidden items-center gap-1 text-sm font-medium lg:flex">

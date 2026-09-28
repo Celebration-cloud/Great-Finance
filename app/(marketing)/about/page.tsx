@@ -1,6 +1,8 @@
 import Link from "next/link";
-import { Database, Lock, ShieldCheck } from "lucide-react";
+import { ArrowRight, Database, Lock, ShieldCheck, FileCheck2, Cpu } from "lucide-react";
 import { legacyExplanation } from "@/features/content/legacy-content";
+import { TundeAuditVault } from "@/components/brand/illustrations/tunde-audit-vault";
+import { GuillochePattern } from "@/components/brand/illustrations/guilloche-pattern";
 
 export const metadata = {
   title: "About Great Finance · Institutional Architecture & Governance",
@@ -10,75 +12,131 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="space-y-24 py-12 sm:space-y-32 sm:py-20">
-      {/* Hero */}
-      <section className="shell">
-        <div className="max-w-3xl space-y-6">
-          <p className="eyebrow">Institutional Profile</p>
-          <h1 className="text-4xl font-extrabold tracking-tight text-[var(--ink)] sm:text-6xl">
-            A clearer path through every financial action.
-          </h1>
-          <p className="text-lg leading-relaxed text-[var(--muted)]">
-            Great Finance was established to eliminate ambiguity, opacity, and delays in personal wealth growth and regional financial distribution.
-          </p>
+    <div className="space-y-24 py-8 sm:space-y-36 sm:py-14">
+      {/* ========================================================================= */}
+      {/* 01. HERO WITH TUNDE AUDIT VAULT */}
+      {/* ========================================================================= */}
+      <section className="shell relative">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="space-y-6">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-950/20 px-4 py-1.5 text-xs font-mono font-bold text-emerald-400">
+              <ShieldCheck size={14} />
+              <span>INSTITUTIONAL GOVERNANCE & LEDGER PROFILE</span>
+            </div>
+
+            <div className="space-y-3">
+              <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--accent)]">
+                [FOUNDATION // MATHEMATICAL INVARIANTS]
+              </span>
+              <h1 className="font-display text-4xl sm:text-6xl font-black tracking-tight text-[var(--ink)] leading-[1.08]">
+                A clearer path through every{" "}
+                <span className="text-[var(--brand)]">financial action</span>.
+              </h1>
+            </div>
+
+            <p className="max-w-2xl text-base sm:text-lg leading-relaxed text-[var(--muted)]">
+              Great Finance was established to eliminate ambiguity, opacity, and delays in personal wealth growth and regional financial distribution. We combine database-level invariants with verified merchant liquidity.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <Link
+                href="/signup"
+                className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-7 py-4 text-sm font-mono font-bold text-white shadow-xl shadow-emerald-900/30 hover:bg-emerald-500 transition"
+              >
+                <span>Join Customer Network</span>
+                <ArrowRight size={16} />
+              </Link>
+              <Link
+                href="/vendors"
+                className="inline-flex items-center gap-2 rounded-xl border border-[var(--line)] bg-[var(--surface)] px-6 py-4 text-sm font-mono font-bold text-[var(--ink)] hover:bg-[var(--surface-elevated)] transition"
+              >
+                <span>Vendor Distribution Program</span>
+              </Link>
+            </div>
+          </div>
+
+          <div className="relative">
+            <TundeAuditVault />
+          </div>
         </div>
       </section>
 
-      {/* Main Philosophy & Legacy Explanation */}
+      {/* ========================================================================= */}
+      {/* 02. CORE PHILOSOPHY & MATHEMATICAL EQUATION */}
+      {/* ========================================================================= */}
       <section className="shell">
-        <div className="rounded-3xl border border-[var(--line)] bg-white p-8 sm:p-14 shadow-sm space-y-8">
+        <div className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-8 sm:p-14 shadow-2xl space-y-8">
           <div className="grid gap-10 lg:grid-cols-[0.4fr_1fr] items-start">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[var(--brand)]">Our Foundation</span>
-              <h2 className="mt-2 text-2xl font-bold tracking-tight text-[var(--ink)]">
-                Built on Verified Records
+            <div className="space-y-2">
+              <span className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-400">
+                Foundational Truth
+              </span>
+              <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[var(--ink)]">
+                Built on Immutable Records
               </h2>
             </div>
-            <div className="space-y-5 text-sm sm:text-base leading-relaxed text-[var(--muted)]">
+            <div className="space-y-6 text-sm sm:text-base leading-relaxed text-[var(--muted)]">
               <p>{legacyExplanation}</p>
               <p>
                 Unlike informal savings clubs or opaque online schemes, Great Finance is built on modern financial engineering primitives: isolated tenant organizations, double-entry ledger accounts with debit/credit balance invariants, signed object vaults, and automated webhook reconciliation.
               </p>
+
+              {/* The Equation Callout */}
+              <div className="rounded-2xl border border-emerald-500/30 bg-emerald-950/20 p-6 space-y-2">
+                <span className="font-mono text-xs font-bold text-emerald-400 uppercase tracking-widest block">
+                  The Universal Ledger Law
+                </span>
+                <p className="font-mono text-xl sm:text-2xl font-black text-[var(--ink)]">
+                  ∑ Debits ≡ ∑ Credits (Assets - Liabilities = 0)
+                </p>
+                <p className="text-xs text-[var(--muted)]">
+                  Enforced by PostgreSQL database constraints before any mutation commits to storage.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Core Architectural Pillars */}
+      {/* ========================================================================= */}
+      {/* 03. CORE ARCHITECTURAL PILLARS */}
+      {/* ========================================================================= */}
       <section className="shell space-y-12">
         <div className="space-y-3">
-          <p className="eyebrow">Technical Architecture</p>
-          <h2 className="text-3xl font-extrabold tracking-tight text-[var(--ink)] sm:text-4xl">
+          <span className="font-mono text-xs font-extrabold uppercase tracking-widest text-[var(--brand)]">
+            [INFRASTRUCTURE // SECURITY PROTOCOLS]
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-[var(--ink)]">
             The Technology Behind Great Finance
           </h2>
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
-          <div className="card p-7 space-y-4">
-            <span className="grid size-11 place-items-center rounded-xl bg-[var(--brand)]/10 text-[var(--brand)]">
+          <div className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-8 space-y-4">
+            <span className="grid size-12 place-items-center rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-400">
               <Database size={22} />
             </span>
-            <h3 className="text-base font-bold text-[var(--ink)]">Neon Lakebase Postgres</h3>
+            <h3 className="font-display text-lg font-bold text-[var(--ink)]">Neon Lakebase Postgres</h3>
             <p className="text-xs text-[var(--muted)] leading-relaxed">
               Cloud-native serverless PostgreSQL providing ACID guarantees, atomic migrations, connection pooling, and instant branch recovery.
             </p>
           </div>
 
-          <div className="card p-7 space-y-4">
-            <span className="grid size-11 place-items-center rounded-xl bg-[var(--brand)]/10 text-[var(--brand)]">
+          <div className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-8 space-y-4">
+            <span className="grid size-12 place-items-center rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-400">
               <ShieldCheck size={22} />
             </span>
-            <h3 className="text-base font-bold text-[var(--ink)]">Double-Entry Accounting</h3>
+            <h3 className="font-display text-lg font-bold text-[var(--ink)]">Double-Entry Accounting</h3>
             <p className="text-xs text-[var(--muted)] leading-relaxed">
               Every kobo is represented in strict dual entries. Funds in escrow, collection revenue, and payout liabilities always balance exactly.
             </p>
           </div>
 
-          <div className="card p-7 space-y-4">
-            <span className="grid size-11 place-items-center rounded-xl bg-[var(--brand)]/10 text-[var(--brand)]">
+          <div className="rounded-3xl border border-[var(--line)] bg-[var(--surface)] p-8 space-y-4">
+            <span className="grid size-12 place-items-center rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-400">
               <Lock size={22} />
             </span>
-            <h3 className="text-base font-bold text-[var(--ink)]">Zero-Exposure Private Vault</h3>
+            <h3 className="font-display text-lg font-bold text-[var(--ink)]">Zero-Exposure Private Vault</h3>
             <p className="text-xs text-[var(--muted)] leading-relaxed">
               Government identity documents and selfie verifications are processed with short-lived presigned credentials and stored securely away from public access.
             </p>
@@ -86,23 +144,29 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Direct Call to Action */}
+      {/* ========================================================================= */}
+      {/* 04. CALL TO ACTION */}
+      {/* ========================================================================= */}
       <section className="shell">
-        <div className="rounded-3xl bg-[var(--surface-inverse)] p-8 sm:p-14 text-white flex flex-col sm:flex-row items-center justify-between gap-8">
+        <div className="rounded-3xl border border-[var(--line)] bg-gradient-to-r from-[var(--surface-inverse)] to-[var(--surface)] p-8 sm:p-14 text-white flex flex-col sm:flex-row items-center justify-between gap-8 shadow-2xl">
           <div className="space-y-2">
-            <h3 className="text-2xl font-bold">Ready to participate in our verified financial network?</h3>
-            <p className="text-sm text-white/70">Join thousands of customers and certified distribution vendors today.</p>
+            <h3 className="font-display text-2xl sm:text-3xl font-bold">
+              Ready to participate in our verified financial network?
+            </h3>
+            <p className="text-sm text-white/70">
+              Join thousands of customers and certified distribution vendors across Nigeria today.
+            </p>
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3 shrink-0">
             <Link
               href="/signup"
-              className="rounded-xl bg-[var(--brand)] px-6 py-3 text-xs font-bold text-white hover:bg-[var(--brand-dark)] transition"
+              className="rounded-xl bg-emerald-600 px-6 py-3.5 text-xs font-mono font-bold text-white hover:bg-emerald-500 transition shadow-lg"
             >
               Register as Customer
             </Link>
             <Link
               href="/vendor/signup"
-              className="rounded-xl bg-[var(--accent)] px-6 py-3 text-xs font-bold text-[var(--surface-inverse)] hover:bg-[var(--accent)]/90 transition"
+              className="rounded-xl bg-amber-400 px-6 py-3.5 text-xs font-mono font-black text-[var(--surface-inverse)] hover:bg-amber-300 transition shadow-lg"
             >
               Register as Vendor
             </Link>

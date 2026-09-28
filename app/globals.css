@@ -1,31 +1,46 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #eef2f7;
-  --muted: #9aa6b6;
-  --paper: #0d1016;
-  --surface: #171b23;
-  --surface-muted: #202631;
-  --surface-elevated: #292f3a;
-  --surface-inverse: #080b10;
-  --line: #343c49;
-  --brand: #6da4ff;
-  --brand-dark: #4a86eb;
-  --accent: #e7b95a;
-  --accent-dark: #c99532;
-  --danger: #f87171;
-  --success-soft: #14261f;
-  --success-line: #28513d;
-  --success-ink: #83d9ab;
-  --warning-soft: #2a2113;
-  --warning-line: #5c4822;
-  --warning-ink: #eccb78;
-  --danger-soft: #2b171a;
-  --danger-line: #603038;
-  --danger-ink: #f3a0a8;
-  --info-soft: #142237;
-  --info-line: #294b78;
-  --info-ink: #91bdf8;
+  /* Sovereign Ledger Core System */
+  --gf-basalt: #080C0E;
+  --gf-obsidian: #0E1418;
+  --gf-slate: #151D24;
+  --gf-slate-elevated: #1D2832;
+  --gf-vellum: #F7F5F0;
+  --gf-emerald-deep: #06231A;
+  --gf-emerald-vivid: #10B981;
+  --gf-emerald-mint: #6EE7B7;
+  --gf-ochre-burnished: #D97706;
+  --gf-ochre-warm: #F59E0B;
+  --gf-ochre-light: #FDE68A;
+  --gf-sand: #E5DFD3;
+
+  /* Universal Semantic Tokens */
+  --ink: #F1F5F9;
+  --muted: #94A3B8;
+  --paper: #080C0E;
+  --surface: #0E1418;
+  --surface-muted: #151D24;
+  --surface-elevated: #1D2832;
+  --surface-inverse: #05080A;
+  --line: #222C35;
+  --brand: #10B981;
+  --brand-dark: #059669;
+  --accent: #F59E0B;
+  --accent-dark: #D97706;
+  --danger: #F87171;
+  --success-soft: #09261E;
+  --success-line: #134E3E;
+  --success-ink: #6EE7B7;
+  --warning-soft: #2B1D09;
+  --warning-line: #634315;
+  --warning-ink: #FDE68A;
+  --danger-soft: #2B1317;
+  --danger-line: #63222B;
+  --danger-ink: #FCA5A5;
+  --info-soft: #0C1E2E;
+  --info-line: #174266;
+  --info-ink: #93C5FD;
 }
 
 * { box-sizing: border-box; }
@@ -41,11 +56,44 @@ body {
   margin: 0;
   color: var(--ink);
   background:
-    radial-gradient(circle at 88% -12%, rgb(109 164 255 / 10%), transparent 38rem),
-    radial-gradient(circle at 8% 30%, rgb(231 185 90 / 5%), transparent 30rem),
+    radial-gradient(circle at 85% -10%, rgba(16, 185, 129, 0.08), transparent 36rem),
+    radial-gradient(circle at 10% 25%, rgba(245, 158, 11, 0.05), transparent 32rem),
+    radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.04), transparent 40rem),
     var(--paper);
-  font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), monospace;
+}
+
+/* 45° Architectural Chamfer Cuts */
+.clip-chamfer-sm {
+  clip-path: polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0% calc(100% - 8px), 0% 8px);
+}
+
+.clip-chamfer {
+  clip-path: polygon(14px 0%, calc(100% - 14px) 0%, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0% calc(100% - 14px), 0% 14px);
+}
+
+.clip-chamfer-tl-br {
+  clip-path: polygon(18px 0%, 100% 0%, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0% 100%, 0% 18px);
+}
+
+.clip-chamfer-tr-bl {
+  clip-path: polygon(0% 0%, calc(100% - 18px) 0%, 100% 18px, 100% 100%, 18px 100%, 0% calc(100% - 18px));
+}
+
+/* Double-Entry Ledger Lines */
+.ledger-rail {
+  border-top: 2px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding-block: 2px;
 }
 
 body:has([data-portal-shell]) > [data-site-header] { display: none; }

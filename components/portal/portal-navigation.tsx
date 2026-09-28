@@ -55,9 +55,15 @@ const adminLinks: readonly PortalLink[] = [
   ["/admin/settings", "System Settings", Settings],
 ];
 
+const superAdminLinks: readonly PortalLink[] = [
+  ...adminLinks,
+  ["/admin/invite", "Invite Administrator", UserRoundCog],
+];
+
 function getLinks(role: Role) {
   if (role === "CUSTOMER") return customerLinks;
   if (role === "VENDOR") return vendorLinks;
+  if (role === "SUPER_ADMIN") return superAdminLinks;
   return adminLinks;
 }
 
@@ -96,6 +102,8 @@ function NavigationLinks({ links, onNavigate }: { links: readonly PortalLink[]; 
   );
 }
 
+import { SovereignMark } from "@/components/brand/brand-logo";
+
 export function PortalNavigation({ email, role }: { email: string; role: Role }) {
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const links = getLinks(role);
@@ -123,9 +131,7 @@ export function PortalNavigation({ email, role }: { email: string; role: Role })
       {/* Desktop Sidebar (Permanent) */}
       <aside className="hidden h-screen min-h-0 flex-col bg-[var(--surface-inverse)] border-r border-[var(--line)] px-4 py-5 text-white lg:sticky lg:top-0 lg:flex">
         <Link className="flex items-center gap-3 rounded-xl px-2 py-2 font-bold" href={links[0][0]} aria-label="Great Finance workspace home">
-          <span className="grid size-10 place-items-center rounded-xl bg-[var(--brand)] text-white shadow-md shadow-[var(--brand)]/30">
-            <Landmark aria-hidden="true" size={20} />
-          </span>
+          <SovereignMark size={36} />
           <div className="leading-tight">
             <span className="block text-base tracking-tight font-extrabold text-white">Great Finance</span>
             <span className="block text-[0.62rem] font-semibold uppercase tracking-wider text-white/50">Ledger Portal</span>
@@ -150,9 +156,7 @@ export function PortalNavigation({ email, role }: { email: string; role: Role })
       <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-[var(--surface-inverse)]/95 backdrop-blur-md text-white shadow-md lg:hidden">
         <div className="flex min-h-16 items-center justify-between gap-3 px-4 sm:px-6">
           <Link className="flex min-w-0 items-center gap-2.5 font-bold" href={links[0][0]} aria-label="Great Finance workspace home">
-            <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-[var(--brand)] text-white shadow-sm">
-              <Landmark aria-hidden="true" size={18} />
-            </span>
+            <SovereignMark size={32} />
             <span className="truncate text-base font-extrabold">Great Finance</span>
           </Link>
 

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Check, Copy, KeyRound, Lock, Shield, ShieldCheck } from "lucide-react";
 import { toast } from "@/lib/toast";
+import { DeleteAccountModal } from "@/components/portal/delete-account-modal";
 
 export function SettingsSecurityCard({
   email,
@@ -13,6 +14,7 @@ export function SettingsSecurityCard({
   role: string;
   userId: string;
 }) {
+  const isDeletable = role === "CUSTOMER" || role === "VENDOR";
   const [resetSent, setResetSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [copiedId, setCopiedId] = useState(false);
@@ -116,6 +118,24 @@ export function SettingsSecurityCard({
           <span>{resetSent ? "Reset Email Dispatched" : "Send Reset Link"}</span>
         </button>
       </div>
+
+      {/* Danger Zone — only visible to CUSTOMER and VENDOR */}
+      {isDeletable && (
+        <div className="rounded-xl border border-red-100 bg-red-50/50 p-4 space-y-3">
+          <div className="flex items-start justify-between gap-4">
+            <div className="space-y-0.5">
+              <p className="text-xs font-bold text-red-700 flex items-center gap-1.5">
+                <Lock size={13} className="text-red-500" />
+                <span>Danger Zone — Delete Account</span>
+              </p>
+              <p className="text-xs text-red-600/80">
+                Permanently deactivate your account. This suspends all access and cannot be reversed.
+              </p>
+            </div>
+            <DeleteAccountModal role={role as "CUSTOMER" | "VENDOR"} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
